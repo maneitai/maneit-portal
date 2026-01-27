@@ -1,12 +1,14 @@
 /* =========================================================
-   Maneit Portal – Core JS (bulletproof nav)
+   Maneit Portal – Core JS (no keyboard shortcuts)
+   - Active tab highlight + auto-scroll
+   - Copy buttons
+   - Notes autosave + drafts
    ========================================================= */
 
 (() => {
   "use strict";
 
   const pathFile = () => location.pathname.split("/").pop() || "index.html";
-  const inPages = () => location.pathname.includes("/pages/");
   const currentPath = pathFile();
 
   /* ---------- Active tab highlight (robust) ---------- */
@@ -19,13 +21,12 @@
     if (hrefFile === currentPath) {
       active = t;
       t.setAttribute("aria-current", "page");
-      // keep your existing inline highlight too (works even if css is stale)
       t.style.borderColor = "rgba(74,222,128,.45)";
       t.style.background = "rgba(74,222,128,.08)";
     }
   }
 
-  // Auto-scroll the nav so the active tab is visible
+  // Auto-scroll nav so active tab is visible
   const nav = document.querySelector(".tabs");
   if (nav && active) {
     try {
@@ -37,35 +38,6 @@
         active.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
       }
     } catch {}
-  }
-
-  /* ---------- Keyboard shortcuts ---------- */
-  document.addEventListener("keydown", (e) => {
-    if (e.altKey || e.ctrlKey || e.metaKey) return;
-    const k = e.key.toLowerCase();
-
-    switch (k) {
-      case "h": goRoot("index.html"); break;
-      case "u": go("pages/hub.html"); break;
-      case "w": go("pages/work.html"); break;
-      case "p": go("pages/projects.html"); break;
-      case "a": go("pages/agents.html"); break;
-      case "n": go("pages/notes.html"); break;
-      case "s": go("pages/system.html"); break;
-      case "c": go("pages/novelcrafter.html"); break;
-      case "f": go("pages/agentfactory.html"); break;
-      case "l": go("pages/pipelines.html"); break;
-      case "t": go("pages/stream.html"); break;
-    }
-  });
-
-  function go(target) {
-    const href = inPages() ? "../" + target : target;
-    window.location.href = href;
-  }
-
-  function goRoot(file) {
-    window.location.href = inPages() ? "../" + file : file;
   }
 
   /* ---------- Copy buttons ---------- */
@@ -97,17 +69,19 @@
     const KEY = "maneit.notes.v1";
     const DRAFTS = "maneit.drafts.v1";
 
+    // load autosave
     try {
       const existing = localStorage.getItem(KEY);
       if (existing && !notesArea.value) notesArea.value = existing;
     } catch {}
 
+    // save autosave
     let t = null;
     notesArea.addEventListener("input", () => {
       clearTimeout(t);
       t = setTimeout(() => {
         try { localStorage.setItem(KEY, notesArea.value); } catch {}
-      }, 250);
+      }, 200);
     });
 
     const saveDraftBtn = document.querySelector("[data-save-draft]");
