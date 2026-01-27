@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>AgentFactory · Maneit Portal</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    body{margin:0;}
+    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
+    .span5,.span7,.span12{grid-column:span 12;}
+    .field{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:#e6edf3;
+      padding:12px;
+      outline:none;
+    }
+    textarea.field{min-height:180px;resize:vertical;font-family:ui-monospace,monospace;}
+    .list{display:flex;flex-direction:column;gap:10px;}
+    .item{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
+    .item strong{display:block;margin-bottom:4px;}
+    .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+    .chip{font-size:11px;padding:4px 9px;border-radius:999px;border:1px solid rgba(74,222,128,.18);background:rgba(74,222,128,.10);color:rgba(230,237,243,.85);user-select:none;}
+    @media(min-width:860px){.span5{grid-column:span 5;}.span7{grid-column:span 7;}}
+  </style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="../index.html">
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">AgentFactory</span>
+    </a>
+    <nav class="tabs">
+      <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="work.html">Work</a>
+      <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="system.html">System</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 class="h1">AgentFactory</h1>
+  <p class="muted">Define role → constraints → I/O → create an agent profile (showcase shell now, real later).</p>
+
+  <section class="grid2">
+    <article class="card span5">
+      <h2>Templates</h2>
+      <div class="list">
+        <div class="item">
+          <strong>Router</strong>
+          <small class="muted">Intent → route → minimal friction</small>
+          <div class="chips"><span class="chip">core</span><span class="chip">fast</span></div>
+        </div>
+        <div class="item">
+          <strong>Coder</strong>
+          <small class="muted">Deterministic code, one file at a time</small>
+          <div class="chips"><span class="chip">build</span><span class="chip">verify</span></div>
+        </div>
+        <div class="item">
+          <strong>Verifier</strong>
+          <small class="muted">Check, critique, prevent regressions</small>
+          <div class="chips"><span class="chip">safety</span><span class="chip">quality</span></div>
+        </div>
+        <div class="item">
+          <strong>Design (ADHD-friendly)</strong>
+          <small class="muted">Low-noise UI, clarity, accessibility</small>
+          <div class="chips"><span class="chip">ux</span><span class="chip">calm</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card span7">
+      <h2>Spawn</h2>
+
+      <label class="mono" for="name" style="display:block;margin:0 0 6px;">Agent name</label>
+      <input class="field" id="name" placeholder="e.g., Fedora Bootstrap Agent" />
+
+      <div style="height:10px;"></div>
+
+      <label class="mono" for="role" style="display:block;margin:0 0 6px;">Role / mission</label>
+      <input class="field" id="role" placeholder="What does this agent do (and not do)?" />
+
+      <div style="height:10px;"></div>
+
+      <label class="mono" for="constraints" style="display:block;margin:0 0 6px;">Constraints</label>
+      <input class="field" id="constraints" placeholder="Rules, boundaries, tooling, no-go zones..." />
+
+      <div style="height:10px;"></div>
+
+      <label class="mono" for="prompt" style="display:block;margin:0 0 6px;">System Prompt</label>
+      <textarea class="field" id="prompt" placeholder="Paste the final agent prompt here..."></textarea>
+
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="#">Save Profile (later)</a>
+        <a class="btn" href="notes.html">Send to Notes →</a>
+        <a class="btn" href="pipelines.html">Attach to Pipeline →</a>
+      </div>
+
+      <p class="mono" style="margin-top:10px;">
+        Later: this becomes a real agent registry + runner.
+      </p>
+    </article>
+
+    <article class="card span12">
+      <h2>Output Contract (Showcase)</h2>
+      <div class="list">
+        <div class="item"><strong>Input</strong><small class="muted">Intent, context, assets, constraints</small></div>
+        <div class="item"><strong>Process</strong><small class="muted">Plan → build → verify → handoff</small></div>
+        <div class="item"><strong>Output</strong><small class="muted">Files, scripts, docs, test steps, changelog</small></div>
+      </div>
+    </article>
+  </section>
+</main>
+
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>
