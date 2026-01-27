@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Work · Maneit Portal</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <style>
+    body { margin:0; }
+    .section { margin-bottom: 24px; }
+    .lane {
+      display: grid;
+      gap: 10px;
+    }
+    .item {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+    .item small {
+      display: block;
+      color: rgba(230,237,243,.6);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap row">
+      <a class="brand" href="../index.html">
+        <span class="dot"></span>
+        <strong>Maneit Portal</strong>
+        <span class="pill">Work</span>
+      </a>
+
+      <nav class="tabs">
+        <a class="tab" href="../index.html">Home</a>
+        <a class="tab" href="projects.html">Projects</a>
+        <a class="tab" href="agents.html">Agents</a>
+        <a class="tab" href="notes.html">Notes</a>
+        <a class="tab" href="system.html">System</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="h1">Workboard</h1>
+    <p class="muted">Now → Next → Later. No clutter. Only momentum.</p>
+
+    <section class="grid">
+      <article class="card span4 section">
+        <h2>Now</h2>
+        <div class="lane">
+          <div class="item">
+            Finish portal core pages
+            <small>focus mode</small>
+          </div>
+          <div class="item">
+            Polish showcase narrative
+            <small>external viewers</small>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span4 section">
+        <h2>Next</h2>
+        <div class="lane">
+          <div class="item">
+            Agent factory UX
+            <small>spawn / role clarity</small>
+          </div>
+          <div class="item">
+            Script library index
+            <small>automation-first</small>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span4 section">
+        <h2>Later</h2>
+        <div class="lane">
+          <div class="item">
+            Multi-user portals
+            <small>personalization</small>
+          </div>
+          <div class="item">
+            Funding / pilot decks
+            <small>external</small>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="../assets/js/app.js" defer></script>
+</body>
+</html>
