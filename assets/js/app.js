@@ -1,6 +1,5 @@
 /* =========================================================
-   Maneit Portal – Core JS
-   Minimal, deterministic, no framework
+   Maneit Portal – Core JS (bulletproof nav)
    ========================================================= */
 
 (() => {
@@ -8,17 +7,37 @@
 
   const pathFile = () => location.pathname.split("/").pop() || "index.html";
   const inPages = () => location.pathname.includes("/pages/");
-
-  /* ---------- Active tab highlight ---------- */
   const currentPath = pathFile();
-  document.querySelectorAll(".tab").forEach(tab => {
-    const href = tab.getAttribute("href");
-    if (!href) return;
-    if (href.endsWith(currentPath)) {
-      tab.style.borderColor = "rgba(74,222,128,.45)";
-      tab.style.background = "rgba(74,222,128,.08)";
+
+  /* ---------- Active tab highlight (robust) ---------- */
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+  let active = null;
+
+  for (const t of tabs) {
+    const href = t.getAttribute("href") || "";
+    const hrefFile = href.split("/").pop();
+    if (hrefFile === currentPath) {
+      active = t;
+      t.setAttribute("aria-current", "page");
+      // keep your existing inline highlight too (works even if css is stale)
+      t.style.borderColor = "rgba(74,222,128,.45)";
+      t.style.background = "rgba(74,222,128,.08)";
     }
-  });
+  }
+
+  // Auto-scroll the nav so the active tab is visible
+  const nav = document.querySelector(".tabs");
+  if (nav && active) {
+    try {
+      const navRect = nav.getBoundingClientRect();
+      const aRect = active.getBoundingClientRect();
+      const leftOverflow = aRect.left < navRect.left;
+      const rightOverflow = aRect.right > navRect.right;
+      if (leftOverflow || rightOverflow) {
+        active.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+    } catch {}
+  }
 
   /* ---------- Keyboard shortcuts ---------- */
   document.addEventListener("keydown", (e) => {
@@ -27,17 +46,16 @@
 
     switch (k) {
       case "h": goRoot("index.html"); break;
+      case "u": go("pages/hub.html"); break;
       case "w": go("pages/work.html"); break;
       case "p": go("pages/projects.html"); break;
       case "a": go("pages/agents.html"); break;
       case "n": go("pages/notes.html"); break;
       case "s": go("pages/system.html"); break;
-
-      case "u": go("pages/hub.html"); break;          // hUb
-      case "c": go("pages/novelcrafter.html"); break; // Crafter
-      case "f": go("pages/agentfactory.html"); break; // Factory
-      case "l": go("pages/pipelines.html"); break;    // fLows
-      case "t": go("pages/stream.html"); break;       // sTream
+      case "c": go("pages/novelcrafter.html"); break;
+      case "f": go("pages/agentfactory.html"); break;
+      case "l": go("pages/pipelines.html"); break;
+      case "t": go("pages/stream.html"); break;
     }
   });
 
@@ -50,33 +68,19 @@
     window.location.href = inPages() ? "../" + file : file;
   }
 
-  /* ---------- Copy buttons (any element with data-copy-target) ---------- */
+  /* ---------- Copy buttons ---------- */
   document.querySelectorAll("[data-copy-target]").forEach(btn => {
     btn.addEventListener("click", async () => {
       const sel = btn.getAttribute("data-copy-target");
       const el = sel ? document.querySelector(sel) : null;
       const text = el ? (el.innerText || el.textContent || "") : "";
-
       if (!text.trim()) return;
 
       try {
         await navigator.clipboard.writeText(text);
         flash(btn, "Copied");
       } catch {
-        // fallback
-        try {
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.style.position = "fixed";
-          ta.style.left = "-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand("copy");
-          ta.remove();
-          flash(btn, "Copied");
-        } catch {
-          flash(btn, "No access");
-        }
+        flash(btn, "No access");
       }
     });
   });
@@ -87,19 +91,17 @@
     setTimeout(() => (btn.textContent = old), 900);
   }
 
-  /* ---------- Notes autosave + drafts (pages/notes.html) ---------- */
+  /* ---------- Notes autosave + drafts ---------- */
   const notesArea = document.querySelector("[data-notes]");
   if (notesArea) {
     const KEY = "maneit.notes.v1";
     const DRAFTS = "maneit.drafts.v1";
 
-    // load
     try {
       const existing = localStorage.getItem(KEY);
       if (existing && !notesArea.value) notesArea.value = existing;
     } catch {}
 
-    // save
     let t = null;
     notesArea.addEventListener("input", () => {
       clearTimeout(t);
@@ -108,34 +110,42 @@
       }, 250);
     });
 
-    // draft save button
     const saveDraftBtn = document.querySelector("[data-save-draft]");
     const draftTitleEl = document.querySelector("[data-draft-title]");
     const draftsList = document.querySelector("[data-drafts-list]");
 
+    const loadDrafts = () => {
+      try {
+        const raw = localStorage.getItem(DRAFTS);
+        const v = raw ? JSON.parse(raw) : [];
+        return Array.isArray(v) ? v : [];
+      } catch { return []; }
+    };
+
     const renderDrafts = () => {
       if (!draftsList) return;
       draftsList.innerHTML = "";
-      const drafts = loadDrafts(DRAFTS);
+      const drafts = loadDrafts();
 
       drafts.slice(0, 30).forEach((d, idx) => {
         const div = document.createElement("div");
-        div.className = "item";
+        div.className = "card";
+        div.style.padding = "12px";
+        div.style.cursor = "pointer";
         div.innerHTML = `<strong>${escapeHtml(d.title || "Untitled")}</strong>
-                         <small class="muted">${escapeHtml(d.when)}</small>`;
+                         <div class="mono" style="margin-top:6px;">${escapeHtml(d.when || "")}</div>`;
         div.addEventListener("click", () => {
           notesArea.value = d.body || "";
           try { localStorage.setItem(KEY, notesArea.value); } catch {}
         });
 
-        // delete
         const del = document.createElement("button");
         del.className = "btn";
         del.style.marginTop = "10px";
         del.textContent = "Delete";
         del.addEventListener("click", (e) => {
           e.stopPropagation();
-          const drafts2 = loadDrafts(DRAFTS);
+          const drafts2 = loadDrafts();
           drafts2.splice(idx, 1);
           try { localStorage.setItem(DRAFTS, JSON.stringify(drafts2)); } catch {}
           renderDrafts();
@@ -152,7 +162,7 @@
         const body = notesArea.value || "";
         const when = new Date().toISOString();
 
-        const drafts = loadDrafts(DRAFTS);
+        const drafts = loadDrafts();
         drafts.unshift({ title, body, when });
         try { localStorage.setItem(DRAFTS, JSON.stringify(drafts)); } catch {}
 
@@ -165,27 +175,9 @@
     renderDrafts();
   }
 
-  function loadDrafts(key) {
-    try {
-      const raw = localStorage.getItem(key);
-      const v = raw ? JSON.parse(raw) : [];
-      return Array.isArray(v) ? v : [];
-    } catch {
-      return [];
-    }
-  }
-
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({
       "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
     }[c]));
   }
-
-  /* ---------- Local state (reserved) ---------- */
-  try {
-    localStorage.setItem("maneit.portal", JSON.stringify({
-      version: "v1",
-      lastVisit: new Date().toISOString()
-    }));
-  } catch {}
 })();
