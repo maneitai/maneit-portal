@@ -6,14 +6,7 @@
   <meta name="color-scheme" content="dark" />
   <title>Stream · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <style>
-    body{margin:0;}
-    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
-    .span6,.span12{grid-column:span 12;}
-    .panel{padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
-    @media(min-width:860px){.span6{grid-column:span 6;}}
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
@@ -22,6 +15,7 @@
     <a class="brand" href="../index.html">
       <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Stream</span>
     </a>
+
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
@@ -40,28 +34,32 @@
 
 <main class="wrap">
   <h1 class="h1">Stream Control</h1>
-  <p class="muted">Placeholder UI. Later: OBS control, scenes, mic routing, overlays, stream checklists.</p>
+  <p class="muted">UI shell now. Later: OBS WebSocket control, audio routing, overlays.</p>
 
-  <section class="grid2">
+  <section class="grid">
     <article class="card span6">
       <h2>Scenes</h2>
-      <div class="panel"><p class="muted" style="margin:0;">Start Soon · Main · BRB · End</p></div>
-      <div class="actions" style="margin-top:10px;"><a class="btn" href="#">Switch Scene (later)</a></div>
+      <p class="muted">Start Soon · Main · BRB · End</p>
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="#">Switch Scene (later)</a>
+      </div>
     </article>
 
     <article class="card span6">
       <h2>Audio</h2>
-      <div class="panel"><p class="muted" style="margin:0;">Mic · Music · Game · Discord</p></div>
-      <div class="actions" style="margin-top:10px;"><a class="btn" href="#">Mute/Unmute (later)</a></div>
+      <p class="muted">Mic · Music · Game · Discord</p>
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="#">Mute/Unmute (later)</a>
+      </div>
     </article>
 
     <article class="card span12">
-      <h2>Stream Checklist</h2>
-      <div class="panel"><p class="muted" style="margin:0;">Title · Category · Thumbnail · Recording · Water · Notes</p></div>
+      <h2>Checklist</h2>
+      <p class="muted">Title · Category · Thumbnail · Recording · Water · Notes</p>
     </article>
   </section>
 </main>
 
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
