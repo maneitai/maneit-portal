@@ -2,426 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maneit Portal — Home</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit Portal</title>
 
-  <style>
-    :root{
-      --bg0:#070A10;
-      --bg1:#0B1220;
-
-      --txt:#EAF0FF;
-      --muted:rgba(234,240,255,0.72);
-
-      --line: rgba(255,255,255,0.16);
-
-      /* glass */
-      --glassA: 0.10;
-      --glass: rgba(255,255,255,var(--glassA));
-      --glass2: rgba(255,255,255,0.06);
-      --blur: 14px;
-      --r: 18px;
-
-      --shadow: 0 18px 55px rgba(0,0,0,0.55);
-
-      --accent: #7DD3FC;
-      --accent2:#A78BFA;
-      --good:#22c55e;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      color:var(--txt);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
-      background:
-        radial-gradient(1200px 800px at 18% -10%, rgba(125,211,252,0.18), transparent 55%),
-        radial-gradient(900px 700px at 90% 10%, rgba(167,139,250,0.16), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
-      overflow-x:hidden;
-    }
-
-    /* subtle noise overlay */
-    .noise{
-      pointer-events:none;
-      position:fixed; inset:0;
-      opacity:0.055;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      mix-blend-mode:overlay;
-    }
-
-    .wrap{
-      max-width: 1220px;
-      margin: 0 auto;
-      padding: 18px 18px 28px;
-    }
-
-    /* Top header / nav */
-    .top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,0.20);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding-left: 6px;
-      white-space:nowrap;
-    }
-    .led{
-      width:8px; height:8px; border-radius:50%;
-      background: var(--good);
-      box-shadow: 0 0 0 6px rgba(34,197,94,0.12);
-      flex: 0 0 auto;
-    }
-    .brandTitle{
-      font-weight: 700;
-      letter-spacing: 0.2px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: var(--txt);
-      font-size: 12px;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .pill:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(255,255,255,0.20);
-    }
-    .pill.active{
-      border-color: rgba(125,211,252,0.42);
-      box-shadow: 0 0 0 5px rgba(125,211,252,0.10);
-    }
-    .nav{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      justify-content:center;
-    }
-
-    /* Page header */
-    .pageHead{
-      margin: 16px 4px 14px;
-    }
-    .pageHead h1{
-      margin:0;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-    }
-    .pageHead p{
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* Glass cards */
-    .card{
-      border-radius: var(--r);
-      border: 1px solid var(--line);
-      background: var(--glass);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(var(--blur));
-      -webkit-backdrop-filter: blur(var(--blur));
-      position:relative;
-      overflow:hidden;
-      padding: 14px;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(600px 140px at 18% 0%, rgba(255,255,255,0.12), transparent 60%);
-      opacity:0.9;
-      pointer-events:none;
-    }
-    .cardTitle{
-      margin: 0 0 8px;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-    }
-    .cardSub{
-      margin: 0 0 12px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    /* Layout grid like screenshot */
-    .grid{
-      display:grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 14px;
-    }
-    .row2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 14px;
-    }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: 1fr; }
-      .row2{ grid-template-columns: 1fr; }
-      .top{ border-radius: 18px; }
-    }
-
-    /* Chat card internal layout */
-    .chatBox{
-      display:grid;
-      grid-template-columns: 160px 1fr;
-      gap: 12px;
-      align-items: stretch;
-    }
-    .chatList{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.16);
-      padding: 10px;
-      min-height: 320px;
-    }
-    .chatList .label{
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 8px;
-    }
-    .chatItem{
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      font-size: 12px;
-      cursor:pointer;
-      user-select:none;
-      margin-bottom: 10px;
-    }
-    .chatMain{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.16);
-      min-height: 320px;
-      position:relative;
-      overflow:hidden;
-    }
-    .chatMain .placeholder{
-      position:absolute;
-      top: 10px; left: 12px;
-      color: rgba(234,240,255,0.55);
-      font-size: 12px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-    }
-
-    .chatBottom{
-      display:grid;
-      grid-template-columns: 180px 1fr auto;
-      gap: 10px;
-      margin-top: 10px;
-      align-items:center;
-    }
-    select, textarea, button{
-      font: inherit;
-      color: var(--txt);
-    }
-    select{
-      width:100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.22);
-      outline:none;
-    }
-    textarea{
-      width:100%;
-      height: 44px;
-      resize: none;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.22);
-      outline:none;
-    }
-    textarea::placeholder{ color: rgba(234,240,255,0.55); }
-    button{
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.08);
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    button:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.24);
-    }
-    button:active{ transform: translateY(0px) scale(0.99); }
-
-    /* Today list */
-    .todayBox{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.16);
-      padding: 12px;
-      min-height: 360px;
-    }
-    .todayBox h4{
-      margin: 0 0 10px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .todayBox ol{
-      margin: 0;
-      padding-left: 18px;
-      color: rgba(234,240,255,0.92);
-      font-size: 12px;
-      line-height: 1.65;
-    }
-
-    /* Calendar & Email list boxes */
-    .boxInner{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.16);
-      padding: 12px;
-      min-height: 160px;
-    }
-    .boxInner .line{
-      margin: 6px 0 0;
-      color: rgba(234,240,255,0.85);
-      font-size: 12px;
-    }
-    .boxInner .muted{
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 6px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-  <div class="noise"></div>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="./index.html">
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">Home</span>
+    </a>
 
-  <div class="wrap">
-
-    <div class="top">
-      <div class="brand">
-        <div class="led"></div>
-        <div class="brandTitle">Maneit Portal</div>
-        <div class="pill active">Home</div>
-      </div>
-
-      <div class="nav">
-        <div class="pill">Hub</div>
-        <div class="pill">Work</div>
-        <div class="pill">Projects</div>
-        <div class="pill">Agents</div>
-        <div class="pill">AgentFactory</div>
-        <div class="pill">Pipelines</div>
-        <div class="pill">NovelCrafter</div>
-        <div class="pill">Stream</div>
-        <div class="pill">Notes</div>
-        <div class="pill">System</div>
-      </div>
-    </div>
-
-    <div class="pageHead">
-      <h1>Home</h1>
-      <p>Your replacement for ChatGPT + Calendar + Day Planner + Email.</p>
-    </div>
-
-    <div class="grid">
-      <!-- Chat -->
-      <div class="card">
-        <div class="cardTitle">Chat</div>
-        <div class="cardSub">Self-reflection, thinking out loud, idea exploration.</div>
-
-        <div class="chatBox">
-          <div class="chatList">
-            <div class="label">Chats</div>
-            <div class="chatItem">New chat</div>
-          </div>
-
-          <div>
-            <div class="chatMain">
-              <div class="placeholder">What’s on your mind?</div>
-            </div>
-
-            <div class="chatBottom">
-              <select>
-                <option>Local LLM (soon)</option>
-                <option>ChatGPT (placeholder)</option>
-                <option>DeepSeek (placeholder)</option>
-              </select>
-
-              <textarea placeholder="Write here… (Enter = send, Shift+Enter = new line)"></textarea>
-
-              <button>Send</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Today -->
-      <div class="card">
-        <div class="cardTitle">Today</div>
-
-        <div class="todayBox">
-          <h4>Top 3</h4>
-          <ol>
-            <li>Keep portal consistent</li>
-            <li>Build OS pages</li>
-            <li>Integrations later</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-
-    <div class="row2">
-      <!-- Calendar -->
-      <div class="card">
-        <div class="cardTitle">Calendar</div>
-        <div class="cardSub">Placeholder daily view.</div>
-        <div class="boxInner">
-          <div class="line">09:00 Focus block</div>
-          <div class="line">12:00 Admin</div>
-          <div class="line">15:00 Build</div>
-        </div>
-      </div>
-
-      <!-- Email Inbox -->
-      <div class="card">
-        <div class="cardTitle">Email Inbox</div>
-        <div class="cardSub">UI shell only.</div>
-        <div class="boxInner">
-          <div class="line">Partnership / Sponsor</div>
-          <div class="line">Municipality / Course</div>
-          <div class="line">Ops / Hardware</div>
-          <div class="muted">Later: Teams/Chat can route items here too.</div>
-        </div>
-      </div>
-    </div>
-
+    <nav class="tabs">
+      <a class="tab" href="pages/hub.html">Hub</a>
+      <a class="tab" href="pages/work.html">Work</a>
+      <a class="tab" href="pages/projects.html">Projects</a>
+      <a class="tab" href="pages/agents.html">Agents</a>
+      <a class="tab" href="pages/agentfactory.html">AgentFactory</a>
+      <a class="tab" href="pages/pipelines.html">Pipelines</a>
+      <a class="tab" href="pages/novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="pages/stream.html">Stream</a>
+      <a class="tab" href="pages/notes.html">Notes</a>
+      <a class="tab" href="pages/system.html">System</a>
+    </nav>
   </div>
+</header>
+
+<main class="wrap">
+  <h1 class="h1">Home</h1>
+  <p class="muted">Self-reflection, thinking, ideation. Not execution.</p>
+
+  <section class="grid">
+    <!-- CHAT -->
+    <article class="card span7">
+      <h2>Chat</h2>
+
+      <div class="chat-layout">
+        <!-- Sidebar -->
+        <aside class="chat-sidebar">
+          <div class="chat-sidebar-header mono">Chats</div>
+          <div class="chat-list" id="chatList"></div>
+          <button class="btn" id="newChatBtn" style="margin:10px;">+ New chat</button>
+        </aside>
+
+        <!-- Main chat -->
+        <div class="chat-main">
+          <div class="chat-messages" id="chatMessages"></div>
+
+          <div class="chat-input">
+            <select class="field" id="modelSelect">
+              <option>Local LLM</option>
+              <option>Reasoning model</option>
+              <option>Fast draft</option>
+            </select>
+
+            <textarea
+              class="field chat-textarea"
+              id="chatInput"
+              placeholder="Write here… (Enter = send, Shift+Enter = new line)"
+            ></textarea>
+
+            <button class="btn" id="sendChat">Send</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- RIGHT COLUMN -->
+    <article class="card span5">
+      <h2>Status</h2>
+      <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
+      <p class="muted">Execution lives elsewhere.</p>
+    </article>
+  </section>
+</main>
+
+<script src="assets/js/app.js" defer></script>
 </body>
 </html>
