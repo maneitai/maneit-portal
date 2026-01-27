@@ -35,12 +35,13 @@
 
 <main class="wrap">
   <h1 class="h1">Home</h1>
-  <p class="muted">Self-reflection, thinking, ideation. Not execution.</p>
+  <p class="muted">Your replacement for ChatGPT + Calendar + Day Planner + Teams/Discord.</p>
 
   <section class="grid">
     <!-- CHAT -->
     <article class="card span7">
       <h2>Chat</h2>
+      <p class="muted">Self-reflection, thinking out loud, idea exploration.</p>
 
       <div class="chat-layout">
         <!-- Sidebar -->
@@ -73,15 +74,86 @@
       </div>
     </article>
 
-    <!-- RIGHT COLUMN -->
+    <!-- TODAY -->
     <article class="card span5">
-      <h2>Status</h2>
-      <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
-      <p class="muted">Execution lives elsewhere.</p>
+      <h2>Today</h2>
+      <p class="muted">Top 3</p>
+
+      <div class="box">
+        <ol class="mono" style="margin:0; padding-left:18px; line-height:1.7;">
+          <li>Keep portal consistent</li>
+          <li>Build OS pages</li>
+          <li>Integrations later</li>
+        </ol>
+      </div>
+    </article>
+
+    <!-- CALENDAR -->
+    <article class="card span6">
+      <h2>Calendar</h2>
+      <p class="muted">Placeholder daily view.</p>
+
+      <div class="box mono">
+        <div>09:00 Focus block</div>
+        <div>12:00 Admin</div>
+        <div>15:00 Build</div>
+      </div>
+    </article>
+
+    <!-- CHAT HUB (replaces Email Inbox) -->
+    <article class="card span6">
+      <h2>Chat Hub</h2>
+      <p class="muted">Teams + Discord DMs. UI shell now. Real sync later.</p>
+
+      <div class="box">
+        <div class="mono" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+          <span class="pill" style="opacity:.95;">Teams: <strong id="teamsCount">3</strong> mentions</span>
+          <span class="pill" style="opacity:.95;">Discord: <strong id="discordCount">1</strong> DM</span>
+          <span class="pill" style="opacity:.8;">Slack: <strong>0</strong></span>
+        </div>
+
+        <div class="mono" style="margin-bottom:8px; opacity:.85;">Latest</div>
+
+        <div class="mono" id="chatHubList" style="display:flex; flex-direction:column; gap:8px;">
+          <div class="rowItem">
+            <strong>[Teams]</strong> @you — “Can you check the draft?”
+          </div>
+          <div class="rowItem">
+            <strong>[Teams]</strong> #ops — “Status on the portal build?”
+          </div>
+          <div class="rowItem">
+            <strong>[Discord]</strong> DM — “Yo, you around?”
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <button class="btn" id="openChatHubBtn">Open Chat Hub</button>
+          <button class="btn" id="routeToInboxBtn">Send selected → Inbox</button>
+          <button class="btn" id="muteChatHubBtn">Mute</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Later: Teams via Microsoft Graph OAuth. Discord via bot/OAuth + backend relay.
+        </p>
+      </div>
     </article>
   </section>
 </main>
 
 <script src="assets/js/app.js" defer></script>
+
+<!-- tiny UI-only handlers (no backend) -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const openBtn = document.getElementById("openChatHubBtn");
+    const routeBtn = document.getElementById("routeToInboxBtn");
+    const muteBtn = document.getElementById("muteChatHubBtn");
+
+    if (openBtn) openBtn.addEventListener("click", () => alert("Chat Hub (UI-only) — backend later."));
+    if (routeBtn) routeBtn.addEventListener("click", () => alert("Routing to Inbox (UI-only) — persistence later."));
+    if (muteBtn) muteBtn.addEventListener("click", () => alert("Muted (UI-only)."));
+  });
+</script>
+
 </body>
 </html>
