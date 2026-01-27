@@ -6,19 +6,19 @@
   <meta name="color-scheme" content="dark" />
   <title>Maneit Portal</title>
 
-  <link rel="stylesheet" href="assets/css/style.css?v=2" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="wrap row">
-    <a class="brand" href="./index.html" aria-label="Home">
-      <span class="dot" aria-hidden="true"></span>
+    <a class="brand" href="./index.html">
+      <span class="dot"></span>
       <strong>Maneit Portal</strong>
       <span class="pill">Home</span>
     </a>
 
-    <nav class="tabs" aria-label="Primary">
+    <nav class="tabs">
       <a class="tab" href="pages/hub.html">Hub</a>
       <a class="tab" href="pages/work.html">Work</a>
       <a class="tab" href="pages/projects.html">Projects</a>
@@ -38,148 +38,80 @@
   <p class="muted">Your replacement for ChatGPT + Calendar + Day Planner + Email.</p>
 
   <section class="grid">
-    <!-- Chat / Command -->
+    <!-- CHAT -->
     <article class="card span7">
-      <h2>Chat / Command</h2>
-      <p class="muted" style="margin-bottom:10px;">
-        Type your intent. Later this routes to your local models / pipeline.
-      </p>
-      <textarea class="field" id="homeChat" placeholder="Example: 'Plan my day. Pull tasks. Draft 2 emails. Create a script.'"></textarea>
+      <h2>Chat</h2>
+      <p class="muted">Self-reflection, thinking out loud, idea exploration.</p>
 
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="pages/agentfactory.html">Open AgentFactory →</a>
-        <a class="btn" href="pages/pipelines.html">Open Pipelines →</a>
-        <a class="btn" href="pages/notes.html">Dump to Notes →</a>
+      <div class="chat-layout">
+        <!-- Sidebar -->
+        <aside class="chat-sidebar">
+          <div class="chat-sidebar-header mono">Chats</div>
+          <div class="chat-list">
+            <div class="chat-item active">New chat</div>
+          </div>
+        </aside>
+
+        <!-- Main chat -->
+        <div class="chat-main">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg assistant">
+              <div class="bubble">
+                What’s on your mind?
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input">
+            <select class="field">
+              <option>Local LLM (default)</option>
+              <option>Reasoning model</option>
+              <option>Fast / draft model</option>
+            </select>
+
+            <textarea
+              class="field chat-textarea"
+              id="chatInput"
+              placeholder="Write here… (Enter = send, Shift+Enter = new line)"
+            ></textarea>
+
+            <button class="btn" id="sendChat">Send</button>
+          </div>
+        </div>
       </div>
-
-      <p class="mono" style="margin-top:12px;">
-        Shortcuts: H Home · U Hub · W Work · P Projects · A Agents · N Notes · S System · C Crafter · F Factory · L Pipelines · T Stream
-      </p>
     </article>
 
-    <!-- Today -->
+    <!-- TODAY -->
     <article class="card span5">
       <h2>Today</h2>
       <div class="card" style="padding:12px;">
-        <p class="muted" style="margin:0 0 8px;">Top 3</p>
-        <div class="card" style="padding:12px; margin-bottom:10px;">
-          <p class="muted" style="margin:0;">1) Keep portal consistent (nav + styling)</p>
-        </div>
-        <div class="card" style="padding:12px; margin-bottom:10px;">
-          <p class="muted" style="margin:0;">2) Build your OS pages (Crafter / Factory / Pipelines)</p>
-        </div>
-        <div class="card" style="padding:12px;">
-          <p class="muted" style="margin:0;">3) Hook in real integrations later (mail/calendar/OBS)</p>
-        </div>
+        <p class="muted">Top 3</p>
+        <p class="muted">1) Keep portal consistent</p>
+        <p class="muted">2) Build OS pages</p>
+        <p class="muted">3) Integrations later</p>
       </div>
     </article>
 
-    <!-- Calendar -->
+    <!-- CALENDAR -->
     <article class="card span6">
       <h2>Calendar</h2>
-      <p class="muted" style="margin-bottom:10px;">
-        Placeholder daily view. Later: Google Calendar / CalDAV / backend.
-      </p>
-
-      <div class="card" style="padding:12px; margin-bottom:10px;">
-        <p class="muted" style="margin:0;"><strong>09:00</strong> Focus block · Portal polish</p>
-      </div>
-      <div class="card" style="padding:12px; margin-bottom:10px;">
-        <p class="muted" style="margin:0;"><strong>12:00</strong> Admin window · Email / planning</p>
-      </div>
-      <div class="card" style="padding:12px;">
-        <p class="muted" style="margin:0;"><strong>15:00</strong> Build · Agents + scripts</p>
-      </div>
-
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="pages/work.html">Plan in Work →</a>
-        <a class="btn" href="pages/system.html">System notes →</a>
-      </div>
+      <p class="muted">Placeholder daily view.</p>
+      <p class="muted">09:00 Focus block</p>
+      <p class="muted">12:00 Admin</p>
+      <p class="muted">15:00 Build</p>
     </article>
 
-    <!-- Inbox -->
+    <!-- INBOX -->
     <article class="card span6">
       <h2>Email Inbox</h2>
-      <p class="muted" style="margin-bottom:10px;">
-        UI shell now. Later: Gmail/Outlook integration via backend/OAuth.
-      </p>
-
-      <div class="card" style="padding:12px; margin-bottom:10px;">
-        <p class="muted" style="margin:0;"><strong>Partnership / Sponsor</strong> · flagged</p>
-      </div>
-      <div class="card" style="padding:12px; margin-bottom:10px;">
-        <p class="muted" style="margin:0;"><strong>Municipality / Course</strong> · needs reply</p>
-      </div>
-      <div class="card" style="padding:12px;">
-        <p class="muted" style="margin:0;"><strong>Ops / Hardware</strong> · waiting</p>
-      </div>
-
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="#compose">Compose ↓</a>
-      </div>
-    </article>
-
-    <!-- Compose -->
-    <article class="card span12" id="compose">
-      <h2>Compose</h2>
-
-      <div class="grid" style="padding:0; margin-top:6px;">
-        <div class="span4">
-          <label class="mono" for="to" style="display:block;margin:0 0 6px;">To</label>
-          <input class="field" id="to" placeholder="name@domain.com" />
-        </div>
-
-        <div class="span8">
-          <label class="mono" for="subject" style="display:block;margin:0 0 6px;">Subject</label>
-          <input class="field" id="subject" placeholder="Subject..." />
-        </div>
-
-        <div class="span12">
-          <label class="mono" for="body" style="display:block;margin:10px 0 6px;">Message</label>
-          <textarea class="field" id="body" placeholder="Write the email here..."></textarea>
-        </div>
-      </div>
-
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="#" id="mailtoBtn">Send via mail client →</a>
-        <a class="btn" href="pages/notes.html">Save draft to Notes →</a>
-      </div>
-
-      <p class="mono" style="margin-top:10px;">
-        Current send method uses mailto:. Later: real send via backend.
-      </p>
+      <p class="muted">UI shell only.</p>
+      <p class="muted">Partnership / Sponsor</p>
+      <p class="muted">Municipality / Course</p>
+      <p class="muted">Ops / Hardware</p>
     </article>
   </section>
-
-  <footer style="padding: 10px 0 30px; border-top:1px solid rgba(255,255,255,.08);">
-    <p class="mono" style="margin:12px 0 0;">
-      Maneit Portal · local-first mindset · GitHub-first edits
-    </p>
-  </footer>
 </main>
 
-<script src="assets/js/app.js?v=2" defer></script>
-
-<script>
-  // Static-friendly send: uses user's default mail app.
-  (() => {
-    const btn = document.getElementById("mailtoBtn");
-    if (!btn) return;
-
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const to = (document.getElementById("to")?.value || "").trim();
-      const subject = (document.getElementById("subject")?.value || "").trim();
-      const body = (document.getElementById("body")?.value || "").trim();
-
-      const mailto = new URL("mailto:" + encodeURIComponent(to || ""));
-      if (subject) mailto.searchParams.set("subject", subject);
-      if (body) mailto.searchParams.set("body", body);
-
-      window.location.href = mailto.toString();
-    });
-  })();
-</script>
-
+<script src="assets/js/app.js" defer></script>
 </body>
 </html>
