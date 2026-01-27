@@ -1,70 +1,205 @@
 /* =========================================================
-   Maneit Portal – Core Styles
-   Calm dark • glassy • low noise • ADHD-friendly
+   Maneit Portal – Global Styles
+   Calm dark • glassy • low noise • consistent across pages
    ========================================================= */
 
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
+:root { color-scheme: dark; }
+
 html { scroll-behavior: smooth; }
 
 body {
-  background: radial-gradient(1200px 600px at 10% -10%, rgba(74, 222, 128, 0.06), transparent 40%),
-              radial-gradient(900px 500px at 90% 10%, rgba(56, 189, 248, 0.05), transparent 45%),
-              #0b0f14;
-  color: #e6edf3;
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   line-height: 1.5;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(74, 222, 128, 0.06), transparent 40%),
+    radial-gradient(900px 500px at 90% 10%, rgba(56, 189, 248, 0.05), transparent 45%),
+    #0b0f14;
+  color: #e6edf3;
 }
 
-h1, h2, h3 { font-weight: 600; }
+a { color: inherit; text-decoration: none; }
 
-.muted { color: rgba(230, 237, 243, 0.7); }
-.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; letter-spacing: 0.2px; }
+/* ---------- Layout primitives (THIS fixes your nav inconsistency) ---------- */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.h1 {
+  font-size: 22px;
+  margin: 0 0 8px;
+  letter-spacing: .2px;
+}
+
+.muted { color: rgba(230, 237, 243, 0.72); margin: 0; }
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  color: rgba(230,237,243,.72);
+  letter-spacing: .2px;
+}
 
 /* ---------- Topbar ---------- */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   backdrop-filter: blur(14px) saturate(120%);
   background: linear-gradient(to bottom, rgba(11, 15, 20, 0.85), rgba(11, 15, 20, 0.65));
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ---------- Navigation Tabs ---------- */
-.tabs { align-items: center; }
-.tab {
-  font-size: 13px;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
-}
-.tab:hover { transform: translateY(-1px); }
-.tab:active { transform: translateY(0); }
-
-/* ---------- Cards ---------- */
-.card {
-  backdrop-filter: blur(10px) saturate(120%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 20px rgba(0, 0, 0, 0.25);
-  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
-}
-.card:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.045);
+/* Brand */
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-/* ---------- Buttons ---------- */
-.btn {
-  font-size: 13px;
-  font-weight: 500;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease, box-shadow 0.1s ease;
+.brand strong {
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
-.btn:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); }
-.btn:active { transform: translateY(1px); }
 
-/* ---------- Pills ---------- */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #4ade80;
+  box-shadow: 0 0 0 4px rgba(74,222,128,.12);
+}
+
 .pill {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(74,222,128,.10);
+  border: 1px solid rgba(74,222,128,.18);
+  color: rgba(230,237,243,.90);
   backdrop-filter: blur(6px);
   font-weight: 500;
 }
 
-/* ---------- Focus ---------- */
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tab {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  font-size: 13px;
+  transition: background .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+.tab:hover {
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.05);
+  transform: translateY(-1px);
+}
+
+.tab:active { transform: translateY(0); }
+
+/* ---------- Cards / Grid ---------- */
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(12, 1fr);
+  padding: 14px 0 28px;
+}
+
+.card {
+  grid-column: span 12;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  border-radius: 16px;
+  padding: 14px;
+  backdrop-filter: blur(10px) saturate(120%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: border-color .15s ease, background .15s ease, transform .1s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255,255,255,.045);
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 12px;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  color: rgba(230,237,243,.72);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background .15s ease, border-color .15s ease, transform .05s ease, box-shadow .1s ease;
+}
+
+.btn:hover {
+  border-color: rgba(255,255,255,.24);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+}
+
+.btn:active { transform: translateY(1px); }
+
+/* Inputs */
+.field {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: #e6edf3;
+  padding: 12px;
+  outline: none;
+}
+
+.field:focus { border-color: rgba(74,222,128,.35); }
+
+textarea.field {
+  resize: vertical;
+  font-family: ui-monospace, monospace;
+}
+
+/* Focus accessibility */
 a:focus-visible,
 button:focus-visible,
 textarea:focus-visible,
@@ -74,21 +209,19 @@ input:focus-visible {
   border-radius: 12px;
 }
 
-/* ---------- Scrollbar ---------- */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #0b0f14; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
 
 hr {
   border: none;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.18), transparent);
+  background: linear-gradient(to right, transparent, rgba(255,255,255,.18), transparent);
 }
 
-/* =========================================================
-   Extra UI components (copy buttons, code panels)
-   ========================================================= */
+/* Code panels + copy buttons (used in System) */
 .codepanel {
   position: relative;
   padding: 12px;
@@ -97,10 +230,7 @@ hr {
   background: rgba(0,0,0,.35);
 }
 
-.codepanel pre {
-  margin: 0;
-  overflow-x: auto;
-}
+.codepanel pre { margin: 0; overflow-x: auto; }
 
 .copybtn {
   position: absolute;
@@ -120,14 +250,11 @@ hr {
   background: rgba(255,255,255,.08);
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(56,189,248,.18);
-  background: rgba(56,189,248,.10);
-  color: rgba(230,237,243,.85);
-  font-size: 12px;
+/* Responsive spans (optional but handy) */
+@media (min-width: 860px) {
+  .span4 { grid-column: span 4; }
+  .span5 { grid-column: span 5; }
+  .span6 { grid-column: span 6; }
+  .span7 { grid-column: span 7; }
+  .span8 { grid-column: span 8; }
 }
