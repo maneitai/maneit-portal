@@ -10,13 +10,9 @@
 
   <style>
     body { margin:0; }
-    pre {
-      background: rgba(0,0,0,.35);
-      border-radius: 16px;
-      padding: 14px;
-      overflow-x: auto;
-      border: 1px solid rgba(255,255,255,.12);
-    }
+    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
+    .span6,.span12{grid-column:span 12;}
+    @media(min-width:860px){ .span6{grid-column:span 6;} }
   </style>
 </head>
 
@@ -30,9 +26,13 @@
     </a>
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
+      <a class="tab" href="agentfactory.html">AgentFactory</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
       <a class="tab" href="notes.html">Notes</a>
     </nav>
   </div>
@@ -40,18 +40,70 @@
 
 <main class="wrap">
   <h1 class="h1">System</h1>
-  <p class="muted">Nodes, scripts, and operational notes.</p>
+  <p class="muted">Bootstraps, scripts, ops notes. Copy-ready blocks.</p>
 
-  <section class="grid">
+  <section class="grid2">
     <article class="card span12">
       <h2>Principles</h2>
-      <pre class="mono">
-- Local-first
+      <div class="codepanel">
+        <button class="copybtn" data-copy-target="#principles">Copy</button>
+        <pre class="mono" id="principles">- Local-first
 - Automation over manual steps
 - Deterministic scripts
 - Clear agent boundaries
-- No unnecessary abstractions
-      </pre>
+- One-file-at-a-time when shipping
+- No unnecessary abstractions</pre>
+      </div>
+    </article>
+
+    <article class="card span6">
+      <h2>GitHub Pages sanity check</h2>
+      <div class="codepanel">
+        <button class="copybtn" data-copy-target="#ghpages">Copy</button>
+        <pre class="mono" id="ghpages">Repo → Settings → Pages
+Branch: main
+Folder: / (root)
+Then open:
+https://&lt;user&gt;.github.io/&lt;repo&gt;/</pre>
+      </div>
+    </article>
+
+    <article class="card span6">
+      <h2>PowerShell launch convention (showcase)</h2>
+      <div class="codepanel">
+        <button class="copybtn" data-copy-target="#pslaunch">Copy</button>
+        <pre class="mono" id="pslaunch"># Convention: always set location first
+Set-Location -LiteralPath "D:\maneit-portal"
+# Then run deterministic scripts from /scripts</pre>
+      </div>
+    </article>
+
+    <article class="card span12">
+      <h2>Script Library (placeholders)</h2>
+      <p class="muted">These become real as you plug in your lab nodes.</p>
+      <div class="grid2">
+        <div class="span6">
+          <div class="codepanel">
+            <button class="copybtn" data-copy-target="#script1">Copy</button>
+            <pre class="mono" id="script1"># NetworkSaint – quick diagnostics (placeholder)
+# ping, bufferbloat, interface stats, route table</pre>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="codepanel">
+            <button class="copybtn" data-copy-target="#script2">Copy</button>
+            <pre class="mono" id="script2"># SystemDwarf – baseline tune (placeholder)
+# power plan, startup hygiene, timer sanity</pre>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card span12">
+      <h2>Shortcuts</h2>
+      <p class="mono" style="margin:0;">
+        H Home · U Hub · W Work · P Projects · A Agents · N Notes · S System · C Crafter · F Factory · L Pipelines · T Stream
+      </p>
     </article>
   </section>
 </main>
