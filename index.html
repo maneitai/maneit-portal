@@ -79,12 +79,17 @@
       <h2>Today</h2>
       <p class="muted">Top 3</p>
 
-      <div class="box">
-        <ol class="mono" style="margin:0; padding-left:18px; line-height:1.7;">
+      <div class="box mono">
+        <ol style="margin:0; padding-left:18px; line-height:1.7;">
           <li>Keep portal consistent</li>
           <li>Build OS pages</li>
           <li>Integrations later</li>
         </ol>
+      </div>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div class="muted">Focus</div>
+        <div style="margin-top:6px;">Home UI → Notes/Inbox shells</div>
       </div>
     </article>
 
@@ -105,30 +110,20 @@
       <h2>Chat Hub</h2>
       <p class="muted">Teams + Discord DMs. UI shell now. Real sync later.</p>
 
-      <div class="box">
-        <div class="mono" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
-          <span class="pill" style="opacity:.95;">Teams: <strong id="teamsCount">3</strong> mentions</span>
-          <span class="pill" style="opacity:.95;">Discord: <strong id="discordCount">1</strong> DM</span>
-          <span class="pill" style="opacity:.8;">Slack: <strong>0</strong></span>
+      <div class="box mono">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">Teams: <strong id="teamsCount">0</strong></span>
+          <span class="pill">Discord: <strong id="discordCount">0</strong></span>
         </div>
 
-        <div class="mono" style="margin-bottom:8px; opacity:.85;">Latest</div>
-
-        <div class="mono" id="chatHubList" style="display:flex; flex-direction:column; gap:8px;">
-          <div class="rowItem">
-            <strong>[Teams]</strong> @you — “Can you check the draft?”
-          </div>
-          <div class="rowItem">
-            <strong>[Teams]</strong> #ops — “Status on the portal build?”
-          </div>
-          <div class="rowItem">
-            <strong>[Discord]</strong> DM — “Yo, you around?”
-          </div>
+        <div style="margin-top:12px;" class="muted">Latest</div>
+        <div id="chatHubList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;">
+          <!-- UI-only items, populated by JS below (or later backend) -->
         </div>
 
-        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-          <button class="btn" id="openChatHubBtn">Open Chat Hub</button>
-          <button class="btn" id="routeToInboxBtn">Send selected → Inbox</button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <button class="btn" id="openChatHubBtn">Open</button>
+          <button class="btn" id="routeToInboxBtn">Send → Inbox</button>
           <button class="btn" id="muteChatHubBtn">Mute</button>
         </div>
 
@@ -137,21 +132,57 @@
         </p>
       </div>
     </article>
+
+    <!-- STATUS -->
+    <article class="card span12">
+      <h2>Status</h2>
+      <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
+      <p class="muted">Execution lives elsewhere.</p>
+    </article>
+
   </section>
 </main>
 
 <script src="assets/js/app.js" defer></script>
 
-<!-- tiny UI-only handlers (no backend) -->
+<!-- UI-only stub for Chat Hub (no backend). Safe to remove later. -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const list = document.getElementById("chatHubList");
+    const teamsCount = document.getElementById("teamsCount");
+    const discordCount = document.getElementById("discordCount");
+
+    // UI-only mock items (replace with real later)
+    const items = [
+      { src: "Teams", txt: "@you — Can you check the draft?" },
+      { src: "Teams", txt: "#ops — Status on portal build?" },
+      { src: "Discord", txt: "DM — You around?" },
+    ];
+
+    let t = 0, d = 0;
+    list.innerHTML = "";
+    items.forEach(it => {
+      if (it.src === "Teams") t++;
+      if (it.src === "Discord") d++;
+
+      const row = document.createElement("div");
+      row.className = "box";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.innerHTML = `<strong>[${it.src}]</strong> ${it.txt}`;
+      list.appendChild(row);
+    });
+
+    teamsCount.textContent = String(t);
+    discordCount.textContent = String(d);
+
     const openBtn = document.getElementById("openChatHubBtn");
     const routeBtn = document.getElementById("routeToInboxBtn");
     const muteBtn = document.getElementById("muteChatHubBtn");
 
-    if (openBtn) openBtn.addEventListener("click", () => alert("Chat Hub (UI-only) — backend later."));
-    if (routeBtn) routeBtn.addEventListener("click", () => alert("Routing to Inbox (UI-only) — persistence later."));
-    if (muteBtn) muteBtn.addEventListener("click", () => alert("Muted (UI-only)."));
+    openBtn?.addEventListener("click", () => alert("Chat Hub (UI-only) — backend later."));
+    routeBtn?.addEventListener("click", () => alert("Route to Inbox (UI-only) — persistence later."));
+    muteBtn?.addEventListener("click", () => alert("Muted (UI-only)."));
   });
 </script>
 
