@@ -4,20 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>Hub · Maneit Portal</title>
+  <title>Maneit Portal — Hub</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="wrap row">
     <a class="brand" href="../index.html">
-      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Hub</span>
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">Hub</span>
     </a>
 
     <nav class="tabs">
-      <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
@@ -34,47 +35,201 @@
 
 <main class="wrap">
   <h1 class="h1">Hub</h1>
-  <p class="muted">Everything in one place. This is the OS map.</p>
+  <p class="muted">All signal in one place. UI shell now. Integrations later.</p>
 
   <section class="grid">
-    <article class="card span4">
-      <h2>Core Control</h2>
-      <p class="muted">Home, Workboard, System.</p>
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="../index.html">Home →</a>
-        <a class="btn" href="work.html">Work →</a>
-        <a class="btn" href="system.html">System →</a>
-      </div>
-    </article>
 
-    <article class="card span4">
-      <h2>Build Engine</h2>
-      <p class="muted">Agents, AgentFactory, Pipelines.</p>
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="agents.html">Agents →</a>
-        <a class="btn" href="agentfactory.html">Factory →</a>
-        <a class="btn" href="pipelines.html">Pipelines →</a>
-      </div>
-    </article>
-
-    <article class="card span4">
-      <h2>Creative + Live</h2>
-      <p class="muted">NovelCrafter + Stream control.</p>
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="novelcrafter.html">NovelCrafter →</a>
-        <a class="btn" href="stream.html">Stream →</a>
-      </div>
-    </article>
-
+    <!-- COMMAND BAR / QUICK ACTIONS -->
     <article class="card span12">
-      <h2>Shortcuts</h2>
-      <p class="mono" style="margin:0;">
-        H Home · U Hub · W Work · P Projects · A Agents · N Notes · S System · C Crafter · F Factory · L Pipelines · T Stream
-      </p>
+      <h2>Command</h2>
+      <p class="muted">Fast jumps + capture. No deep logic here.</p>
+
+      <div class="box" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <a class="btn" href="../index.html">Home (Thinking)</a>
+        <a class="btn" href="work.html">Work</a>
+        <a class="btn" href="notes.html">Notes</a>
+        <a class="btn" href="projects.html">Projects</a>
+        <a class="btn" href="pipelines.html">Pipelines</a>
+        <a class="btn" href="system.html">System</a>
+      </div>
+
+      <div class="box" style="margin-top:12px;">
+        <div class="mono muted">Quick capture</div>
+        <div style="display:grid; grid-template-columns: 1fr auto; gap:10px; margin-top:8px;">
+          <input class="field" id="hubCapture" placeholder="Capture anything… (idea / task / message)" />
+          <button class="btn" id="hubCaptureBtn">Capture</button>
+        </div>
+        <div class="mono" id="hubCaptureList" style="margin-top:10px; display:flex; flex-direction:column; gap:8px;"></div>
+      </div>
     </article>
+
+    <!-- TODAY / TOP 3 -->
+    <article class="card span4">
+      <h2>Today</h2>
+      <p class="muted">Top 3 (focus only)</p>
+
+      <div class="box mono">
+        <ol style="margin:0; padding-left:18px; line-height:1.7;">
+          <li>Keep portal consistent</li>
+          <li>Build OS pages</li>
+          <li>Integrations later</li>
+        </ol>
+      </div>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div class="muted">Current mode</div>
+        <div style="margin-top:6px;">Design + UI shells</div>
+      </div>
+    </article>
+
+    <!-- CALENDAR PREVIEW -->
+    <article class="card span4">
+      <h2>Calendar</h2>
+      <p class="muted">Daily slice</p>
+
+      <div class="box mono">
+        <div>09:00 Focus block</div>
+        <div>12:00 Admin</div>
+        <div>15:00 Build</div>
+      </div>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div class="muted">Next up</div>
+        <div style="margin-top:6px;">Notes + Inbox shells</div>
+      </div>
+    </article>
+
+    <!-- SIGNAL: TEAMS / DISCORD -->
+    <article class="card span4">
+      <h2>Signal</h2>
+      <p class="muted">Teams + Discord. UI shell now.</p>
+
+      <div class="box mono">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">Teams: <strong id="hubTeamsCount">0</strong></span>
+          <span class="pill">Discord: <strong id="hubDiscordCount">0</strong></span>
+        </div>
+
+        <div class="muted" style="margin-top:12px;">Latest</div>
+        <div id="hubSignalList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <button class="btn" id="hubOpenSignal">Open</button>
+          <button class="btn" id="hubRouteSignal">Send → Inbox</button>
+          <button class="btn" id="hubMuteSignal">Mute</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- INBOX (TRIAGE PLACEHOLDER) -->
+    <article class="card span6">
+      <h2>Inbox</h2>
+      <p class="muted">Unified triage (email later). This is where routed items land.</p>
+
+      <div class="box mono">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">Untriaged: <strong id="hubInboxCount">3</strong></span>
+          <span class="pill">Waiting: <strong>1</strong></span>
+          <span class="pill">Done: <strong>0</strong></span>
+        </div>
+
+        <div class="muted" style="margin-top:12px;">Buckets</div>
+        <div style="margin-top:8px; display:flex; flex-direction:column; gap:6px;">
+          <div>Partnership / Sponsor</div>
+          <div>Municipality / Course</div>
+          <div>Ops / Hardware</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SYSTEM SNAPSHOT -->
+    <article class="card span6">
+      <h2>System</h2>
+      <p class="muted">Ops snapshot. Models later.</p>
+
+      <div class="box mono">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">Portal: <strong>UI-only</strong></span>
+          <span class="pill">Persistence: <strong>Later</strong></span>
+          <span class="pill">Linux models: <strong>Not connected</strong></span>
+        </div>
+
+        <div class="muted" style="margin-top:12px;">Planned</div>
+        <div style="margin-top:8px; display:flex; flex-direction:column; gap:6px;">
+          <div>• Start/stop models via systemd</div>
+          <div>• Logs + status feed</div>
+          <div>• Work tab: web terminal</div>
+        </div>
+      </div>
+    </article>
+
   </section>
 </main>
 
-<script src="../assets/js/app.js?v=2" defer></script>
+<script>
+  // UI-only hub behavior (no backend, no persistence)
+  (() => {
+    const $ = (id) => document.getElementById(id);
+
+    // Signal mock
+    const signalItems = [
+      { src: "Teams", txt: "@you — Can you check the draft?" },
+      { src: "Teams", txt: "#ops — Status on portal build?" },
+      { src: "Discord", txt: "DM — You around?" }
+    ];
+
+    let t = 0, d = 0;
+    const list = $("hubSignalList");
+    list.innerHTML = "";
+    for (const it of signalItems) {
+      if (it.src === "Teams") t++;
+      if (it.src === "Discord") d++;
+
+      const row = document.createElement("div");
+      row.className = "box";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.textContent = `[${it.src}] ${it.txt}`;
+      list.appendChild(row);
+    }
+    $("hubTeamsCount").textContent = String(t);
+    $("hubDiscordCount").textContent = String(d);
+
+    $("hubOpenSignal").addEventListener("click", () => alert("Signal hub (UI-only) — backend later."));
+    $("hubRouteSignal").addEventListener("click", () => alert("Route to Inbox (UI-only) — persistence later."));
+    $("hubMuteSignal").addEventListener("click", () => alert("Muted (UI-only)."));
+
+    // Capture mock
+    const cap = $("hubCapture");
+    const capBtn = $("hubCaptureBtn");
+    const capList = $("hubCaptureList");
+
+    function addCapture(text) {
+      const row = document.createElement("div");
+      row.className = "box mono";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.textContent = text;
+      capList.prepend(row);
+      const n = Number($("hubInboxCount").textContent || "0") + 1;
+      $("hubInboxCount").textContent = String(n);
+    }
+
+    capBtn.addEventListener("click", () => {
+      const v = (cap.value || "").trim();
+      if (!v) return;
+      cap.value = "";
+      addCapture(v);
+    });
+
+    cap.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        capBtn.click();
+      }
+    });
+  })();
+</script>
+
 </body>
 </html>
