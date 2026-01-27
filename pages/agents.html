@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Agents · Maneit Portal</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+
+  <style>
+    body { margin:0; }
+    .agent {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+  </style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="../index.html">
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">Agents</span>
+    </a>
+    <nav class="tabs">
+      <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="work.html">Work</a>
+      <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="notes.html">Notes</a>
+      <a class="tab" href="system.html">System</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 class="h1">Agents</h1>
+  <p class="muted">Specialized minds. Clear roles. Zero overlap.</p>
+
+  <section class="grid">
+    <article class="card span6">
+      <h2>Core</h2>
+      <div class="agent">
+        <strong>Router</strong>
+        <p class="muted">Intent parsing & task routing.</p>
+      </div>
+      <div class="agent">
+        <strong>Builder</strong>
+        <p class="muted">Structures portals, layouts, flows.</p>
+      </div>
+    </article>
+
+    <article class="card span6">
+      <h2>Execution</h2>
+      <div class="agent">
+        <strong>Coder</strong>
+        <p class="muted">Writes deterministic code & scripts.</p>
+      </div>
+      <div class="agent">
+        <strong>Verifier</strong>
+        <p class="muted">Checks logic, safety, and regressions.</p>
+      </div>
+    </article>
+  </section>
+</main>
+
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>
