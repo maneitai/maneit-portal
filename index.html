@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit Portal</title>
+
+  <!-- We’ll add this file next -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Nice defaults even before CSS exists -->
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#0b0f14; color:#e6edf3; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 18px; }
+    .topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: rgba(11,15,20,.72); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .row { display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .brand { display:flex; gap:10px; align-items:center; text-decoration:none; }
+    .dot { width:10px; height:10px; border-radius:999px; background:#4ade80; box-shadow:0 0 0 4px rgba(74,222,128,.12); }
+    .tabs { display:flex; gap:10px; flex-wrap:wrap; }
+    .tab { padding:10px 12px; border-radius:12px; text-decoration:none; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03); }
+    .tab:hover { border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.05); }
+    .hero { padding: 22px 0 8px; }
+    .h1 { font-size: 22px; margin: 0 0 8px; letter-spacing:.2px; }
+    .muted { color: rgba(230,237,243,.72); margin: 0; }
+    .grid { display:grid; gap:12px; grid-template-columns: repeat(12, 1fr); padding: 14px 0 24px; }
+    .card { grid-column: span 12; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03); border-radius: 16px; padding: 14px; }
+    .card h2 { margin:0 0 8px; font-size: 14px; letter-spacing:.3px; text-transform: uppercase; color: rgba(230,237,243,.72); }
+    .card .big { font-size: 18px; margin: 0 0 10px; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:10px; padding: 11px 12px; border-radius: 14px; text-decoration:none; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); }
+    .btn:hover { border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.06); }
+    .pill { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(74,222,128,.10); border: 1px solid rgba(74,222,128,.18); color: rgba(230,237,243,.90); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 12px; color: rgba(230,237,243,.72); }
+    @media (min-width: 860px){
+      .card.span6 { grid-column: span 6; }
+      .card.span4 { grid-column: span 4; }
+      .card.span8 { grid-column: span 8; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="row">
+        <a class="brand" href="./index.html" aria-label="Home">
+          <span class="dot" aria-hidden="true"></span>
+          <strong>Maneit Portal</strong>
+          <span class="pill">Production v1</span>
+        </a>
+
+        <nav class="tabs" aria-label="Primary">
+          <a class="tab" href="pages/work.html">Work</a>
+          <a class="tab" href="pages/projects.html">Projects</a>
+          <a class="tab" href="pages/agents.html">Agents</a>
+          <a class="tab" href="pages/notes.html">Notes</a>
+          <a class="tab" href="pages/system.html">System</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1 class="h1">Founder Operating System</h1>
+      <p class="muted">
+        Fast entry points. Zero clutter. One click to momentum.
+        <span class="mono">/index.html</span>
+      </p>
+    </section>
+
+    <section class="grid" aria-label="Dashboard">
+      <article class="card span8">
+        <h2>Quick Actions</h2>
+        <p class="big">What do you want to move forward right now?</p>
+        <div class="actions">
+          <a class="btn" href="pages/work.html">Open Workboard →</a>
+          <a class="btn" href="pages/projects.html">Open Projects →</a>
+          <a class="btn" href="pages/agents.html">Spawn an Agent →</a>
+          <a class="btn" href="pages/notes.html">Capture Notes →</a>
+        </div>
+        <p class="mono" style="margin-top:12px;">
+          Next files we will create: assets/css/style.css, assets/js/app.js, pages/*.html
+        </p>
+      </article>
+
+      <article class="card span4">
+        <h2>Status</h2>
+        <p class="big" style="margin-bottom:6px;">Portal build</p>
+        <p class="muted" style="margin-top:0;">
+          You are building manually in GitHub, one file at a time.
+        </p>
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:12px 0;">
+        <p class="mono" style="margin:0;">Mode: deterministic</p>
+        <p class="mono" style="margin:0;">Theme: calm dark</p>
+        <p class="mono" style="margin:0;">Target: ADHD-friendly</p>
+      </article>
+
+      <article class="card span6">
+        <h2>Workboard</h2>
+        <p class="big">Pipeline overview + “Now / Next / Later”.</p>
+        <div class="actions">
+          <a class="btn" href="pages/work.html">Go to Work →</a>
+        </div>
+        <p class="mono" style="margin-top:12px;">
+          Placeholder page until we generate it.
+        </p>
+      </article>
+
+      <article class="card span6">
+        <h2>System</h2>
+        <p class="big">Nodes, scripts, bootstraps, and ops notes.</p>
+        <div class="actions">
+          <a class="btn" href="pages/system.html">Go to System →</a>
+        </div>
+        <p class="mono" style="margin-top:12px;">
+          We’ll add copy buttons + structured blocks.
+        </p>
+      </article>
+    </section>
+
+    <footer style="padding: 10px 0 30px; border-top:1px solid rgba(255,255,255,.08);">
+      <p class="mono" style="margin:12px 0 0;">
+        © Maneit Labs — local-first mindset, GitHub-first edits.
+      </p>
+    </footer>
+  </main>
+
+  <!-- We’ll add this file later -->
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
