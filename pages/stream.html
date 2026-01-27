@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Stream · Maneit Portal</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    body{margin:0;}
+    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
+    .span6,.span12{grid-column:span 12;}
+    .panel{padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
+    @media(min-width:860px){.span6{grid-column:span 6;}}
+  </style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="../index.html">
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">Stream</span>
+    </a>
+    <nav class="tabs">
+      <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="work.html">Work</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="system.html">System</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 class="h1">Stream Control</h1>
+  <p class="muted">Placeholder UI. Later: OBS control, scenes, mic routing, overlays, stream checklists.</p>
+
+  <section class="grid2">
+    <article class="card span6">
+      <h2>Scenes</h2>
+      <div class="panel">
+        <p class="muted" style="margin:0;">Start Soon · Main · BRB · End</p>
+      </div>
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="#">Switch Scene (later)</a>
+      </div>
+    </article>
+
+    <article class="card span6">
+      <h2>Audio</h2>
+      <div class="panel">
+        <p class="muted" style="margin:0;">Mic · Music · Game · Discord</p>
+      </div>
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="#">Mute/Unmute (later)</a>
+      </div>
+    </article>
+
+    <article class="card span12">
+      <h2>Stream Checklist</h2>
+      <div class="panel">
+        <p class="muted" style="margin:0;">Title · Category · Thumbnail · Recording · Water · Notes</p>
+      </div>
+    </article>
+  </section>
+</main>
+
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>
