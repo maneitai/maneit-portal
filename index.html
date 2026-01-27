@@ -35,38 +35,30 @@
 
 <main class="wrap">
   <h1 class="h1">Home</h1>
-  <p class="muted">Your replacement for ChatGPT + Calendar + Day Planner + Email.</p>
+  <p class="muted">Self-reflection, thinking, ideation. Not execution.</p>
 
   <section class="grid">
     <!-- CHAT -->
     <article class="card span7">
       <h2>Chat</h2>
-      <p class="muted">Self-reflection, thinking out loud, idea exploration.</p>
 
       <div class="chat-layout">
         <!-- Sidebar -->
         <aside class="chat-sidebar">
           <div class="chat-sidebar-header mono">Chats</div>
-          <div class="chat-list">
-            <div class="chat-item active">New chat</div>
-          </div>
+          <div class="chat-list" id="chatList"></div>
+          <button class="btn" id="newChatBtn" style="margin:10px;">+ New chat</button>
         </aside>
 
         <!-- Main chat -->
         <div class="chat-main">
-          <div class="chat-messages" id="chatMessages">
-            <div class="chat-msg assistant">
-              <div class="bubble">
-                What’s on your mind?
-              </div>
-            </div>
-          </div>
+          <div class="chat-messages" id="chatMessages"></div>
 
           <div class="chat-input">
-            <select class="field">
-              <option>Local LLM (default)</option>
+            <select class="field" id="modelSelect">
+              <option>Local LLM</option>
               <option>Reasoning model</option>
-              <option>Fast / draft model</option>
+              <option>Fast draft</option>
             </select>
 
             <textarea
@@ -81,33 +73,11 @@
       </div>
     </article>
 
-    <!-- TODAY -->
+    <!-- RIGHT COLUMN -->
     <article class="card span5">
-      <h2>Today</h2>
-      <div class="card" style="padding:12px;">
-        <p class="muted">Top 3</p>
-        <p class="muted">1) Keep portal consistent</p>
-        <p class="muted">2) Build OS pages</p>
-        <p class="muted">3) Integrations later</p>
-      </div>
-    </article>
-
-    <!-- CALENDAR -->
-    <article class="card span6">
-      <h2>Calendar</h2>
-      <p class="muted">Placeholder daily view.</p>
-      <p class="muted">09:00 Focus block</p>
-      <p class="muted">12:00 Admin</p>
-      <p class="muted">15:00 Build</p>
-    </article>
-
-    <!-- INBOX -->
-    <article class="card span6">
-      <h2>Email Inbox</h2>
-      <p class="muted">UI shell only.</p>
-      <p class="muted">Partnership / Sponsor</p>
-      <p class="muted">Municipality / Course</p>
-      <p class="muted">Ops / Hardware</p>
+      <h2>Status</h2>
+      <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
+      <p class="muted">Execution lives elsewhere.</p>
     </article>
   </section>
 </main>
