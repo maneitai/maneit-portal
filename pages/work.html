@@ -6,13 +6,7 @@
   <meta name="color-scheme" content="dark" />
   <title>Work · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <style>
-    body{margin:0;}
-    .lane{display:grid;gap:10px;}
-    .item{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
-    .item small{display:block;color:rgba(230,237,243,.6);font-size:11px;margin-top:4px;}
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
@@ -24,7 +18,9 @@
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
+      <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
       <a class="tab" href="agentfactory.html">AgentFactory</a>
       <a class="tab" href="pipelines.html">Pipelines</a>
       <a class="tab" href="novelcrafter.html">NovelCrafter</a>
@@ -42,30 +38,27 @@
   <section class="grid">
     <article class="card span4">
       <h2>Now</h2>
-      <div class="lane">
-        <div class="item">Portal polish pass <small>nav, notes, copy, hub</small></div>
-        <div class="item">Showcase narrative <small>why it’s different</small></div>
+      <div class="card" style="padding:12px;">
+        <p class="muted">Portal polish + consistency pass.</p>
       </div>
     </article>
 
     <article class="card span4">
       <h2>Next</h2>
-      <div class="lane">
-        <div class="item">Agent registry persistence <small>profiles + tags</small></div>
-        <div class="item">Pipeline runner hooks <small>backend later</small></div>
+      <div class="card" style="padding:12px;">
+        <p class="muted">Agent registry + pipeline hooks.</p>
       </div>
     </article>
 
     <article class="card span4">
       <h2>Later</h2>
-      <div class="lane">
-        <div class="item">Real email integration <small>backend / oauth</small></div>
-        <div class="item">Stream control live <small>OBS websocket</small></div>
+      <div class="card" style="padding:12px;">
+        <p class="muted">Real inbox + calendar integration.</p>
       </div>
     </article>
   </section>
 </main>
 
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
