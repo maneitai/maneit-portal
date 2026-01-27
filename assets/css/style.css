@@ -1,0 +1,187 @@
+/* =========================================================
+   Maneit Portal – Core Styles
+   Calm dark • glassy • low noise • ADHD-friendly
+   ========================================================= */
+
+/* ---------- CSS Reset (lightweight) ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
+      rgba(74, 222, 128, 0.06),
+      transparent 40%
+    ),
+    radial-gradient(
+      900px 500px at 90% 10%,
+      rgba(56, 189, 248, 0.05),
+      transparent 45%
+    ),
+    #0b0f14;
+  color: #e6edf3;
+  line-height: 1.5;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+.muted {
+  color: rgba(230, 237, 243, 0.7);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  letter-spacing: 0.2px;
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  backdrop-filter: blur(14px) saturate(120%);
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 15, 20, 0.85),
+    rgba(11, 15, 20, 0.65)
+  );
+}
+
+.brand strong {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Navigation Tabs ---------- */
+.tabs {
+  align-items: center;
+}
+
+.tab {
+  font-size: 13px;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    transform 0.05s ease;
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+}
+
+.tab:active {
+  transform: translateY(0);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  backdrop-filter: blur(10px) saturate(120%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.15s ease, background 0.15s ease,
+    transform 0.1s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.card h2 {
+  user-select: none;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.05s ease,
+    box-shadow 0.1s ease;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* ---------- Pills / Status ---------- */
+.pill {
+  backdrop-filter: blur(6px);
+  font-weight: 500;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+}
+
+/* ---------- Grid helpers ---------- */
+.grid {
+  margin-top: 6px;
+}
+
+/* ---------- Focus & Accessibility ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(74, 222, 128, 0.6);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
+/* ---------- Scrollbar (subtle) ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b0f14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- Utility ---------- */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+}
