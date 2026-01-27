@@ -6,110 +6,53 @@
   <meta name="color-scheme" content="dark" />
   <title>Projects · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-
-  <style>
-    body { margin:0; }
-    .project {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-    }
-    .project strong { font-size: 15px; }
-    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag {
-      font-size: 11px; padding: 3px 8px; border-radius: 999px;
-      background: rgba(56,189,248,.10);
-      border: 1px solid rgba(56,189,248,.18);
-      color: rgba(230,237,243,.85);
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="wrap row">
-      <a class="brand" href="../index.html">
-        <span class="dot"></span>
-        <strong>Maneit Portal</strong>
-        <span class="pill">Projects</span>
-      </a>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="../index.html">
+      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Projects</span>
+    </a>
+    <nav class="tabs">
+      <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="hub.html">Hub</a>
+      <a class="tab" href="work.html">Work</a>
+      <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
+      <a class="tab" href="agentfactory.html">AgentFactory</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
+      <a class="tab" href="notes.html">Notes</a>
+      <a class="tab" href="system.html">System</a>
+    </nav>
+  </div>
+</header>
 
-      <nav class="tabs">
-        <a class="tab" href="../index.html">Home</a>
-        <a class="tab" href="hub.html">Hub</a>
-        <a class="tab" href="work.html">Work</a>
-        <a class="tab" href="projects.html">Projects</a>
-        <a class="tab" href="agents.html">Agents</a>
-        <a class="tab" href="agentfactory.html">AgentFactory</a>
-        <a class="tab" href="pipelines.html">Pipelines</a>
-        <a class="tab" href="novelcrafter.html">NovelCrafter</a>
-        <a class="tab" href="stream.html">Stream</a>
-        <a class="tab" href="notes.html">Notes</a>
-        <a class="tab" href="system.html">System</a>
-      </nav>
-    </div>
-  </header>
+<main class="wrap">
+  <h1 class="h1">Projects</h1>
+  <p class="muted">Active, paused, and idea-stage initiatives.</p>
 
-  <main class="wrap">
-    <h1 class="h1">Projects</h1>
-    <p class="muted">Active, paused, and idea-stage initiatives.</p>
+  <section class="grid">
+    <article class="card span6">
+      <h2>Active</h2>
+      <p class="muted">Maneit Portal, AI Lab console, NovelCrafter.</p>
+    </article>
 
-    <section class="grid">
-      <article class="card span6">
-        <h2>Active</h2>
-        <div class="project">
-          <strong>Maneit Portal</strong>
-          <p class="muted">Founder OS + showcase environment.</p>
-          <div class="tags">
-            <span class="tag">HTML</span>
-            <span class="tag">CSS</span>
-            <span class="tag">JS</span>
-            <span class="tag">Showcase</span>
-          </div>
-        </div>
-      </article>
+    <article class="card span6">
+      <h2>Systems</h2>
+      <p class="muted">NetworkSaint, SystemDwarf, GameEngine.</p>
+    </article>
 
-      <article class="card span6">
-        <h2>Systems</h2>
-        <div class="project">
-          <strong>NetworkSaint</strong>
-          <p class="muted">Low-latency network diagnostics & tuning.</p>
-          <div class="tags">
-            <span class="tag">PowerShell</span>
-            <span class="tag">Esports</span>
-          </div>
-        </div>
+    <article class="card span12">
+      <h2>Next to build</h2>
+      <p class="muted">Showcase page + nav injector + persistent registry.</p>
+    </article>
+  </section>
+</main>
 
-        <div class="project" style="margin-top:10px;">
-          <strong>SystemDwarf</strong>
-          <p class="muted">Beginner-friendly system optimization suite.</p>
-          <div class="tags">
-            <span class="tag">Windows</span>
-            <span class="tag">Automation</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="card span12">
-        <h2>Idea Stage</h2>
-        <div class="project">
-          <strong>AgentFactory</strong>
-          <p class="muted">Spawn task-specific AI agents with clarity.</p>
-          <div class="tags">
-            <span class="tag">AI</span>
-            <span class="tag">UX</span>
-            <span class="tag">Pipeline</span>
-          </div>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
