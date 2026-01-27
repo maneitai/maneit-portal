@@ -20,31 +20,38 @@
   });
 
   /* ---------- Keyboard shortcuts ---------- */
-  document.addEventListener("keydown", e => {
+  document.addEventListener("keydown", (e) => {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
 
-    switch (e.key.toLowerCase()) {
-      case "w":
-        navigate("pages/work.html");
-        break;
-      case "p":
-        navigate("pages/projects.html");
-        break;
-      case "a":
-        navigate("pages/agents.html");
-        break;
-      case "n":
-        navigate("pages/notes.html");
-        break;
-      case "s":
-        navigate("pages/system.html");
-        break;
+    const k = e.key.toLowerCase();
+
+    switch (k) {
+      case "h": navigateRoot("index.html"); break;
+      case "w": navigate("pages/work.html"); break;
+      case "p": navigate("pages/projects.html"); break;
+      case "a": navigate("pages/agents.html"); break;
+      case "n": navigate("pages/notes.html"); break;
+      case "s": navigate("pages/system.html"); break;
+
+      // New
+      case "c": navigate("pages/novelcrafter.html"); break;     // Crafter
+      case "f": navigate("pages/agentfactory.html"); break;     // Factory
+      case "l": navigate("pages/pipelines.html"); break;        // fLows/pipelines
+      case "t": navigate("pages/stream.html"); break;           // sTream
     }
   });
 
   function navigate(path) {
-    if (location.pathname.endsWith(path)) return;
-    window.location.href = path;
+    // Works from root and from /pages
+    const isInPages = location.pathname.includes("/pages/");
+    const target = isInPages ? "../" + path : path;
+    if (location.href.endsWith(target)) return;
+    window.location.href = target;
+  }
+
+  function navigateRoot(file) {
+    const isInPages = location.pathname.includes("/pages/");
+    window.location.href = isInPages ? "../" + file : file;
   }
 
   /* ---------- Local state (reserved) ---------- */
@@ -56,7 +63,6 @@
   try {
     localStorage.setItem("maneit.portal", JSON.stringify(state));
   } catch (_) {
-    // silent fail – portal must work without storage
+    // portal must work without storage
   }
-
 })();
