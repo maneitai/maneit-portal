@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Hub · Maneit Portal</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    body{margin:0;}
+    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
+    .span4,.span6,.span12{grid-column:span 12;}
+    .tile{
+      padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .tile a{ text-decoration:none; }
+    @media(min-width:860px){ .span4{grid-column:span 4;} .span6{grid-column:span 6;} }
+  </style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="../index.html">
+      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Hub</span>
+    </a>
+    <nav class="tabs">
+      <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="work.html">Work</a>
+      <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="agentfactory.html">AgentFactory</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
+      <a class="tab" href="system.html">System</a>
+      <a class="tab" href="notes.html">Notes</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 class="h1">Hub</h1>
+  <p class="muted">Everything in one place. This is the “OS map”.</p>
+
+  <section class="grid2">
+    <article class="card span12">
+      <h2>Core Control</h2>
+      <div class="grid2">
+        <div class="tile span4">
+          <strong>Home</strong>
+          <p class="muted">Command center: chat routing, calendar surface, inbox shell.</p>
+          <a class="btn" href="../index.html">Open →</a>
+        </div>
+        <div class="tile span4">
+          <strong>Workboard</strong>
+          <p class="muted">Now / Next / Later.</p>
+          <a class="btn" href="work.html">Open →</a>
+        </div>
+        <div class="tile span4">
+          <strong>System</strong>
+          <p class="muted">Bootstraps, scripts, ops.</p>
+          <a class="btn" href="system.html">Open →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card span12">
+      <h2>Build Engine</h2>
+      <div class="grid2">
+        <div class="tile span4">
+          <strong>AgentFactory</strong>
+          <p class="muted">Define and spawn specialized agents.</p>
+          <a class="btn" href="agentfactory.html">Open →</a>
+        </div>
+        <div class="tile span4">
+          <strong>Pipelines</strong>
+          <p class="muted">Orchestration view: inputs → agents → artifacts.</p>
+          <a class="btn" href="pipelines.html">Open →</a>
+        </div>
+        <div class="tile span4">
+          <strong>Projects</strong>
+          <p class="muted">Active + idea stage registry.</p>
+          <a class="btn" href="projects.html">Open →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card span12">
+      <h2>Creative + Live</h2>
+      <div class="grid2">
+        <div class="tile span6">
+          <strong>NovelCrafter</strong>
+          <p class="muted">Worldbuilding, characters, scenes, exports.</p>
+          <a class="btn" href="novelcrafter.html">Open →</a>
+        </div>
+        <div class="tile span6">
+          <strong>Stream</strong>
+          <p class="muted">OBS control + checklists (placeholder now).</p>
+          <a class="btn" href="stream.html">Open →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card span12">
+      <h2>Shortcuts</h2>
+      <p class="mono" style="margin:0;">
+        H Home · U Hub · W Work · P Projects · A Agents · N Notes · S System · C Crafter · F Factory · L Pipelines · T Stream
+      </p>
+    </article>
+  </section>
+</main>
+
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>
