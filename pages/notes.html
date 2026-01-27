@@ -6,45 +6,27 @@
   <meta name="color-scheme" content="dark" />
   <title>Notes · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-
-  <style>
-    body { margin:0; }
-    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
-    .span5,.span7,.span12{grid-column:span 12;}
-    .field{
-      width:100%;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:#e6edf3;
-      padding:12px;
-      outline:none;
-    }
-    textarea.field{min-height:320px;resize:vertical;font-family:ui-monospace,monospace;}
-    .list{display:flex;flex-direction:column;gap:10px;}
-    .item{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
-    .item strong{display:block;margin-bottom:4px;}
-    @media(min-width:860px){ .span5{grid-column:span 5;} .span7{grid-column:span 7;} }
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="wrap row">
     <a class="brand" href="../index.html">
-      <span class="dot"></span>
-      <strong>Maneit Portal</strong>
-      <span class="pill">Notes</span>
+      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Notes</span>
     </a>
+
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
       <a class="tab" href="agentfactory.html">AgentFactory</a>
       <a class="tab" href="pipelines.html">Pipelines</a>
       <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
+      <a class="tab" href="notes.html">Notes</a>
       <a class="tab" href="system.html">System</a>
     </nav>
   </div>
@@ -52,37 +34,35 @@
 
 <main class="wrap">
   <h1 class="h1">Notes</h1>
-  <p class="muted">Autosaves instantly. Click a draft to load it.</p>
+  <p class="muted">Autosaves instantly. Use drafts as a shelf.</p>
 
-  <section class="grid2">
+  <section class="grid">
     <article class="card span7">
-      <h2>Scratchpad (autosave)</h2>
-      <textarea class="field" data-notes placeholder="Write anything. No formatting pressure."></textarea>
+      <h2>Scratchpad</h2>
+      <textarea class="field" data-notes placeholder="Write anything. No formatting pressure." style="min-height:320px;"></textarea>
 
-      <div class="grid2" style="margin-top:10px;">
-        <div class="span5">
+      <div class="grid" style="padding:0;margin-top:10px;">
+        <div class="span4">
           <label class="mono" style="display:block;margin:0 0 6px;">Draft title</label>
           <input class="field" data-draft-title placeholder="e.g., Sponsor email draft" />
         </div>
-        <div class="span7" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+        <div class="span8" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
           <button class="btn" type="button" data-save-draft>Save as Draft</button>
           <a class="btn" href="../index.html#compose">Send to Compose →</a>
         </div>
       </div>
 
-      <p class="mono" style="margin-top:10px;">
-        Stored locally: <span class="badge">localStorage</span>
-      </p>
+      <p class="mono" style="margin-top:10px;">Stored locally (localStorage).</p>
     </article>
 
     <article class="card span5">
       <h2>Drafts</h2>
-      <div class="list" data-drafts-list></div>
-      <p class="mono" style="margin-top:10px;">Tip: click draft card to load into scratchpad.</p>
+      <div data-drafts-list style="display:flex;flex-direction:column;gap:10px;"></div>
+      <p class="mono" style="margin-top:10px;">Click a draft card to load it.</p>
     </article>
   </section>
 </main>
 
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
