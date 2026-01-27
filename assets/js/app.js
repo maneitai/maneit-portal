@@ -1,128 +1,605 @@
-/* Maneit Portal – Chat engine (local, simple, safe) */
+/* assets/js/app.js
+   Home — finished UI functionality (no backend)
+   - Chat (multi chats, select, send, Enter/Shift+Enter, per-chat model)
+   - Today Top 3 editor
+   - Calendar editor
+   - Chat Hub (Teams/Discord items, select, mark read, route to inbox)
+   - Theme/Glass controls (CSS vars) + localStorage
+*/
 
 (() => {
-  const chatListEl = document.getElementById("chatList");
-  const messagesEl = document.getElementById("chatMessages");
-  const inputEl = document.getElementById("chatInput");
-  const sendBtn = document.getElementById("sendChat");
-  const newChatBtn = document.getElementById("newChatBtn");
+  "use strict";
 
-  if (!chatListEl || !messagesEl || !inputEl || !sendBtn) return;
+  const STORAGE_KEY = "maneit.portal.home.v1";
+  const STORAGE_ENABLED = true;
 
-  const STORE_KEY = "maneit.chat.v1";
+  const $ = (id) => document.getElementById(id);
 
-  let state = {
-    chats: [],
-    activeId: null
+  // ===== DOM =====
+  const dom = {
+    // Chat
+    chatList: $("chatList"),
+    newChatBtn: $("newChatBtn"),
+    chatMessages: $("chatMessages"),
+    modelSelect: $("modelSelect"),
+    chatInput: $("chatInput"),
+    sendChat: $("sendChat"),
+
+    // Today
+    todayList: $("todayList"),
+    todayAdd: $("todayAdd"),
+    todayAddBtn: $("todayAddBtn"),
+
+    // Calendar
+    calendarList: $("calendarList"),
+    calTime: $("calTime"),
+    calText: $("calText"),
+    calAddBtn: $("calAddBtn"),
+
+    // Chat Hub
+    teamsCount: $("teamsCount"),
+    discordCount: $("discordCount"),
+    chatHubUnread: $("chatHubUnread"),
+    chatHubList: $("chatHubList"),
+    hubInboxList: $("hubInboxList"),
+    chatHubMarkReadBtn: $("chatHubMarkReadBtn"),
+    routeToInboxBtn: $("routeToInboxBtn"),
+    chatHubClearBtn: $("chatHubClearBtn"),
+
+    // Theme modal
+    openThemeBtn: $("openThemeBtn"),
+    themeModal: $("themeModal"),
+    closeThemeBtn: $("closeThemeBtn"),
+    themeSelect: $("themeSelect"),
+    glassAlpha: $("glassAlpha"),
+    glassBlur: $("glassBlur"),
   };
 
-  /* ---------- Persistence ---------- */
-  function load() {
-    try {
-      const raw = localStorage.getItem(STORE_KEY);
-      if (raw) state = JSON.parse(raw);
-    } catch {}
-    if (!state.chats.length) createChat();
-  }
+  // ===== State =====
+  const themes = {
+    obsidian: { bg0:"#070A10", bg1:"#0B1220", accent:"#7DD3FC", accent2:"#A78BFA" },
+    nord:     { bg0:"#0B0F14", bg1:"#0F172A", accent:"#93C5FD", accent2:"#A5B4FC" },
+    emerald:  { bg0:"#050B0A", bg1:"#0B1A16", accent:"#34D399", accent2:"#22C55E" },
+    amber:    { bg0:"#0A0906", bg1:"#17120A", accent:"#FBBF24", accent2:"#FB7185" },
+    pure:     { bg0:"#05070B", bg1:"#070A10", accent:"#E5E7EB", accent2:"#94A3B8" }
+  };
 
+  const uid = () => Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
+
+  /** @type {{
+   *  chat: { chats: Array<any>, activeChatId: string|null },
+   *  today: { items: string[] },
+   *  calendar: { items: Array<{id:string,time:string,text:string}> },
+   *  chathub: { items: Array<{id:string,src:'Teams'|'Discord',text:string,unread:boolean,selected:boolean}>, inbox: Array<{id:string,text:string,src:string,ts:number}> },
+   *  theme: { themeKey: string, alpha: number, blur: number }
+   * }} */
+  let state = {
+    chat: { chats: [], activeChatId: null },
+    today: { items: ["Keep portal consistent", "Build OS pages", "Integrations later"] },
+    calendar: {
+      items: [
+        { id: uid(), time: "09:00", text: "Focus block" },
+        { id: uid(), time: "12:00", text: "Admin" },
+        { id: uid(), time: "15:00", text: "Build" },
+      ],
+    },
+    chathub: {
+      items: [
+        { id: uid(), src: "Teams", text: "@you — Can you check the draft?", unread: true, selected: false },
+        { id: uid(), src: "Teams", text: "#ops — Status on portal build?", unread: true, selected: false },
+        { id: uid(), src: "Discord", text: "DM — You around?", unread: true, selected: false },
+      ],
+      inbox: [],
+    },
+    theme: { themeKey: "obsidian", alpha: 0.10, blur: 14 },
+  };
+
+  // ===== Storage =====
   function save() {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch {}
+    if (!STORAGE_ENABLED) return;
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    catch (e) { console.warn("save failed", e); }
   }
 
-  /* ---------- Chat ops ---------- */
-  function createChat() {
-    const id = crypto.randomUUID();
-    state.chats.unshift({
-      id,
+  function load() {
+    if (!STORAGE_ENABLED) return false;
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    try {
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return false;
+      state = deepMerge(state, parsed);
+      // normalize
+      if (!Array.isArray(state.chat.chats)) state.chat.chats = [];
+      if (!Array.isArray(state.today.items)) state.today.items = [];
+      if (!Array.isArray(state.calendar.items)) state.calendar.items = [];
+      if (!Array.isArray(state.chathub.items)) state.chathub.items = [];
+      if (!Array.isArray(state.chathub.inbox)) state.chathub.inbox = [];
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function deepMerge(base, incoming) {
+    if (Array.isArray(base)) return Array.isArray(incoming) ? incoming : base;
+    if (base && typeof base === "object") {
+      const out = { ...base };
+      if (incoming && typeof incoming === "object") {
+        for (const k of Object.keys(incoming)) {
+          out[k] = deepMerge(base[k], incoming[k]);
+        }
+      }
+      return out;
+    }
+    return (incoming === undefined ? base : incoming);
+  }
+
+  // ===== CSS variables (theme/glass) =====
+  function setCSSVar(name, value) {
+    document.documentElement.style.setProperty(name, value);
+  }
+  function applyTheme() {
+    const t = themes[state.theme.themeKey] || themes.obsidian;
+    setCSSVar("--bg0", t.bg0);
+    setCSSVar("--bg1", t.bg1);
+    setCSSVar("--accent", t.accent);
+    setCSSVar("--accent2", t.accent2);
+
+    // Support both naming styles, in case your style.css uses either:
+    setCSSVar("--glassA", String(state.theme.alpha));
+    setCSSVar("--glass-a", String(state.theme.alpha));
+    setCSSVar("--blur", String(state.theme.blur) + "px");
+    setCSSVar("--glass-blur", String(state.theme.blur) + "px");
+  }
+
+  // ===== Chat =====
+  function ensureChat() {
+    if (state.chat.chats.length === 0) {
+      const c = newChat();
+      state.chat.chats.push(c);
+      state.chat.activeChatId = c.id;
+    }
+    if (!state.chat.activeChatId || !state.chat.chats.some(c => c.id === state.chat.activeChatId)) {
+      state.chat.activeChatId = state.chat.chats[0].id;
+    }
+  }
+
+  function newChat() {
+    return {
+      id: uid(),
       title: "New chat",
-      messages: [
-        { role: "assistant", text: "What’s on your mind?" }
-      ]
-    });
-    state.activeId = id;
-    save();
-    render();
+      model: dom.modelSelect?.value || "Local LLM",
+      createdAt: Date.now(),
+      messages: [],
+    };
   }
 
   function activeChat() {
-    return state.chats.find(c => c.id === state.activeId);
+    return state.chat.chats.find(c => c.id === state.chat.activeChatId) || null;
   }
 
-  function sendMessage(text) {
-    const chat = activeChat();
-    if (!chat) return;
-
-    chat.messages.push({ role: "user", text });
-    chat.messages.push({ role: "assistant", text: "Let’s reflect on that." });
-
-    if (chat.messages.length === 3) {
-      chat.title = text.slice(0, 30) || "Chat";
-    }
-
+  function setActiveChat(id) {
+    state.chat.activeChatId = id;
+    const c = activeChat();
+    if (c && dom.modelSelect) dom.modelSelect.value = c.model || dom.modelSelect.value;
+    renderChat();
     save();
-    renderMessages();
-    renderChatList();
   }
 
-  /* ---------- Rendering ---------- */
-  function renderChatList() {
-    chatListEl.innerHTML = "";
-    state.chats.forEach(chat => {
-      const div = document.createElement("div");
-      div.className = "chat-item" + (chat.id === state.activeId ? " active" : "");
-      div.textContent = chat.title;
-      div.onclick = () => {
-        state.activeId = chat.id;
-        save();
-        render();
-      };
-      chatListEl.appendChild(div);
-    });
-  }
+  function sendUserMessage(text) {
+    const c = activeChat();
+    if (!c) return;
+    const trimmed = (text || "").trim();
+    if (!trimmed) return;
 
-  function renderMessages() {
-    messagesEl.innerHTML = "";
-    const chat = activeChat();
-    if (!chat) return;
+    c.model = dom.modelSelect?.value || c.model;
+    c.messages.push({ id: uid(), role: "user", text: trimmed, ts: Date.now(), model: c.model });
 
-    chat.messages.forEach(m => {
-      const wrap = document.createElement("div");
-      wrap.className = `chat-msg ${m.role}`;
-
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.textContent = m.text;
-
-      wrap.appendChild(bubble);
-      messagesEl.appendChild(wrap);
-    });
-
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-
-  function render() {
-    renderChatList();
-    renderMessages();
-  }
-
-  /* ---------- Events ---------- */
-  sendBtn.onclick = () => {
-    const text = inputEl.value.trim();
-    if (!text) return;
-    inputEl.value = "";
-    sendMessage(text);
-  };
-
-  inputEl.addEventListener("keydown", e => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendBtn.click();
+    if (c.title === "New chat") {
+      const short = trimmed.replace(/\s+/g, " ");
+      c.title = short.length > 28 ? short.slice(0, 28) + "…" : short;
     }
-  });
 
-  newChatBtn.onclick = createChat;
+    dom.chatInput.value = "";
+    renderChat();
+    save();
 
-  /* ---------- Init ---------- */
-  load();
-  render();
+    // UI-only assistant placeholder (optional, minimal)
+    // Comment out if you want pure user-only logs:
+    window.setTimeout(() => {
+      c.messages.push({
+        id: uid(),
+        role: "assistant",
+        text: "(UI-only) Connected models later. For now this is a local thought log.",
+        ts: Date.now(),
+        model: c.model,
+      });
+      renderChat();
+      save();
+    }, 250);
+  }
+
+  function renderChat() {
+    // chat list
+    dom.chatList.innerHTML = "";
+    const chatsSorted = [...state.chat.chats].sort((a, b) => {
+      const aLast = a.messages?.[a.messages.length - 1]?.ts ?? a.createdAt;
+      const bLast = b.messages?.[b.messages.length - 1]?.ts ?? b.createdAt;
+      return bLast - aLast;
+    });
+
+    for (const c of chatsSorted) {
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.type = "button";
+      btn.style.width = "calc(100% - 20px)";
+      btn.style.margin = "10px";
+      btn.style.opacity = (c.id === state.chat.activeChatId) ? "1" : "0.85";
+      btn.style.borderColor = (c.id === state.chat.activeChatId) ? "rgba(125,211,252,0.45)" : "";
+      btn.textContent = c.title || "Chat";
+      btn.addEventListener("click", () => setActiveChat(c.id));
+      dom.chatList.appendChild(btn);
+    }
+
+    // messages
+    const c = activeChat();
+    dom.chatMessages.innerHTML = "";
+    if (!c) return;
+
+    // keep model dropdown aligned
+    if (dom.modelSelect && c.model) dom.modelSelect.value = c.model;
+
+    for (const m of c.messages) {
+      const row = document.createElement("div");
+      row.className = "box mono";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.style.opacity = m.role === "assistant" ? "0.92" : "1";
+      row.style.borderColor = m.role === "assistant" ? "rgba(167,139,250,0.22)" : "";
+      row.innerHTML = `<strong>${m.role === "assistant" ? "Assistant" : "You"}:</strong> ${escapeHtml(m.text)}`;
+      dom.chatMessages.appendChild(row);
+    }
+
+    // scroll to bottom
+    dom.chatMessages.scrollTop = dom.chatMessages.scrollHeight;
+  }
+
+  // ===== Today =====
+  function renderToday() {
+    dom.todayList.innerHTML = "";
+    const items = state.today.items.slice(0, 3);
+
+    items.forEach((txt, idx) => {
+      const li = document.createElement("li");
+      li.style.display = "flex";
+      li.style.gap = "8px";
+      li.style.alignItems = "center";
+
+      const span = document.createElement("span");
+      span.textContent = txt;
+      span.style.cursor = "text";
+      span.title = "Click to edit";
+
+      span.addEventListener("click", () => {
+        const next = prompt("Edit item:", txt);
+        if (next === null) return;
+        const v = next.trim();
+        if (!v) return;
+        state.today.items[idx] = v;
+        renderToday();
+        save();
+      });
+
+      const del = document.createElement("button");
+      del.className = "btn";
+      del.type = "button";
+      del.style.padding = "6px 10px";
+      del.textContent = "×";
+      del.title = "Remove";
+      del.addEventListener("click", () => {
+        state.today.items.splice(idx, 1);
+        // keep max 3 but allow fewer
+        renderToday();
+        save();
+      });
+
+      li.appendChild(span);
+      li.appendChild(del);
+      dom.todayList.appendChild(li);
+    });
+
+    // enforce max 3 (hard)
+    if (state.today.items.length > 3) state.today.items = state.today.items.slice(0, 3);
+  }
+
+  function addTodayItem() {
+    const v = (dom.todayAdd.value || "").trim();
+    if (!v) return;
+    if (state.today.items.length >= 3) {
+      // replace last (strict Top 3)
+      state.today.items[2] = v;
+    } else {
+      state.today.items.push(v);
+    }
+    dom.todayAdd.value = "";
+    renderToday();
+    save();
+  }
+
+  // ===== Calendar =====
+  function renderCalendar() {
+    dom.calendarList.innerHTML = "";
+    const items = [...state.calendar.items].sort((a, b) => (a.time || "").localeCompare(b.time || ""));
+
+    items.forEach((it) => {
+      const row = document.createElement("div");
+      row.className = "box mono";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "center";
+      row.style.gap = "10px";
+
+      const left = document.createElement("div");
+      left.innerHTML = `<strong>${escapeHtml(it.time)}</strong> ${escapeHtml(it.text)}`;
+      left.style.cursor = "text";
+      left.title = "Click to edit";
+
+      left.addEventListener("click", () => {
+        const nt = prompt("Time (HH:MM):", it.time) ?? it.time;
+        const nx = prompt("Text:", it.text);
+        if (nx === null) return;
+        const t = (nt || "").trim();
+        const x = (nx || "").trim();
+        if (!t || !x) return;
+        it.time = t;
+        it.text = x;
+        renderCalendar();
+        save();
+      });
+
+      const del = document.createElement("button");
+      del.className = "btn";
+      del.type = "button";
+      del.style.padding = "6px 10px";
+      del.textContent = "×";
+      del.title = "Remove";
+      del.addEventListener("click", () => {
+        state.calendar.items = state.calendar.items.filter(x => x.id !== it.id);
+        renderCalendar();
+        save();
+      });
+
+      row.appendChild(left);
+      row.appendChild(del);
+      dom.calendarList.appendChild(row);
+    });
+  }
+
+  function addCalendarItem() {
+    const time = (dom.calTime.value || "").trim();
+    const text = (dom.calText.value || "").trim();
+    if (!time || !text) return;
+    state.calendar.items.push({ id: uid(), time, text });
+    dom.calTime.value = "";
+    dom.calText.value = "";
+    renderCalendar();
+    save();
+  }
+
+  // ===== Chat Hub =====
+  function renderChatHub() {
+    const items = state.chathub.items;
+
+    let teams = 0, discord = 0, unread = 0;
+    for (const it of items) {
+      if (it.src === "Teams") teams++;
+      if (it.src === "Discord") discord++;
+      if (it.unread) unread++;
+    }
+    dom.teamsCount.textContent = String(teams);
+    dom.discordCount.textContent = String(discord);
+    dom.chatHubUnread.textContent = String(unread);
+
+    dom.chatHubList.innerHTML = "";
+    items.forEach((it) => {
+      const row = document.createElement("div");
+      row.className = "box mono";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.style.cursor = "pointer";
+      row.style.userSelect = "none";
+      row.style.borderColor = it.selected ? "rgba(125,211,252,0.45)" : "";
+      row.style.opacity = it.unread ? "1" : "0.70";
+
+      row.innerHTML = `<strong>[${it.src}]</strong> ${escapeHtml(it.text)}`;
+
+      row.addEventListener("click", () => {
+        it.selected = !it.selected;
+        renderChatHub();
+        save();
+      });
+
+      dom.chatHubList.appendChild(row);
+    });
+
+    // inbox list
+    dom.hubInboxList.innerHTML = "";
+    state.chathub.inbox.slice().reverse().forEach((it) => {
+      const row = document.createElement("div");
+      row.className = "box mono";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.innerHTML = `<strong>[${escapeHtml(it.src)}]</strong> ${escapeHtml(it.text)}`;
+      dom.hubInboxList.appendChild(row);
+    });
+  }
+
+  function markChatHubRead() {
+    let changed = false;
+    for (const it of state.chathub.items) {
+      if (it.selected) {
+        it.unread = false;
+        it.selected = false;
+        changed = true;
+      }
+    }
+    if (changed) {
+      renderChatHub();
+      save();
+    }
+  }
+
+  function routeChatHubToInbox() {
+    const selected = state.chathub.items.filter(it => it.selected);
+    if (selected.length === 0) return;
+
+    for (const it of selected) {
+      state.chathub.inbox.push({
+        id: uid(),
+        src: it.src,
+        text: it.text,
+        ts: Date.now(),
+      });
+      it.unread = false;
+      it.selected = false;
+    }
+    renderChatHub();
+    save();
+  }
+
+  function clearChatHub() {
+    state.chathub.items = [];
+    renderChatHub();
+    save();
+  }
+
+  // ===== Theme modal =====
+  function openTheme() { dom.themeModal.style.display = "block"; }
+  function closeTheme() { dom.themeModal.style.display = "none"; }
+
+  function wireThemeControls() {
+    dom.glassAlpha.value = String(state.theme.alpha);
+    dom.glassBlur.value = String(state.theme.blur);
+    dom.themeSelect.value = state.theme.themeKey;
+
+    dom.themeSelect.addEventListener("change", () => {
+      state.theme.themeKey = dom.themeSelect.value;
+      applyTheme();
+      save();
+    });
+
+    dom.glassAlpha.addEventListener("input", () => {
+      state.theme.alpha = Number(dom.glassAlpha.value);
+      applyTheme();
+      save();
+    });
+
+    dom.glassBlur.addEventListener("input", () => {
+      state.theme.blur = Number(dom.glassBlur.value);
+      applyTheme();
+      save();
+    });
+
+    dom.openThemeBtn.addEventListener("click", openTheme);
+    dom.closeThemeBtn.addEventListener("click", closeTheme);
+
+    // click outside card closes
+    dom.themeModal.addEventListener("click", (e) => {
+      if (e.target === dom.themeModal) closeTheme();
+    });
+  }
+
+  // ===== Utilities =====
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  // ===== Wiring =====
+  function wireEvents() {
+    // Chat controls
+    dom.newChatBtn.addEventListener("click", () => {
+      const c = newChat();
+      state.chat.chats.unshift(c);
+      state.chat.activeChatId = c.id;
+      renderChat();
+      save();
+      dom.chatInput.focus();
+    });
+
+    dom.sendChat.addEventListener("click", () => {
+      sendUserMessage(dom.chatInput.value);
+    });
+
+    dom.modelSelect.addEventListener("change", () => {
+      const c = activeChat();
+      if (!c) return;
+      c.model = dom.modelSelect.value;
+      save();
+    });
+
+    dom.chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendUserMessage(dom.chatInput.value);
+      }
+    });
+
+    // Today
+    dom.todayAddBtn.addEventListener("click", addTodayItem);
+    dom.todayAdd.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addTodayItem();
+      }
+    });
+
+    // Calendar
+    dom.calAddBtn.addEventListener("click", addCalendarItem);
+    dom.calText.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addCalendarItem();
+      }
+    });
+
+    // Chat hub
+    dom.chatHubMarkReadBtn.addEventListener("click", markChatHubRead);
+    dom.routeToInboxBtn.addEventListener("click", routeChatHubToInbox);
+    dom.chatHubClearBtn.addEventListener("click", clearChatHub);
+
+    // Global Esc closes modal
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeTheme();
+    });
+  }
+
+  function init() {
+    load();
+    applyTheme();
+
+    ensureChat();
+    renderChat();
+    renderToday();
+    renderCalendar();
+    renderChatHub();
+
+    wireThemeControls();
+    wireEvents();
+
+    save(); // write normalized state
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
