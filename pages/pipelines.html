@@ -6,42 +6,27 @@
   <meta name="color-scheme" content="dark" />
   <title>Pipelines · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <style>
-    body{margin:0;}
-    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
-    .span4,.span8,.span12{grid-column:span 12;}
-    .node{
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-    }
-    .node strong{display:block;margin-bottom:6px;}
-    .node small{color:rgba(230,237,243,.62);}
-    .lane{display:flex;flex-direction:column;gap:10px;}
-    .arrow{opacity:.65; font-family: ui-monospace, monospace;}
-    @media(min-width:860px){
-      .span4{grid-column:span 4;}
-      .span8{grid-column:span 8;}
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="wrap row">
     <a class="brand" href="../index.html">
-      <span class="dot"></span>
-      <strong>Maneit Portal</strong>
-      <span class="pill">Pipelines</span>
+      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Pipelines</span>
     </a>
+
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
       <a class="tab" href="agentfactory.html">AgentFactory</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
       <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
+      <a class="tab" href="notes.html">Notes</a>
       <a class="tab" href="system.html">System</a>
     </nav>
   </div>
@@ -49,60 +34,30 @@
 
 <main class="wrap">
   <h1 class="h1">Pipelines</h1>
-  <p class="muted">Orchestration view: inputs → agents → artifacts. Showcase shell now, real runner later.</p>
+  <p class="muted">Orchestration view: inputs → agents → artifacts.</p>
 
-  <section class="grid2">
+  <section class="grid">
     <article class="card span8">
-      <h2>Pipeline: Build a Feature</h2>
-      <div class="lane">
-        <div class="node">
-          <strong>1) Router</strong>
-          <small>Parse intent, decide path, request missing info</small>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="node">
-          <strong>2) Builder</strong>
-          <small>IA, file plan, UX layout</small>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="node">
-          <strong>3) Coder</strong>
-          <small>Create files deterministically (one by one)</small>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="node">
-          <strong>4) Verifier</strong>
-          <small>Logic + regression + “does it feel right?”</small>
-        </div>
-        <div class="arrow">↓</div>
-        <div class="node">
-          <strong>5) Handoff</strong>
-          <small>Commit list + next actions + change notes</small>
-        </div>
+      <h2>Build a Feature</h2>
+      <p class="muted">Router → Builder → Coder → Verifier → Handoff</p>
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="agentfactory.html">Open AgentFactory →</a>
+        <a class="btn" href="system.html">System scripts →</a>
       </div>
     </article>
 
     <article class="card span4">
       <h2>Quick Links</h2>
-      <div class="lane">
-        <div class="node"><strong>AgentFactory</strong><small>Define roles & prompts</small></div>
-        <div class="node"><strong>System</strong><small>Bootstraps, ops, nodes</small></div>
-        <div class="node"><strong>Work</strong><small>Now / Next / Later</small></div>
-      </div>
+      <p class="muted">Work, Notes, Projects</p>
       <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="agentfactory.html">Open AgentFactory →</a>
+        <a class="btn" href="work.html">Work →</a>
+        <a class="btn" href="notes.html">Notes →</a>
       </div>
     </article>
 
     <article class="card span12">
-      <h2>Pipeline: Novel Writing</h2>
-      <div class="lane">
-        <div class="node"><strong>1) Concept</strong><small>Theme, promise, constraints</small></div>
-        <div class="node"><strong>2) World/Characters</strong><small>NovelCrafter structured entries</small></div>
-        <div class="node"><strong>3) Scene List</strong><small>Hook → escalation → payoff</small></div>
-        <div class="node"><strong>4) Draft</strong><small>Fast output, later polish</small></div>
-        <div class="node"><strong>5) Export</strong><small>Markdown / Doc pack</small></div>
-      </div>
+      <h2>Novel Writing</h2>
+      <p class="muted">Concept → World/Characters → Scene List → Draft → Export</p>
       <div class="actions" style="margin-top:10px;">
         <a class="btn" href="novelcrafter.html">Open NovelCrafter →</a>
       </div>
@@ -110,6 +65,6 @@
   </section>
 </main>
 
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
