@@ -10,37 +10,17 @@
   <style>
     body{margin:0;}
     .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0;}
-    .kpi{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:10px;}
-    .kpi .box{grid-column:span 12;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
     .tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
     .pill2{padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);text-decoration:none;}
     .pill2:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06);}
     .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
-    .span6{grid-column:span 12;}
-    .span4{grid-column:span 12;}
-    .span8{grid-column:span 12;}
-    .field{
-      width:100%;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:#e6edf3;
-      padding:12px;
-      outline:none;
-    }
+    .span6,.span4,.span8,.span12{grid-column:span 12;}
+    .field{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e6edf3;padding:12px;outline:none;}
     textarea.field{min-height:140px;resize:vertical;font-family:ui-monospace,monospace;}
     .list{display:flex;flex-direction:column;gap:10px;}
     .item{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
     .item strong{display:block;margin-bottom:4px;}
-    .chip{font-size:11px;padding:4px 9px;border-radius:999px;border:1px solid rgba(56,189,248,.18);background:rgba(56,189,248,.10);color:rgba(230,237,243,.85);user-select:none;}
-    .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
-    @media(min-width:860px){
-      .span6{grid-column:span 6;}
-      .span4{grid-column:span 4;}
-      .span8{grid-column:span 8;}
-      .kpi .box.span4{grid-column:span 4;}
-      .kpi .box.span6{grid-column:span 6;}
-    }
+    @media(min-width:860px){ .span6{grid-column:span 6;} .span4{grid-column:span 4;} .span8{grid-column:span 8;} }
   </style>
 </head>
 
@@ -48,16 +28,19 @@
 <header class="topbar">
   <div class="wrap row">
     <a class="brand" href="../index.html">
-      <span class="dot"></span>
-      <strong>Maneit Portal</strong>
-      <span class="pill">NovelCrafter</span>
+      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">NovelCrafter</span>
     </a>
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
       <a class="tab" href="agentfactory.html">AgentFactory</a>
       <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
+      <a class="tab" href="notes.html">Notes</a>
       <a class="tab" href="system.html">System</a>
     </nav>
   </div>
@@ -65,7 +48,7 @@
 
 <main class="wrap">
   <h1 class="h1">NovelCrafter</h1>
-  <p class="muted">Worldbuilding, characters, plot, scenes. Structured, searchable, and production-ready.</p>
+  <p class="muted">Worldbuilding, characters, plot, scenes. Structured, searchable, production-ready.</p>
 
   <div class="toolbar">
     <a class="btn" href="#">New Project</a>
@@ -74,37 +57,7 @@
     <a class="btn" href="#">New Scene</a>
   </div>
 
-  <section class="kpi">
-    <div class="box span4">
-      <h2>Active World</h2>
-      <p class="muted" style="margin:0;">Gylfagard / Spirit Bond (placeholder)</p>
-      <div class="chips">
-        <span class="chip">Viking</span>
-        <span class="chip">Fantasy</span>
-        <span class="chip">Lore</span>
-      </div>
-    </div>
-    <div class="box span4">
-      <h2>Focus</h2>
-      <p class="muted" style="margin:0;">Scene pipeline + character arcs</p>
-      <div class="chips">
-        <span class="chip">Draft</span>
-        <span class="chip">Outline</span>
-        <span class="chip">Rewrite</span>
-      </div>
-    </div>
-    <div class="box span4">
-      <h2>Output</h2>
-      <p class="muted" style="margin:0;">Export-ready structure</p>
-      <div class="chips">
-        <span class="chip">Markdown</span>
-        <span class="chip">Docs</span>
-        <span class="chip">JSON</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="tabs2" aria-label="NovelCrafter Tabs">
+  <section class="tabs2">
     <a class="pill2" href="#world">World</a>
     <a class="pill2" href="#characters">Characters</a>
     <a class="pill2" href="#locations">Locations</a>
