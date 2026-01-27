@@ -6,34 +6,28 @@
   <meta name="color-scheme" content="dark" />
   <title>System · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-
-  <style>
-    body { margin:0; }
-    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
-    .span6,.span12{grid-column:span 12;}
-    @media(min-width:860px){ .span6{grid-column:span 6;} }
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="wrap row">
     <a class="brand" href="../index.html">
-      <span class="dot"></span>
-      <strong>Maneit Portal</strong>
-      <span class="pill">System</span>
+      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">System</span>
     </a>
+
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
       <a class="tab" href="agentfactory.html">AgentFactory</a>
       <a class="tab" href="pipelines.html">Pipelines</a>
       <a class="tab" href="novelcrafter.html">NovelCrafter</a>
       <a class="tab" href="stream.html">Stream</a>
       <a class="tab" href="notes.html">Notes</a>
+      <a class="tab" href="system.html">System</a>
     </nav>
   </div>
 </header>
@@ -42,7 +36,7 @@
   <h1 class="h1">System</h1>
   <p class="muted">Bootstraps, scripts, ops notes. Copy-ready blocks.</p>
 
-  <section class="grid2">
+  <section class="grid">
     <article class="card span12">
       <h2>Principles</h2>
       <div class="codepanel">
@@ -69,33 +63,11 @@ https://&lt;user&gt;.github.io/&lt;repo&gt;/</pre>
     </article>
 
     <article class="card span6">
-      <h2>PowerShell launch convention (showcase)</h2>
+      <h2>PowerShell launch convention</h2>
       <div class="codepanel">
         <button class="copybtn" data-copy-target="#pslaunch">Copy</button>
-        <pre class="mono" id="pslaunch"># Convention: always set location first
-Set-Location -LiteralPath "D:\maneit-portal"
-# Then run deterministic scripts from /scripts</pre>
-      </div>
-    </article>
-
-    <article class="card span12">
-      <h2>Script Library (placeholders)</h2>
-      <p class="muted">These become real as you plug in your lab nodes.</p>
-      <div class="grid2">
-        <div class="span6">
-          <div class="codepanel">
-            <button class="copybtn" data-copy-target="#script1">Copy</button>
-            <pre class="mono" id="script1"># NetworkSaint – quick diagnostics (placeholder)
-# ping, bufferbloat, interface stats, route table</pre>
-          </div>
-        </div>
-        <div class="span6">
-          <div class="codepanel">
-            <button class="copybtn" data-copy-target="#script2">Copy</button>
-            <pre class="mono" id="script2"># SystemDwarf – baseline tune (placeholder)
-# power plan, startup hygiene, timer sanity</pre>
-          </div>
-        </div>
+        <pre class="mono" id="pslaunch">Set-Location -LiteralPath "D:\maneit-portal"
+# run deterministic scripts from /scripts</pre>
       </div>
     </article>
 
@@ -108,6 +80,6 @@ Set-Location -LiteralPath "D:\maneit-portal"
   </section>
 </main>
 
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
