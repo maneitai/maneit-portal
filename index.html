@@ -1,87 +1,663 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <title>Maneit Portal</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Portal — Home</title>
 
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    :root{
+      --bg0:#070A10;
+      --bg1:#0B1220;
+      --bg2:#0A0F1A;
+
+      --txt:#E7EAF0;
+      --muted:#AAB3C5;
+
+      --accent:#7DD3FC;
+      --accent2:#A78BFA;
+
+      --glass-a:0.08;        /* slider controls this */
+      --glass-bg: rgba(255,255,255,var(--glass-a));
+      --glass-border: rgba(255,255,255,0.18);
+      --glass-blur: 14px;
+
+      --shadow: 0 18px 55px rgba(0,0,0,0.55);
+      --radius: 18px;
+
+      --chip: rgba(255,255,255,0.10);
+      --chip-border: rgba(255,255,255,0.16);
+
+      --grid-gap: 14px;
+      --maxw: 1220px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--txt);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+      background:
+        radial-gradient(1200px 800px at 18% -10%, rgba(125,211,252,0.18), transparent 55%),
+        radial-gradient(900px 700px at 90% 10%, rgba(167,139,250,0.16), transparent 55%),
+        radial-gradient(1000px 800px at 50% 110%, rgba(16,185,129,0.08), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
+      overflow-x:hidden;
+    }
+
+    /* subtle noise (optional) */
+    .noise{
+      pointer-events:none;
+      position:fixed; inset:0;
+      opacity:0.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+    }
+
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:22px 18px 28px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-bottom:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background:var(--accent);
+      box-shadow: 0 0 0 6px rgba(125,211,252,0.12);
+    }
+    .title{
+      font-size:18px; letter-spacing:0.2px; font-weight:650;
+    }
+    .subtitle{color:var(--muted); font-size:12px; margin-top:2px}
+
+    .actions{
+      display:flex; align-items:center; gap:10px;
+    }
+    .btn{
+      border:1px solid var(--glass-border);
+      background: rgba(255,255,255,0.06);
+      color:var(--txt);
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      display:flex; align-items:center; gap:8px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.24); }
+    .btn:active{ transform: translateY(0px) scale(0.99); }
+    .btn .k{opacity:.8; font-size:12px; padding:2px 8px; border-radius:999px; border:1px solid rgba(255,255,255,0.14); background: rgba(0,0,0,0.15);}
+
+    .glass{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .glass::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 140px at 20% 0%, rgba(255,255,255,0.12), transparent 60%);
+      opacity:0.9;
+      pointer-events:none;
+    }
+    .card{
+      padding:14px;
+    }
+    .card h3{
+      margin:0 0 8px 0;
+      font-size:13px; font-weight:650;
+      letter-spacing:0.2px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .card .hint{color:var(--muted); font-size:12px; margin-top:-2px}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: var(--grid-gap);
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--grid-gap);
+    }
+    @media (max-width: 720px){
+      .grid2{grid-template-columns:1fr}
+    }
+
+    .row{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      background: var(--chip);
+      border:1px solid var(--chip-border);
+      border-radius: 999px;
+      font-size:12px;
+      color:var(--txt);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+
+    .list{
+      display:flex; flex-direction:column; gap:10px;
+      margin-top:10px;
+    }
+    .item{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      padding:10px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.12);
+    }
+    .item .l{
+      display:flex; flex-direction:column; gap:2px;
+      min-width:0;
+    }
+    .item .t{
+      font-size:13px; font-weight:600;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .item .s{
+      font-size:12px; color:var(--muted);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color:var(--txt);
+      white-space:nowrap;
+    }
+    .badge.ok{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .badge.warn{ border-color: rgba(234,179,8,0.35); background: rgba(234,179,8,0.10); }
+    .badge.off{ border-color: rgba(148,163,184,0.25); background: rgba(148,163,184,0.08); color: rgba(231,234,240,0.85); }
+
+    .input{
+      width:100%;
+      border-radius: 14px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--txt);
+      outline:none;
+    }
+    .input::placeholder{color: rgba(170,179,197,0.75);}
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      align-items:center;
+      margin-top:10px;
+    }
+    .mini{
+      font-size:11px;
+      color: var(--muted);
+    }
+
+    /* Settings modal */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      background: rgba(0,0,0,0.55);
+      z-index:50;
+    }
+    .modal.open{display:flex;}
+    .modal .panel{
+      width:min(680px, 100%);
+      padding:16px;
+    }
+    .modalHead{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .modalHead .h{
+      font-size:14px; font-weight:700;
+    }
+    .close{
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color:var(--txt);
+      border-radius: 12px;
+      padding:8px 10px;
+      cursor:pointer;
+    }
+    .formRow{
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap:12px;
+      align-items:center;
+      padding:10px 0;
+      border-top:1px solid rgba(255,255,255,0.10);
+    }
+    @media (max-width: 640px){
+      .formRow{grid-template-columns:1fr}
+    }
+    select, input[type="range"]{width:100%}
+    select{
+      border-radius: 14px;
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--txt);
+      outline:none;
+    }
+    input[type="range"]{
+      accent-color: var(--accent);
+    }
+  </style>
 </head>
 
 <body>
-<header class="topbar">
-  <div class="wrap row">
-    <a class="brand" href="./index.html">
-      <span class="dot"></span>
-      <strong>Maneit Portal</strong>
-      <span class="pill">Home</span>
-    </a>
+  <div class="noise"></div>
 
-    <nav class="tabs">
-      <a class="tab" href="pages/hub.html">Hub</a>
-      <a class="tab" href="pages/work.html">Work</a>
-      <a class="tab" href="pages/projects.html">Projects</a>
-      <a class="tab" href="pages/agents.html">Agents</a>
-      <a class="tab" href="pages/agentfactory.html">AgentFactory</a>
-      <a class="tab" href="pages/pipelines.html">Pipelines</a>
-      <a class="tab" href="pages/novelcrafter.html">NovelCrafter</a>
-      <a class="tab" href="pages/stream.html">Stream</a>
-      <a class="tab" href="pages/notes.html">Notes</a>
-      <a class="tab" href="pages/system.html">System</a>
-    </nav>
-  </div>
-</header>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <div class="title">Home</div>
+          <div class="subtitle">Premium glass dashboard (UI-only v1)</div>
+        </div>
+      </div>
 
-<main class="wrap">
-  <h1 class="h1">Home</h1>
-  <p class="muted">Self-reflection, thinking, ideation. Not execution.</p>
+      <div class="actions">
+        <div class="btn" id="btnSettings" title="Settings">
+          ⚙️ <span>Theme</span> <span class="k">S</span>
+        </div>
+        <div class="btn" title="New capture (mock)">
+          ➕ <span>Capture</span> <span class="k">C</span>
+        </div>
+      </div>
+    </div>
 
-  <section class="grid">
-    <!-- CHAT -->
-    <article class="card span7">
-      <h2>Chat</h2>
+    <!-- Quick actions + status -->
+    <div class="grid">
+      <div class="glass card">
+        <h3>
+          <span>Quick actions</span>
+          <span class="mini">No persistence yet</span>
+        </h3>
+        <div class="hint">Fast entry points — later we’ll route to Notes / Inbox / Work.</div>
 
-      <div class="chat-layout">
-        <!-- Sidebar -->
-        <aside class="chat-sidebar">
-          <div class="chat-sidebar-header mono">Chats</div>
-          <div class="chat-list" id="chatList"></div>
-          <button class="btn" id="newChatBtn" style="margin:10px;">+ New chat</button>
-        </aside>
+        <div class="row" style="margin-top:12px;">
+          <div class="chip" onclick="toast('Open: Notes (mock)')">🗒️ Notes</div>
+          <div class="chip" onclick="toast('Open: Inbox (mock)')">📥 Inbox</div>
+          <div class="chip" onclick="toast('Open: Work (mock)')">🧠 Work</div>
+          <div class="chip" onclick="toast('Open: Chat (mock)')">💬 Chat</div>
+          <div class="chip" onclick="openSettings()">✨ Glass settings</div>
+        </div>
 
-        <!-- Main chat -->
-        <div class="chat-main">
-          <div class="chat-messages" id="chatMessages"></div>
+        <div class="list">
+          <div class="item">
+            <div class="l">
+              <div class="t">Today focus</div>
+              <div class="s">Finish Home UI → then Notes & Inbox UIs</div>
+            </div>
+            <div class="badge ok">locked</div>
+          </div>
 
-          <div class="chat-input">
-            <select class="field" id="modelSelect">
-              <option>Local LLM</option>
-              <option>Reasoning model</option>
-              <option>Fast draft</option>
-            </select>
-
-            <textarea
-              class="field chat-textarea"
-              id="chatInput"
-              placeholder="Write here… (Enter = send, Shift+Enter = new line)"
-            ></textarea>
-
-            <button class="btn" id="sendChat">Send</button>
+          <div class="item">
+            <div class="l">
+              <div class="t">Phase</div>
+              <div class="s">Visual + UX wiring first (no backend, no localStorage)</div>
+            </div>
+            <div class="badge warn">v1</div>
           </div>
         </div>
       </div>
-    </article>
 
-    <!-- RIGHT COLUMN -->
-    <article class="card span5">
-      <h2>Status</h2>
-      <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
-      <p class="muted">Execution lives elsewhere.</p>
-    </article>
-  </section>
-</main>
+      <div class="glass card">
+        <h3>
+          <span>System snapshot</span>
+          <span class="mini">mock</span>
+        </h3>
+        <div class="hint">Later: live status from Linux node(s), model services, logs.</div>
 
-<script src="assets/js/app.js" defer></script>
+        <div class="list">
+          <div class="item">
+            <div class="l">
+              <div class="t">Portal state</div>
+              <div class="s">UI-only • No persistence • No API</div>
+            </div>
+            <div class="badge ok">OK</div>
+          </div>
+
+          <div class="item">
+            <div class="l">
+              <div class="t">Linux models</div>
+              <div class="s">Not connected</div>
+            </div>
+            <div class="badge off">OFF</div>
+          </div>
+
+          <div class="item">
+            <div class="l">
+              <div class="t">Next wiring</div>
+              <div class="s">Notes + Inbox UIs → then Work tab (terminal + model controls)</div>
+            </div>
+            <div class="badge warn">queued</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent + Notes/Inbox preview -->
+    <div class="grid2" style="margin-top: var(--grid-gap);">
+      <div class="glass card">
+        <h3>
+          <span>Recent conversations</span>
+          <span class="mini">mock</span>
+        </h3>
+        <div class="hint">Later: real list from your persistence layer.</div>
+
+        <div class="list">
+          <div class="item" onclick="toast('Open conversation (mock)')">
+            <div class="l">
+              <div class="t">Phase 2: Notes + Inbox</div>
+              <div class="s">Last touched: just now</div>
+            </div>
+            <div class="badge ok">active</div>
+          </div>
+
+          <div class="item" onclick="toast('Open conversation (mock)')">
+            <div class="l">
+              <div class="t">Master templates</div>
+              <div class="s">Pinned reference (later)</div>
+            </div>
+            <div class="badge">pinned</div>
+          </div>
+
+          <div class="item" onclick="toast('Open conversation (mock)')">
+            <div class="l">
+              <div class="t">Workflows</div>
+              <div class="s">Draft UI patterns and chips</div>
+            </div>
+            <div class="badge off">idle</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <h3>
+          <span>Quick capture</span>
+          <span class="mini">mock</span>
+        </h3>
+        <div class="hint">Later: this will push into Inbox with tags, priority, routing.</div>
+
+        <input class="input" id="captureBox" placeholder="Type anything… (idea / task / note)"/>
+
+        <div class="split">
+          <div class="mini">Enter = capture • Shift+Enter = newline (later)</div>
+          <div class="btn" onclick="capture()">📥 Capture</div>
+        </div>
+
+        <div class="list" id="captureList" style="margin-top:12px;">
+          <!-- populated by JS (mock) -->
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top: var(--grid-gap);">
+      <div class="glass card">
+        <h3>
+          <span>Notes preview</span>
+          <span class="mini">mock</span>
+        </h3>
+        <div class="hint">Later: folders, tags, pinning, export to Notes.</div>
+
+        <div class="list">
+          <div class="item" onclick="toast('Open note (mock)')">
+            <div class="l">
+              <div class="t">Master templates</div>
+              <div class="s">UI patterns • chips • layouts</div>
+            </div>
+            <div class="badge">doc</div>
+          </div>
+          <div class="item" onclick="toast('Open note (mock)')">
+            <div class="l">
+              <div class="t">Phase 2 spec</div>
+              <div class="s">Notes + Inbox + Work tab plan</div>
+            </div>
+            <div class="badge">spec</div>
+          </div>
+          <div class="item" onclick="toast('Open note (mock)')">
+            <div class="l">
+              <div class="t">Model orchestration</div>
+              <div class="s">systemd units • start/stop • logs</div>
+            </div>
+            <div class="badge off">later</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <h3>
+          <span>Inbox preview</span>
+          <span class="mini">mock</span>
+        </h3>
+        <div class="hint">Later: triage → route to Notes / Work / Archive.</div>
+
+        <div class="list">
+          <div class="item">
+            <div class="l">
+              <div class="t">Add premium glass theme + slider</div>
+              <div class="s">Status: in progress</div>
+            </div>
+            <div class="badge warn">triage</div>
+          </div>
+          <div class="item">
+            <div class="l">
+              <div class="t">Finish Home tab UI</div>
+              <div class="s">Then: Notes and Inbox UIs</div>
+            </div>
+            <div class="badge ok">now</div>
+          </div>
+          <div class="item">
+            <div class="l">
+              <div class="t">Work tab: terminal + model controls</div>
+              <div class="s">UI only (v1)</div>
+            </div>
+            <div class="badge off">next</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Settings modal -->
+  <div class="modal" id="settingsModal" onclick="if(event.target.id==='settingsModal') closeSettings()">
+    <div class="glass panel">
+      <div class="modalHead">
+        <div class="h">Theme & Glass Settings</div>
+        <button class="close" onclick="closeSettings()">Close</button>
+      </div>
+
+      <div class="formRow">
+        <div class="mini">Theme</div>
+        <div>
+          <select id="themeSelect" onchange="applyTheme(this.value)">
+            <option value="obsidian">Obsidian Glass</option>
+            <option value="nord">Nord Frost</option>
+            <option value="emerald">Emerald Calm</option>
+            <option value="amber">Amber Focus</option>
+            <option value="pure">Pure Dark (no glass)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="formRow">
+        <div class="mini">Glass transparency</div>
+        <div>
+          <input id="alphaRange" type="range" min="0.04" max="0.20" step="0.01" value="0.08"
+                 oninput="setGlassAlpha(this.value)"/>
+          <div class="mini" style="margin-top:6px;">
+            Current: <span id="alphaVal">0.08</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="formRow">
+        <div class="mini">Blur strength</div>
+        <div>
+          <input id="blurRange" type="range" min="6" max="26" step="1" value="14"
+                 oninput="setBlur(this.value)"/>
+          <div class="mini" style="margin-top:6px;">
+            Current: <span id="blurVal">14</span>px
+          </div>
+        </div>
+      </div>
+
+      <div class="formRow">
+        <div class="mini">Notes</div>
+        <div class="mini">
+          No persistence saved yet. When we enable localStorage later, we’ll store these settings automatically.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- tiny toast (mock) ---
+    let toastTimer = null;
+    function toast(msg){
+      clearTimeout(toastTimer);
+      let el = document.getElementById("toast");
+      if(!el){
+        el = document.createElement("div");
+        el.id = "toast";
+        el.style.position = "fixed";
+        el.style.left = "50%";
+        el.style.bottom = "16px";
+        el.style.transform = "translateX(-50%)";
+        el.style.padding = "10px 12px";
+        el.style.borderRadius = "14px";
+        el.style.border = "1px solid rgba(255,255,255,0.18)";
+        el.style.background = "rgba(0,0,0,0.45)";
+        el.style.backdropFilter = "blur(10px)";
+        el.style.webkitBackdropFilter = "blur(10px)";
+        el.style.color = "rgba(231,234,240,0.95)";
+        el.style.fontSize = "12px";
+        el.style.zIndex = "100";
+        document.body.appendChild(el);
+      }
+      el.textContent = msg;
+      el.style.opacity = "1";
+      toastTimer = setTimeout(()=>{ el.style.opacity = "0"; }, 1200);
+    }
+
+    // --- Settings modal ---
+    const modal = document.getElementById("settingsModal");
+    const btnSettings = document.getElementById("btnSettings");
+    btnSettings.addEventListener("click", openSettings);
+
+    // keyboard shortcuts (UI-only)
+    document.addEventListener("keydown", (e)=>{
+      if(e.key.toLowerCase() === "s") openSettings();
+      if(e.key.toLowerCase() === "c") toast("Capture focus (mock)");
+      if(e.key === "Escape") closeSettings();
+    });
+
+    function openSettings(){ modal.classList.add("open"); }
+    function closeSettings(){ modal.classList.remove("open"); }
+
+    // --- Glass controls (no persistence yet) ---
+    function setGlassAlpha(v){
+      document.documentElement.style.setProperty("--glass-a", v);
+      document.getElementById("alphaVal").textContent = Number(v).toFixed(2);
+    }
+    function setBlur(v){
+      document.documentElement.style.setProperty("--glass-blur", v + "px");
+      document.getElementById("blurVal").textContent = v;
+    }
+
+    // --- Theme system (UI-only) ---
+    const themes = {
+      obsidian: { bg0:"#070A10", bg1:"#0B1220", accent:"#7DD3FC", accent2:"#A78BFA" },
+      nord:     { bg0:"#0B0F14", bg1:"#0F172A", accent:"#93C5FD", accent2:"#A5B4FC" },
+      emerald:  { bg0:"#050B0A", bg1:"#0B1A16", accent:"#34D399", accent2:"#22C55E" },
+      amber:    { bg0:"#0A0906", bg1:"#17120A", accent:"#FBBF24", accent2:"#FB7185" },
+      pure:     { bg0:"#05070B", bg1:"#070A10", accent:"#E5E7EB", accent2:"#94A3B8" }
+    };
+
+    function applyTheme(key){
+      const t = themes[key] || themes.obsidian;
+      document.documentElement.style.setProperty("--bg0", t.bg0);
+      document.documentElement.style.setProperty("--bg1", t.bg1);
+      document.documentElement.style.setProperty("--accent", t.accent);
+      document.documentElement.style.setProperty("--accent2", t.accent2);
+
+      // If "pure", reduce glass to feel more solid
+      if(key === "pure"){
+        setGlassAlpha(0.06);
+        document.getElementById("alphaRange").value = 0.06;
+      }
+      toast("Theme: " + key);
+    }
+
+    // sync initial slider labels
+    (function init(){
+      const a = document.getElementById("alphaRange").value;
+      const b = document.getElementById("blurRange").value;
+      setGlassAlpha(a);
+      setBlur(b);
+      applyTheme("obsidian");
+    })();
+
+    // --- Capture mock list ---
+    const captureList = document.getElementById("captureList");
+    function capture(){
+      const box = document.getElementById("captureBox");
+      const txt = (box.value || "").trim();
+      if(!txt){ toast("Nothing to capture"); return; }
+      box.value = "";
+
+      const row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = `
+        <div class="l">
+          <div class="t">${escapeHtml(txt)}</div>
+          <div class="s">Captured to Inbox (mock) • not saved</div>
+        </div>
+        <div class="badge warn">new</div>
+      `;
+      captureList.prepend(row);
+      toast("Captured");
+    }
+
+    function escapeHtml(str){
+      return str
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+  </script>
 </body>
 </html>
