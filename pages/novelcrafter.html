@@ -6,22 +6,7 @@
   <meta name="color-scheme" content="dark" />
   <title>NovelCrafter · Maneit Portal</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <style>
-    body{margin:0;}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0;}
-    .tabs2{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-    .pill2{padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);text-decoration:none;}
-    .pill2:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06);}
-    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
-    .span6,.span4,.span8,.span12{grid-column:span 12;}
-    .field{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e6edf3;padding:12px;outline:none;}
-    textarea.field{min-height:140px;resize:vertical;font-family:ui-monospace,monospace;}
-    .list{display:flex;flex-direction:column;gap:10px;}
-    .item{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
-    .item strong{display:block;margin-bottom:4px;}
-    @media(min-width:860px){ .span6{grid-column:span 6;} .span4{grid-column:span 4;} .span8{grid-column:span 8;} }
-  </style>
+  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
 </head>
 
 <body>
@@ -30,6 +15,7 @@
     <a class="brand" href="../index.html">
       <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">NovelCrafter</span>
     </a>
+
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
@@ -48,68 +34,40 @@
 
 <main class="wrap">
   <h1 class="h1">NovelCrafter</h1>
-  <p class="muted">Worldbuilding, characters, plot, scenes. Structured, searchable, production-ready.</p>
+  <p class="muted">Worldbuilding, characters, plot, scenes. Structured and export-ready.</p>
 
-  <div class="toolbar">
-    <a class="btn" href="#">New Project</a>
-    <a class="btn" href="#">New Character</a>
-    <a class="btn" href="#">New Location</a>
-    <a class="btn" href="#">New Scene</a>
-  </div>
-
-  <section class="tabs2">
-    <a class="pill2" href="#world">World</a>
-    <a class="pill2" href="#characters">Characters</a>
-    <a class="pill2" href="#locations">Locations</a>
-    <a class="pill2" href="#plot">Plot</a>
-    <a class="pill2" href="#scenes">Scenes</a>
-    <a class="pill2" href="#exports">Exports</a>
-  </section>
-
-  <section class="grid2" id="world">
+  <section class="grid">
     <article class="card span8">
       <h2>World Notes</h2>
-      <textarea class="field" placeholder="Lore, rules, factions, magic, economy..."></textarea>
-      <p class="mono" style="margin-top:10px;">Later: autosave + tags + backlinks.</p>
+      <textarea class="field" placeholder="Lore, rules, factions, magic, economy..." style="min-height:220px;"></textarea>
+      <div class="actions" style="margin-top:10px;">
+        <a class="btn" href="notes.html">Send to Notes →</a>
+        <a class="btn" href="pipelines.html">Writing Pipeline →</a>
+      </div>
     </article>
 
     <article class="card span4">
-      <h2>Recent Items</h2>
-      <div class="list">
-        <div class="item"><strong>Faction: The Ravens</strong><small class="muted">updated today</small></div>
-        <div class="item"><strong>Location: Fjord Gate</strong><small class="muted">updated yesterday</small></div>
-        <div class="item"><strong>Character: Storm</strong><small class="muted">updated 2 days ago</small></div>
+      <h2>Quick Create</h2>
+      <div class="actions">
+        <a class="btn" href="#">New Character</a>
+        <a class="btn" href="#">New Location</a>
+        <a class="btn" href="#">New Scene</a>
       </div>
+      <p class="mono" style="margin-top:10px;">(Shell now, database later.)</p>
     </article>
 
-    <article class="card span6" id="characters">
+    <article class="card span6">
       <h2>Characters</h2>
-      <div class="list">
-        <div class="item"><strong>Storm</strong><small class="muted">skills · motivation · arc</small></div>
-        <div class="item"><strong>Thor the Goblinlord</strong><small class="muted">reputation · leadership · myth</small></div>
-      </div>
+      <p class="muted">Storm · Thor the Goblinlord · …</p>
     </article>
 
-    <article class="card span6" id="scenes">
+    <article class="card span6">
       <h2>Scenes</h2>
-      <div class="list">
-        <div class="item"><strong>Scene 01 — Hook</strong><small class="muted">goal · conflict · outcome</small></div>
-        <div class="item"><strong>Scene 02 — Escalation</strong><small class="muted">stakes · choice · consequence</small></div>
-      </div>
-    </article>
-
-    <article class="card span12" id="exports">
-      <h2>Exports</h2>
-      <p class="muted">Showcase buttons now. Later: real export + pipeline handoff.</p>
-      <div class="toolbar">
-        <a class="btn" href="#">Export: Markdown</a>
-        <a class="btn" href="#">Export: JSON</a>
-        <a class="btn" href="#">Export: Doc Pack</a>
-      </div>
+      <p class="muted">Hook → escalation → payoff</p>
     </article>
   </section>
 </main>
 
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=2" defer></script>
 </body>
 </html>
