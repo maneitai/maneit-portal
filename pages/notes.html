@@ -10,17 +10,22 @@
 
   <style>
     body { margin:0; }
-    textarea {
-      width: 100%;
-      min-height: 240px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 16px;
-      padding: 14px;
-      color: #e6edf3;
-      font-family: ui-monospace, monospace;
-      resize: vertical;
+    .grid2{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:12px;}
+    .span5,.span7,.span12{grid-column:span 12;}
+    .field{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:#e6edf3;
+      padding:12px;
+      outline:none;
     }
+    textarea.field{min-height:320px;resize:vertical;font-family:ui-monospace,monospace;}
+    .list{display:flex;flex-direction:column;gap:10px;}
+    .item{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);}
+    .item strong{display:block;margin-bottom:4px;}
+    @media(min-width:860px){ .span5{grid-column:span 5;} .span7{grid-column:span 7;} }
   </style>
 </head>
 
@@ -34,9 +39,12 @@
     </a>
     <nav class="tabs">
       <a class="tab" href="../index.html">Home</a>
+      <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
+      <a class="tab" href="agentfactory.html">AgentFactory</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
       <a class="tab" href="system.html">System</a>
     </nav>
   </div>
@@ -44,12 +52,33 @@
 
 <main class="wrap">
   <h1 class="h1">Notes</h1>
-  <p class="muted">Dump thoughts. Structure later.</p>
+  <p class="muted">Autosaves instantly. Click a draft to load it.</p>
 
-  <section class="grid">
-    <article class="card span12">
-      <h2>Scratchpad</h2>
-      <textarea placeholder="Write anything. No formatting pressure."></textarea>
+  <section class="grid2">
+    <article class="card span7">
+      <h2>Scratchpad (autosave)</h2>
+      <textarea class="field" data-notes placeholder="Write anything. No formatting pressure."></textarea>
+
+      <div class="grid2" style="margin-top:10px;">
+        <div class="span5">
+          <label class="mono" style="display:block;margin:0 0 6px;">Draft title</label>
+          <input class="field" data-draft-title placeholder="e.g., Sponsor email draft" />
+        </div>
+        <div class="span7" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+          <button class="btn" type="button" data-save-draft>Save as Draft</button>
+          <a class="btn" href="../index.html#compose">Send to Compose →</a>
+        </div>
+      </div>
+
+      <p class="mono" style="margin-top:10px;">
+        Stored locally: <span class="badge">localStorage</span>
+      </p>
+    </article>
+
+    <article class="card span5">
+      <h2>Drafts</h2>
+      <div class="list" data-drafts-list></div>
+      <p class="mono" style="margin-top:10px;">Tip: click draft card to load into scratchpad.</p>
     </article>
   </section>
 </main>
