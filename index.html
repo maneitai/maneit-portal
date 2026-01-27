@@ -30,6 +30,9 @@
       <a class="tab" href="pages/notes.html">Notes</a>
       <a class="tab" href="pages/system.html">System</a>
     </nav>
+
+    <!-- Home-only quick settings -->
+    <button class="btn" id="openThemeBtn" style="margin-left:auto;">Theme</button>
   </div>
 </header>
 
@@ -77,35 +80,39 @@
     <!-- TODAY -->
     <article class="card span5">
       <h2>Today</h2>
-      <p class="muted">Top 3</p>
+      <p class="muted">Top 3 (click to edit)</p>
 
-      <div class="box mono">
-        <ol style="margin:0; padding-left:18px; line-height:1.7;">
-          <li>Keep portal consistent</li>
-          <li>Build OS pages</li>
-          <li>Integrations later</li>
-        </ol>
-      </div>
+      <div class="box mono" id="todayBox">
+        <ol id="todayList" style="margin:0; padding-left:18px; line-height:1.7;"></ol>
 
-      <div class="box mono" style="margin-top:12px;">
-        <div class="muted">Focus</div>
-        <div style="margin-top:6px;">Home UI → Notes/Inbox shells</div>
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <input class="field" id="todayAdd" placeholder="Add item…" style="flex:1; min-width:180px;" />
+          <button class="btn" id="todayAddBtn">Add</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">Rule: max 3 here. Backlog lives elsewhere.</p>
       </div>
     </article>
 
     <!-- CALENDAR -->
     <article class="card span6">
       <h2>Calendar</h2>
-      <p class="muted">Placeholder daily view.</p>
+      <p class="muted">Daily slice (UI-only)</p>
 
       <div class="box mono">
-        <div>09:00 Focus block</div>
-        <div>12:00 Admin</div>
-        <div>15:00 Build</div>
+        <div id="calendarList" style="display:flex; flex-direction:column; gap:8px;"></div>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <input class="field" id="calTime" placeholder="HH:MM" style="width:110px;" />
+          <input class="field" id="calText" placeholder="What?" style="flex:1; min-width:200px;" />
+          <button class="btn" id="calAddBtn">Add</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">No real calendar sync yet. Just your day slice.</p>
       </div>
     </article>
 
-    <!-- CHAT HUB (replaces Email Inbox) -->
+    <!-- CHAT HUB -->
     <article class="card span6">
       <h2>Chat Hub</h2>
       <p class="muted">Teams + Discord DMs. UI shell now. Real sync later.</p>
@@ -114,17 +121,21 @@
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <span class="pill">Teams: <strong id="teamsCount">0</strong></span>
           <span class="pill">Discord: <strong id="discordCount">0</strong></span>
+          <span class="pill">Unread: <strong id="chatHubUnread">0</strong></span>
         </div>
 
-        <div style="margin-top:12px;" class="muted">Latest</div>
-        <div id="chatHubList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;">
-          <!-- UI-only items, populated by JS below (or later backend) -->
-        </div>
+        <div style="margin-top:12px;" class="muted">Latest (click to select)</div>
+        <div id="chatHubList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
 
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-          <button class="btn" id="openChatHubBtn">Open</button>
+          <button class="btn" id="chatHubMarkReadBtn">Mark read</button>
           <button class="btn" id="routeToInboxBtn">Send → Inbox</button>
-          <button class="btn" id="muteChatHubBtn">Mute</button>
+          <button class="btn" id="chatHubClearBtn">Clear</button>
+        </div>
+
+        <div class="box mono" style="margin-top:12px;">
+          <div class="muted">Inbox (routed items)</div>
+          <div id="hubInboxList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
         </div>
 
         <p class="muted" style="margin-top:10px;">
@@ -139,52 +150,47 @@
       <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
       <p class="muted">Execution lives elsewhere.</p>
     </article>
-
   </section>
 </main>
 
+<!-- Theme / Glass Modal (inline styles so you don’t need CSS edits) -->
+<div id="themeModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9999;">
+  <div class="wrap" style="height:100%; display:flex; align-items:center; justify-content:center;">
+    <div class="card" style="max-width:760px; width:100%;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+        <div>
+          <h2 style="margin:0;">Theme & Glass</h2>
+          <p class="muted" style="margin:6px 0 0;">UI-only settings. Saved locally.</p>
+        </div>
+        <button class="btn" id="closeThemeBtn">Close</button>
+      </div>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div style="display:grid; grid-template-columns: 160px 1fr; gap:12px; align-items:center;">
+          <div class="muted">Theme</div>
+          <select class="field" id="themeSelect">
+            <option value="obsidian">Obsidian</option>
+            <option value="nord">Nord</option>
+            <option value="emerald">Emerald</option>
+            <option value="amber">Amber</option>
+            <option value="pure">Pure Dark</option>
+          </select>
+
+          <div class="muted">Transparency</div>
+          <input id="glassAlpha" type="range" min="0.04" max="0.20" step="0.01" />
+
+          <div class="muted">Blur</div>
+          <input id="glassBlur" type="range" min="6" max="26" step="1" />
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          These set CSS variables on <code>:root</code>. Your style.css stays the source of layout.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="assets/js/app.js" defer></script>
-
-<!-- UI-only stub for Chat Hub (no backend). Safe to remove later. -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const list = document.getElementById("chatHubList");
-    const teamsCount = document.getElementById("teamsCount");
-    const discordCount = document.getElementById("discordCount");
-
-    // UI-only mock items (replace with real later)
-    const items = [
-      { src: "Teams", txt: "@you — Can you check the draft?" },
-      { src: "Teams", txt: "#ops — Status on portal build?" },
-      { src: "Discord", txt: "DM — You around?" },
-    ];
-
-    let t = 0, d = 0;
-    list.innerHTML = "";
-    items.forEach(it => {
-      if (it.src === "Teams") t++;
-      if (it.src === "Discord") d++;
-
-      const row = document.createElement("div");
-      row.className = "box";
-      row.style.padding = "10px";
-      row.style.borderRadius = "12px";
-      row.innerHTML = `<strong>[${it.src}]</strong> ${it.txt}`;
-      list.appendChild(row);
-    });
-
-    teamsCount.textContent = String(t);
-    discordCount.textContent = String(d);
-
-    const openBtn = document.getElementById("openChatHubBtn");
-    const routeBtn = document.getElementById("routeToInboxBtn");
-    const muteBtn = document.getElementById("muteChatHubBtn");
-
-    openBtn?.addEventListener("click", () => alert("Chat Hub (UI-only) — backend later."));
-    routeBtn?.addEventListener("click", () => alert("Route to Inbox (UI-only) — persistence later."));
-    muteBtn?.addEventListener("click", () => alert("Muted (UI-only)."));
-  });
-</script>
-
 </body>
 </html>
