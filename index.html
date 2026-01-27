@@ -6,38 +6,89 @@
   <meta name="color-scheme" content="dark" />
   <title>Maneit Portal</title>
 
-  <!-- We’ll add this file next -->
   <link rel="stylesheet" href="assets/css/style.css" />
 
-  <!-- Nice defaults even before CSS exists -->
   <style>
     :root { color-scheme: dark; }
-    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#0b0f14; color:#e6edf3; }
-    a { color: inherit; }
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 18px; }
-    .topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: rgba(11,15,20,.72); border-bottom: 1px solid rgba(255,255,255,.08); }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; color:#e6edf3; }
+
+    /* Layout */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 18px; }
+    .topbar { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px); }
     .row { display:flex; gap:12px; align-items:center; justify-content:space-between; }
     .brand { display:flex; gap:10px; align-items:center; text-decoration:none; }
     .dot { width:10px; height:10px; border-radius:999px; background:#4ade80; box-shadow:0 0 0 4px rgba(74,222,128,.12); }
     .tabs { display:flex; gap:10px; flex-wrap:wrap; }
     .tab { padding:10px 12px; border-radius:12px; text-decoration:none; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03); }
     .tab:hover { border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.05); }
-    .hero { padding: 22px 0 8px; }
+    .pill { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(74,222,128,.10); border: 1px solid rgba(74,222,128,.18); color: rgba(230,237,243,.90); }
+
+    .hero { padding: 18px 0 8px; }
     .h1 { font-size: 22px; margin: 0 0 8px; letter-spacing:.2px; }
     .muted { color: rgba(230,237,243,.72); margin: 0; }
-    .grid { display:grid; gap:12px; grid-template-columns: repeat(12, 1fr); padding: 14px 0 24px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 12px; color: rgba(230,237,243,.72); }
+
+    .grid { display:grid; gap:12px; grid-template-columns: repeat(12, 1fr); padding: 14px 0 28px; }
     .card { grid-column: span 12; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.03); border-radius: 16px; padding: 14px; }
-    .card h2 { margin:0 0 8px; font-size: 14px; letter-spacing:.3px; text-transform: uppercase; color: rgba(230,237,243,.72); }
+    .card h2 { margin:0 0 10px; font-size: 12px; letter-spacing:.4px; text-transform: uppercase; color: rgba(230,237,243,.72); }
     .card .big { font-size: 18px; margin: 0 0 10px; }
-    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+
     .btn { display:inline-flex; align-items:center; gap:10px; padding: 11px 12px; border-radius: 14px; text-decoration:none; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); }
     .btn:hover { border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.06); }
-    .pill { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(74,222,128,.10); border: 1px solid rgba(74,222,128,.18); color: rgba(230,237,243,.90); }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 12px; color: rgba(230,237,243,.72); }
+    .btn:active { transform: translateY(1px); }
+
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+
+    /* Home widgets */
+    .stack { display:flex; flex-direction:column; gap:10px; }
+    .panel {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+
+    .field {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: #e6edf3;
+      padding: 12px;
+      outline: none;
+    }
+    .field:focus { border-color: rgba(74,222,128,.35); }
+
+    textarea.field { min-height: 140px; resize: vertical; font-family: ui-monospace, monospace; }
+
+    .list { display:flex; flex-direction:column; gap:10px; }
+    .item {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+    }
+    .item strong { display:block; font-size: 14px; margin-bottom: 4px; }
+    .item small { color: rgba(230,237,243,.62); }
+
+    .chips { display:flex; gap:6px; flex-wrap:wrap; }
+    .chip {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,.18);
+      background: rgba(56,189,248,.10);
+      color: rgba(230,237,243,.85);
+      user-select:none;
+    }
+    .chip.ok { border-color: rgba(74,222,128,.18); background: rgba(74,222,128,.10); }
+
     @media (min-width: 860px){
-      .card.span6 { grid-column: span 6; }
-      .card.span4 { grid-column: span 4; }
-      .card.span8 { grid-column: span 8; }
+      .span4 { grid-column: span 4; }
+      .span5 { grid-column: span 5; }
+      .span6 { grid-column: span 6; }
+      .span7 { grid-column: span 7; }
+      .span8 { grid-column: span 8; }
     }
   </style>
 </head>
@@ -49,7 +100,7 @@
         <a class="brand" href="./index.html" aria-label="Home">
           <span class="dot" aria-hidden="true"></span>
           <strong>Maneit Portal</strong>
-          <span class="pill">Production v1</span>
+          <span class="pill">Home</span>
         </a>
 
         <nav class="tabs" aria-label="Primary">
@@ -65,71 +116,182 @@
 
   <main class="wrap">
     <section class="hero">
-      <h1 class="h1">Founder Operating System</h1>
-      <p class="muted">
-        Fast entry points. Zero clutter. One click to momentum.
-        <span class="mono">/index.html</span>
-      </p>
+      <h1 class="h1">Home</h1>
+      <p class="muted">Your replacement for ChatGPT + Calendar + Day Planner + Email.</p>
+      <div class="chips" style="margin-top:10px;">
+        <span class="chip ok">Low noise</span>
+        <span class="chip ok">Fast entry</span>
+        <span class="chip">Keyboard-first</span>
+        <span class="chip">Backend-ready</span>
+      </div>
     </section>
 
-    <section class="grid" aria-label="Dashboard">
-      <article class="card span8">
-        <h2>Quick Actions</h2>
-        <p class="big">What do you want to move forward right now?</p>
-        <div class="actions">
+    <section class="grid" aria-label="Home Dashboard">
+      <!-- Chat / Command -->
+      <article class="card span7">
+        <h2>Chat / Command</h2>
+        <p class="muted" style="margin-bottom:10px;">
+          Type your intent. This will later route to your local models / pipeline.
+        </p>
+        <textarea class="field" id="homeChat" placeholder="Example: 'Plan my day. Pull tasks. Draft 2 emails. Create a script.'"></textarea>
+
+        <div class="actions" style="margin-top:10px;">
+          <a class="btn" href="pages/agents.html">Open Agents →</a>
+          <a class="btn" href="pages/notes.html">Dump to Notes →</a>
           <a class="btn" href="pages/work.html">Open Workboard →</a>
-          <a class="btn" href="pages/projects.html">Open Projects →</a>
-          <a class="btn" href="pages/agents.html">Spawn an Agent →</a>
-          <a class="btn" href="pages/notes.html">Capture Notes →</a>
         </div>
+
         <p class="mono" style="margin-top:12px;">
-          Next files we will create: assets/css/style.css, assets/js/app.js, pages/*.html
+          Shortcut: W=Work, P=Projects, A=Agents, N=Notes, S=System
         </p>
       </article>
 
-      <article class="card span4">
-        <h2>Status</h2>
-        <p class="big" style="margin-bottom:6px;">Portal build</p>
-        <p class="muted" style="margin-top:0;">
-          You are building manually in GitHub, one file at a time.
-        </p>
-        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:12px 0;">
-        <p class="mono" style="margin:0;">Mode: deterministic</p>
-        <p class="mono" style="margin:0;">Theme: calm dark</p>
-        <p class="mono" style="margin:0;">Target: ADHD-friendly</p>
+      <!-- Today -->
+      <article class="card span5">
+        <h2>Today</h2>
+        <div class="stack">
+          <div class="panel">
+            <strong style="display:block;margin-bottom:6px;">Top 3</strong>
+            <div class="list">
+              <div class="item">
+                <strong>Finish Home wiring</strong>
+                <small>Make it feel real (showcase)</small>
+              </div>
+              <div class="item">
+                <strong>Define Inbox + Compose flows</strong>
+                <small>UI now, backend later</small>
+              </div>
+              <div class="item">
+                <strong>Calendar surface</strong>
+                <small>Daily view + next events</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <strong style="display:block;margin-bottom:6px;">Energy</strong>
+            <div class="chips">
+              <span class="chip ok">Deep work</span>
+              <span class="chip">Admin</span>
+              <span class="chip">Social</span>
+            </div>
+            <p class="mono" style="margin:10px 0 0;">(Later: persistent toggle + automation)</p>
+          </div>
+        </div>
       </article>
 
+      <!-- Calendar -->
       <article class="card span6">
-        <h2>Workboard</h2>
-        <p class="big">Pipeline overview + “Now / Next / Later”.</p>
-        <div class="actions">
-          <a class="btn" href="pages/work.html">Go to Work →</a>
-        </div>
-        <p class="mono" style="margin-top:12px;">
-          Placeholder page until we generate it.
+        <h2>Calendar</h2>
+        <p class="muted" style="margin-bottom:10px;">
+          Placeholder daily view. Later we can connect Google Calendar / CalDAV / your own backend.
         </p>
+        <div class="list">
+          <div class="item">
+            <strong>09:00 – Focus block</strong>
+            <small>Portal polish + integrations</small>
+          </div>
+          <div class="item">
+            <strong>12:00 – Admin window</strong>
+            <small>Email + planning + logistics</small>
+          </div>
+          <div class="item">
+            <strong>15:00 – Build</strong>
+            <small>Agents + scripts + demo material</small>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:10px;">
+          <a class="btn" href="pages/system.html">System notes →</a>
+          <a class="btn" href="pages/work.html">Plan in Work →</a>
+        </div>
       </article>
 
+      <!-- Inbox -->
       <article class="card span6">
-        <h2>System</h2>
-        <p class="big">Nodes, scripts, bootstraps, and ops notes.</p>
-        <div class="actions">
-          <a class="btn" href="pages/system.html">Go to System →</a>
+        <h2>Email Inbox</h2>
+        <p class="muted" style="margin-bottom:10px;">
+          UI shell. Later: connect Gmail/Outlook or your own mailbox service.
+        </p>
+
+        <div class="list">
+          <div class="item">
+            <strong>Partnership / Sponsor – Follow up</strong>
+            <small>2h ago · flagged</small>
+          </div>
+          <div class="item">
+            <strong>Municipality / Course interest</strong>
+            <small>Yesterday · needs reply</small>
+          </div>
+          <div class="item">
+            <strong>Ops / Hardware / Shipping</strong>
+            <small>2 days ago · waiting</small>
+          </div>
         </div>
-        <p class="mono" style="margin-top:12px;">
-          We’ll add copy buttons + structured blocks.
+
+        <div class="actions" style="margin-top:10px;">
+          <a class="btn" href="#compose">Compose ↓</a>
+        </div>
+      </article>
+
+      <!-- Compose -->
+      <article class="card span12" id="compose">
+        <h2>Compose</h2>
+        <div class="grid" style="padding:0; margin-top:6px;">
+          <div class="span4">
+            <label class="mono" for="to" style="display:block;margin:0 0 6px;">To</label>
+            <input class="field" id="to" placeholder="name@domain.com" />
+          </div>
+          <div class="span8">
+            <label class="mono" for="subject" style="display:block;margin:0 0 6px;">Subject</label>
+            <input class="field" id="subject" placeholder="Subject..." />
+          </div>
+          <div class="span12">
+            <label class="mono" for="body" style="display:block;margin:10px 0 6px;">Message</label>
+            <textarea class="field" id="body" placeholder="Write the email here..."></textarea>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:10px;">
+          <a class="btn" href="#" id="mailtoBtn">Send via mail client →</a>
+          <a class="btn" href="pages/notes.html">Save draft to Notes →</a>
+        </div>
+
+        <p class="mono" style="margin-top:10px;">
+          (Current send method uses mailto: link. Later: real send via backend.)
         </p>
       </article>
     </section>
 
     <footer style="padding: 10px 0 30px; border-top:1px solid rgba(255,255,255,.08);">
       <p class="mono" style="margin:12px 0 0;">
-        © Maneit Labs — local-first mindset, GitHub-first edits.
+        Home is your control room: chat routing, schedule surface, planning, and communication.
       </p>
     </footer>
   </main>
 
-  <!-- We’ll add this file later -->
   <script src="assets/js/app.js" defer></script>
+
+  <script>
+    // Lightweight "send" for now: uses user's default mail app.
+    // This keeps GitHub Pages static while still being demo-able.
+    (() => {
+      const btn = document.getElementById("mailtoBtn");
+      if (!btn) return;
+
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const to = (document.getElementById("to")?.value || "").trim();
+        const subject = (document.getElementById("subject")?.value || "").trim();
+        const body = (document.getElementById("body")?.value || "").trim();
+
+        const mailto = new URL("mailto:" + encodeURIComponent(to || ""));
+        if (subject) mailto.searchParams.set("subject", subject);
+        if (body) mailto.searchParams.set("body", body);
+
+        window.location.href = mailto.toString();
+      });
+    })();
+  </script>
 </body>
 </html>
