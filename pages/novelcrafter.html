@@ -4,20 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>NovelCrafter · Maneit Portal</title>
+  <title>Maneit Portal — NovelCrafter</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 
 <body>
 <header class="topbar">
   <div class="wrap row">
     <a class="brand" href="../index.html">
-      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">NovelCrafter</span>
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">NovelCrafter</span>
     </a>
 
     <nav class="tabs">
-      <a class="tab" href="../index.html">Home</a>
       <a class="tab" href="hub.html">Hub</a>
       <a class="tab" href="work.html">Work</a>
       <a class="tab" href="projects.html">Projects</a>
@@ -34,40 +35,350 @@
 
 <main class="wrap">
   <h1 class="h1">NovelCrafter</h1>
-  <p class="muted">Worldbuilding, characters, plot, scenes. Structured and export-ready.</p>
+  <p class="muted">Worldbuilding + characters + plots + scenes. UI shell only (no saving yet).</p>
+
+  <!-- Module Tabs -->
+  <section class="card span12" style="margin-bottom:12px;">
+    <div class="box mono" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+      <button class="btn" data-module="world">World</button>
+      <button class="btn" data-module="characters">Characters</button>
+      <button class="btn" data-module="plot">Plot</button>
+      <button class="btn" data-module="scenes">Scenes</button>
+      <button class="btn" data-module="lore">Lore</button>
+      <button class="btn" data-module="assets">Assets</button>
+      <button class="btn" data-module="prompts">Prompts</button>
+
+      <span class="pill" id="modulePill" style="margin-left:auto;">Module: <strong>World</strong></span>
+    </div>
+  </section>
 
   <section class="grid">
-    <article class="card span8">
-      <h2>World Notes</h2>
-      <textarea class="field" placeholder="Lore, rules, factions, magic, economy..." style="min-height:220px;"></textarea>
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="notes.html">Send to Notes →</a>
-        <a class="btn" href="pipelines.html">Writing Pipeline →</a>
+
+    <!-- LEFT: Library -->
+    <article class="card span3">
+      <h2>Library</h2>
+      <p class="muted">Select a node. Add is UI-only for now.</p>
+
+      <div class="box" style="margin-top:10px;">
+        <input class="field" id="searchBox" placeholder="Search…" />
+        <div class="mono muted" style="margin-top:10px;">List</div>
+        <div id="libraryList" class="mono" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <button class="btn" id="addItemBtn">+ Add</button>
+          <button class="btn" id="duplicateBtn">Duplicate</button>
+          <button class="btn" id="deleteBtn">Delete</button>
+        </div>
+      </div>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div class="muted">Project</div>
+        <div style="margin-top:6px;"><strong>Gylfagard</strong> (placeholder)</div>
+        <div class="muted" style="margin-top:10px;">Status</div>
+        <div style="margin-top:6px;">UI shell • no persistence</div>
       </div>
     </article>
 
-    <article class="card span4">
-      <h2>Quick Create</h2>
-      <div class="actions">
-        <a class="btn" href="#">New Character</a>
-        <a class="btn" href="#">New Location</a>
-        <a class="btn" href="#">New Scene</a>
+    <!-- CENTER: Editor -->
+    <article class="card span6">
+      <h2 id="editorHeading">World</h2>
+      <p class="muted" id="editorSub">Create and refine the core of the setting.</p>
+
+      <div class="box" style="margin-top:10px;">
+        <div class="mono muted">Title</div>
+        <input class="field" id="titleField" placeholder="Title…" style="margin-top:8px;" />
+
+        <div class="mono muted" style="margin-top:12px;">Content</div>
+        <textarea class="field" id="bodyField" style="margin-top:8px; height:320px;"
+          placeholder="Write here… (This will be saved later)"></textarea>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <input class="field" id="tagsField" placeholder="Tags (comma-separated)" style="flex:1; min-width:240px;" />
+          <button class="btn" id="saveStubBtn">Save (later)</button>
+          <button class="btn" id="exportStubBtn">Export (later)</button>
+        </div>
       </div>
-      <p class="mono" style="margin-top:10px;">(Shell now, database later.)</p>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div class="muted">Quick links</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+          <span class="pill">Open Notes</span>
+          <span class="pill">Open Work</span>
+          <span class="pill">Open Pipelines</span>
+        </div>
+      </div>
     </article>
 
-    <article class="card span6">
-      <h2>Characters</h2>
-      <p class="muted">Storm · Thor the Goblinlord · …</p>
+    <!-- RIGHT: Context / Prompts -->
+    <article class="card span3">
+      <h2>Context</h2>
+      <p class="muted">Glue panel. Keeps your brain locked-in.</p>
+
+      <div class="box mono" style="margin-top:10px;">
+        <div class="muted">Selected</div>
+        <div id="selectedInfo" style="margin-top:6px;"><strong>None</strong></div>
+
+        <div class="muted" style="margin-top:12px;">Quick facts (placeholder)</div>
+        <div id="factsBox" style="margin-top:8px; display:flex; flex-direction:column; gap:6px; opacity:.9;">
+          <div>• Tone: Nordic / cold</div>
+          <div>• Scope: Kingdom-level</div>
+          <div>• Focus: Worldbuilding</div>
+        </div>
+      </div>
+
+      <div class="box" style="margin-top:12px;">
+        <div class="mono muted">Prompt builder (UI-only)</div>
+
+        <select class="field" id="promptMode" style="margin-top:8px;">
+          <option value="outline">Outline</option>
+          <option value="scene">Scene draft</option>
+          <option value="character">Character sheet</option>
+          <option value="lore">Lore entry</option>
+        </select>
+
+        <textarea class="field" id="promptText" style="margin-top:8px; height:160px;"
+          placeholder="Prompt will appear here…"></textarea>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <button class="btn" id="buildPromptBtn">Build prompt</button>
+          <button class="btn" id="copyPromptBtn">Copy</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Later: send to local models + store outputs as nodes.
+        </p>
+      </div>
     </article>
 
-    <article class="card span6">
-      <h2>Scenes</h2>
-      <p class="muted">Hook → escalation → payoff</p>
-    </article>
   </section>
 </main>
 
-<script src="../assets/js/app.js?v=2" defer></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  const moduleMeta = {
+    world:      { h:"World",       s:"Create and refine the core of the setting." },
+    characters: { h:"Characters",  s:"People, factions, arcs, relationships." },
+    plot:       { h:"Plot",        s:"Acts, beats, themes, goals, stakes." },
+    scenes:     { h:"Scenes",      s:"Scene cards, POV, location, conflict." },
+    lore:       { h:"Lore",        s:"Rules, history, religions, magic, tech." },
+    assets:     { h:"Assets",      s:"Images, references, mood, maps (later)." },
+    prompts:    { h:"Prompts",     s:"Reusable prompt templates (later)." },
+  };
+
+  // UI-only dataset
+  const data = {
+    world: [
+      { id:"w1", title:"Kingdom overview", body:"", tags:"kingdom,overview" },
+      { id:"w2", title:"Geography", body:"", tags:"map,biomes" },
+      { id:"w3", title:"Magic rules", body:"", tags:"magic,rules" },
+    ],
+    characters: [
+      { id:"c1", title:"Storm", body:"", tags:"protagonist" },
+      { id:"c2", title:"Thor the Goblinlord", body:"", tags:"goblin,lord" },
+      { id:"c3", title:"Beanie", body:"", tags:"ally" },
+    ],
+    plot: [
+      { id:"p1", title:"Act I — Setup", body:"", tags:"act1" },
+      { id:"p2", title:"Act II — Pressure", body:"", tags:"act2" },
+      { id:"p3", title:"Act III — Resolution", body:"", tags:"act3" },
+    ],
+    scenes: [
+      { id:"s1", title:"Arrival at the fjord", body:"", tags:"arrival" },
+      { id:"s2", title:"The oath", body:"", tags:"oath" },
+      { id:"s3", title:"Ambush in the pines", body:"", tags:"ambush" },
+    ],
+    lore: [
+      { id:"l1", title:"The Old Kings", body:"", tags:"history" },
+      { id:"l2", title:"Runes & blood", body:"", tags:"magic" },
+      { id:"l3", title:"The winter pact", body:"", tags:"religion" },
+    ],
+    assets: [
+      { id:"a1", title:"Moodboard (placeholder)", body:"", tags:"mood" },
+      { id:"a2", title:"Map drafts (placeholder)", body:"", tags:"map" },
+    ],
+    prompts: [
+      { id:"pr1", title:"Scene draft template", body:"", tags:"prompt" },
+      { id:"pr2", title:"Character sheet template", body:"", tags:"prompt" },
+    ],
+  };
+
+  let activeModule = "world";
+  let activeId = null;
+
+  // DOM
+  const modulePill = $("modulePill");
+  const libraryList = $("libraryList");
+  const searchBox = $("searchBox");
+
+  const editorHeading = $("editorHeading");
+  const editorSub = $("editorSub");
+  const titleField = $("titleField");
+  const bodyField = $("bodyField");
+  const tagsField = $("tagsField");
+
+  const selectedInfo = $("selectedInfo");
+  const promptMode = $("promptMode");
+  const promptText = $("promptText");
+
+  function setModule(m) {
+    activeModule = m;
+    activeId = null;
+
+    const meta = moduleMeta[m];
+    editorHeading.textContent = meta.h;
+    editorSub.textContent = meta.s;
+    modulePill.innerHTML = `Module: <strong>${meta.h}</strong>`;
+
+    titleField.value = "";
+    bodyField.value = "";
+    tagsField.value = "";
+    selectedInfo.innerHTML = "<strong>None</strong>";
+
+    renderList();
+  }
+
+  function renderList() {
+    const q = (searchBox.value || "").trim().toLowerCase();
+    const items = (data[activeModule] || []).filter(it => {
+      if (!q) return true;
+      return (it.title || "").toLowerCase().includes(q) || (it.tags || "").toLowerCase().includes(q);
+    });
+
+    libraryList.innerHTML = "";
+    items.forEach(it => {
+      const row = document.createElement("div");
+      row.className = "box";
+      row.style.padding = "10px";
+      row.style.borderRadius = "12px";
+      row.style.cursor = "pointer";
+      row.style.userSelect = "none";
+      row.style.borderColor = (it.id === activeId) ? "rgba(125,211,252,0.45)" : "";
+
+      row.innerHTML = `<strong>${escapeHtml(it.title)}</strong><div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(it.tags || "")}</div>`;
+      row.addEventListener("click", () => selectItem(it.id));
+      libraryList.appendChild(row);
+    });
+
+    if (items.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "muted mono";
+      empty.style.marginTop = "8px";
+      empty.textContent = "No items.";
+      libraryList.appendChild(empty);
+    }
+  }
+
+  function selectItem(id) {
+    activeId = id;
+    const it = (data[activeModule] || []).find(x => x.id === id);
+    if (!it) return;
+
+    titleField.value = it.title || "";
+    bodyField.value = it.body || "";
+    tagsField.value = it.tags || "";
+
+    selectedInfo.innerHTML = `<strong>${escapeHtml(it.title)}</strong><div class="muted" style="margin-top:6px;">${escapeHtml(it.tags || "")}</div>`;
+    renderList();
+  }
+
+  function addItem() {
+    const t = prompt("Title:");
+    if (t === null) return;
+    const title = t.trim();
+    if (!title) return;
+
+    const newIt = { id: (activeModule[0] + Date.now()), title, body:"", tags:"" };
+    data[activeModule] = data[activeModule] || [];
+    data[activeModule].unshift(newIt);
+    selectItem(newIt.id);
+    renderList();
+  }
+
+  function duplicateItem() {
+    if (!activeId) return alert("Select an item first.");
+    const it = (data[activeModule] || []).find(x => x.id === activeId);
+    if (!it) return;
+    const copy = { ...it, id: (activeModule[0] + Date.now()), title: it.title + " (copy)" };
+    data[activeModule].unshift(copy);
+    selectItem(copy.id);
+    renderList();
+  }
+
+  function deleteItem() {
+    if (!activeId) return alert("Select an item first.");
+    const ok = confirm("Delete selected item? (UI-only)");
+    if (!ok) return;
+    data[activeModule] = (data[activeModule] || []).filter(x => x.id !== activeId);
+    activeId = null;
+    titleField.value = "";
+    bodyField.value = "";
+    tagsField.value = "";
+    selectedInfo.innerHTML = "<strong>None</strong>";
+    renderList();
+  }
+
+  function buildPrompt() {
+    const mode = promptMode.value;
+    const title = (titleField.value || "").trim() || "(untitled)";
+    const tags = (tagsField.value || "").trim();
+    const body = (bodyField.value || "").trim();
+
+    let p = "";
+    if (mode === "outline") {
+      p = `Create a concise outline for: ${title}\nTags: ${tags}\nContext:\n${body}\n\nOutput: bullet outline + key beats.`;
+    } else if (mode === "scene") {
+      p = `Write a scene draft.\nTitle: ${title}\nTags: ${tags}\nContext:\n${body}\n\nConstraints: vivid but tight, clear conflict, strong ending hook.`;
+    } else if (mode === "character") {
+      p = `Create a character sheet.\nName/Title: ${title}\nTags: ${tags}\nContext:\n${body}\n\nInclude: appearance, voice, goals, fears, contradictions, arc, secrets.`;
+    } else {
+      p = `Write a lore entry.\nTitle: ${title}\nTags: ${tags}\nContext:\n${body}\n\nInclude: origin, rules, consequences, contradictions, story hooks.`;
+    }
+
+    promptText.value = p;
+  }
+
+  async function copyPrompt() {
+    const v = promptText.value || "";
+    if (!v.trim()) return;
+    try {
+      await navigator.clipboard.writeText(v);
+      alert("Copied.");
+    } catch {
+      alert("Copy failed (browser blocked clipboard).");
+    }
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // Wire module buttons
+  document.querySelectorAll("[data-module]").forEach(btn => {
+    btn.addEventListener("click", () => setModule(btn.getAttribute("data-module")));
+  });
+
+  searchBox.addEventListener("input", renderList);
+
+  $("addItemBtn").addEventListener("click", addItem);
+  $("duplicateBtn").addEventListener("click", duplicateItem);
+  $("deleteBtn").addEventListener("click", deleteItem);
+
+  $("buildPromptBtn").addEventListener("click", buildPrompt);
+  $("copyPromptBtn").addEventListener("click", copyPrompt);
+
+  $("saveStubBtn").addEventListener("click", () => alert("Saving is later (persistence layer)."));
+  $("exportStubBtn").addEventListener("click", () => alert("Export is later."));
+
+  // Init
+  setModule("world");
+})();
+</script>
 </body>
 </html>
