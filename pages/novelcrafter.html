@@ -6,379 +6,277 @@
   <meta name="color-scheme" content="dark" />
   <title>Maneit Portal — NovelCrafter</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <!-- New future-proof stack (only this page uses it for now) -->
+  <link rel="stylesheet" href="../assets/css/core.css" />
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+  <link rel="stylesheet" href="../assets/css/pages/novelcrafter.css" />
 </head>
 
 <body>
-<header class="topbar">
-  <div class="wrap row">
-    <a class="brand" href="../index.html">
-      <span class="dot"></span>
-      <strong>Maneit Portal</strong>
-      <span class="pill">NovelCrafter</span>
-    </a>
+  <div class="gridbg" aria-hidden="true"></div>
 
-    <nav class="tabs">
-      <a class="tab" href="hub.html">Hub</a>
-      <a class="tab" href="work.html">Work</a>
-      <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
-      <a class="tab" href="agentfactory.html">AgentFactory</a>
-      <a class="tab" href="pipelines.html">Pipelines</a>
-      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
-      <a class="tab" href="stream.html">Stream</a>
-      <a class="tab" href="notes.html">Notes</a>
-      <a class="tab" href="system.html">System</a>
-    </nav>
-  </div>
-</header>
+  <header class="topbar">
+    <div class="wrap row">
+      <a class="brand" href="../index.html">
+        <span class="dot"></span>
+        <strong>Maneit Portal</strong>
+        <span class="pill">NovelCrafter</span>
+      </a>
 
-<main class="wrap">
-  <h1 class="h1">NovelCrafter</h1>
-  <p class="muted">Worldbuilding + characters + plots + scenes. UI shell only (no saving yet).</p>
-
-  <!-- Module Tabs -->
-  <section class="card span12" style="margin-bottom:12px;">
-    <div class="box mono" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-      <button class="btn" data-module="world">World</button>
-      <button class="btn" data-module="characters">Characters</button>
-      <button class="btn" data-module="plot">Plot</button>
-      <button class="btn" data-module="scenes">Scenes</button>
-      <button class="btn" data-module="lore">Lore</button>
-      <button class="btn" data-module="assets">Assets</button>
-      <button class="btn" data-module="prompts">Prompts</button>
-
-      <span class="pill" id="modulePill" style="margin-left:auto;">Module: <strong>World</strong></span>
+      <nav class="tabsTop" aria-label="Portal navigation">
+        <a class="tab" href="hub.html">Hub</a>
+        <a class="tab" href="work.html">Work</a>
+        <a class="tab" href="projects.html">Projects</a>
+        <a class="tab" href="agents.html">Agents</a>
+        <a class="tab" href="agentfactory.html">AgentFactory</a>
+        <a class="tab" href="pipelines.html">Pipelines</a>
+        <a class="tab" href="novelcrafter.html" data-active="true">NovelCrafter</a>
+        <a class="tab" href="stream.html">Stream</a>
+        <a class="tab" href="notes.html">Notes</a>
+        <a class="tab" href="system.html">System</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section class="grid">
-
-    <!-- LEFT: Library -->
-    <article class="card span3">
-      <h2>Library</h2>
-      <p class="muted">Select a node. Add is UI-only for now.</p>
-
-      <div class="box" style="margin-top:10px;">
-        <input class="field" id="searchBox" placeholder="Search…" />
-        <div class="mono muted" style="margin-top:10px;">List</div>
-        <div id="libraryList" class="mono" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
-
-        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-          <button class="btn" id="addItemBtn">+ Add</button>
-          <button class="btn" id="duplicateBtn">Duplicate</button>
-          <button class="btn" id="deleteBtn">Delete</button>
+  <main class="layout" id="novelcrafterRoot">
+    <!-- LIBRARY -->
+    <section class="panel" id="pLibrary">
+      <div class="panelHead">
+        <div class="panelTitle">Library</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" id="libAddBtn" title="Add node (UI-only)">＋</button>
+          <button class="iconbtn" title="No-op">×</button>
         </div>
       </div>
 
-      <div class="box mono" style="margin-top:12px;">
-        <div class="muted">Project</div>
-        <div style="margin-top:6px;"><strong>Gylfagard</strong> (placeholder)</div>
-        <div class="muted" style="margin-top:10px;">Status</div>
-        <div style="margin-top:6px;">UI shell • no persistence</div>
-      </div>
-    </article>
-
-    <!-- CENTER: Editor -->
-    <article class="card span6">
-      <h2 id="editorHeading">World</h2>
-      <p class="muted" id="editorSub">Create and refine the core of the setting.</p>
-
-      <div class="box" style="margin-top:10px;">
-        <div class="mono muted">Title</div>
-        <input class="field" id="titleField" placeholder="Title…" style="margin-top:8px;" />
-
-        <div class="mono muted" style="margin-top:12px;">Content</div>
-        <textarea class="field" id="bodyField" style="margin-top:8px; height:320px;"
-          placeholder="Write here… (This will be saved later)"></textarea>
-
-        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-          <input class="field" id="tagsField" placeholder="Tags (comma-separated)" style="flex:1; min-width:240px;" />
-          <button class="btn" id="saveStubBtn">Save (later)</button>
-          <button class="btn" id="exportStubBtn">Export (later)</button>
-        </div>
+      <div class="moduleTabs" id="moduleTabs">
+        <div class="mtab active" data-mod="world">World</div>
+        <div class="mtab" data-mod="characters">Characters</div>
+        <div class="mtab" data-mod="lore">Lore</div>
+        <div class="mtab" data-mod="plot">Plot</div>
+        <div class="mtab" data-mod="scenes">Scenes</div>
+        <div class="mtab" data-mod="assets">Assets</div>
+        <div class="mtab" data-mod="prompts">Prompts</div>
       </div>
 
-      <div class="box mono" style="margin-top:12px;">
-        <div class="muted">Quick links</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
-          <span class="pill">Open Notes</span>
-          <span class="pill">Open Work</span>
-          <span class="pill">Open Pipelines</span>
-        </div>
-      </div>
-    </article>
-
-    <!-- RIGHT: Context / Prompts -->
-    <article class="card span3">
-      <h2>Context</h2>
-      <p class="muted">Glue panel. Keeps your brain locked-in.</p>
-
-      <div class="box mono" style="margin-top:10px;">
-        <div class="muted">Selected</div>
-        <div id="selectedInfo" style="margin-top:6px;"><strong>None</strong></div>
-
-        <div class="muted" style="margin-top:12px;">Quick facts (placeholder)</div>
-        <div id="factsBox" style="margin-top:8px; display:flex; flex-direction:column; gap:6px; opacity:.9;">
-          <div>• Tone: Nordic / cold</div>
-          <div>• Scope: Kingdom-level</div>
-          <div>• Focus: Worldbuilding</div>
-        </div>
-      </div>
-
-      <div class="box" style="margin-top:12px;">
-        <div class="mono muted">Prompt builder (UI-only)</div>
-
-        <select class="field" id="promptMode" style="margin-top:8px;">
-          <option value="outline">Outline</option>
-          <option value="scene">Scene draft</option>
-          <option value="character">Character sheet</option>
-          <option value="lore">Lore entry</option>
+      <div class="panelBody">
+        <div class="mono muted">Project</div>
+        <select class="field" id="projectSelect" style="margin-top:8px;">
+          <option value="gylfagard">Guldardal Chronicles</option>
+          <option value="iskald">ISKALD (placeholder)</option>
         </select>
 
-        <textarea class="field" id="promptText" style="margin-top:8px; height:160px;"
-          placeholder="Prompt will appear here…"></textarea>
+        <div class="mono muted" style="margin-top:12px;">Search</div>
+        <input class="field" id="libSearch" placeholder="Search nodes…" style="margin-top:8px;" />
 
-        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-          <button class="btn" id="buildPromptBtn">Build prompt</button>
-          <button class="btn" id="copyPromptBtn">Copy</button>
+        <div class="mono muted" style="margin-top:12px;">Nodes</div>
+        <div class="libScroll mono" id="libList" style="margin-top:8px;"></div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <button class="btn" id="libDupBtn">Duplicate</button>
+          <button class="btn" id="libDelBtn">Delete</button>
+        </div>
+      </div>
+
+      <div class="panelFoot">panel</div>
+    </section>
+
+    <!-- CHATMODEL -->
+    <section class="panel" id="pChat">
+      <div class="panelHead">
+        <div class="panelTitle">Chatmodel</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" id="chatNewBtn" title="New chat">＋</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
+
+      <div class="chatTop mono">
+        <div class="muted" id="chatProjectLabel">Project: —</div>
+        <div class="muted" id="chatModuleLabel">Module: —</div>
+      </div>
+
+      <div class="chatGrid">
+        <div class="chatList">
+          <div class="chatListInner" id="chatList"></div>
+          <div style="padding:10px;">
+            <button class="btn" style="width:100%;" id="chatNewBtn2">+ New chat</button>
+          </div>
         </div>
 
-        <p class="muted" style="margin-top:10px;">
-          Later: send to local models + store outputs as nodes.
-        </p>
+        <div class="chatMain">
+          <div class="chatMsgs mono" id="chatMsgs"></div>
+
+          <div class="chatInput">
+            <select class="field" id="modelSelect">
+              <option>Local LLM</option>
+              <option>Reasoning model</option>
+              <option>Fast draft</option>
+            </select>
+
+            <textarea class="field chatTA" id="chatInput" placeholder="Enter = send, Shift+Enter = newline"></textarea>
+
+            <button class="btn" id="sendBtn">Send</button>
+          </div>
+        </div>
       </div>
-    </article>
 
-  </section>
-</main>
+      <div class="panelFoot">panel</div>
+    </section>
 
-<script>
-(() => {
-  const $ = (id) => document.getElementById(id);
+    <!-- STORYLINE -->
+    <section class="panel" id="pStoryline">
+      <div class="panelHead">
+        <div class="panelTitle">Storyline</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" id="beatAddQuick" title="Focus add">＋</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
 
-  const moduleMeta = {
-    world:      { h:"World",       s:"Create and refine the core of the setting." },
-    characters: { h:"Characters",  s:"People, factions, arcs, relationships." },
-    plot:       { h:"Plot",        s:"Acts, beats, themes, goals, stakes." },
-    scenes:     { h:"Scenes",      s:"Scene cards, POV, location, conflict." },
-    lore:       { h:"Lore",        s:"Rules, history, religions, magic, tech." },
-    assets:     { h:"Assets",      s:"Images, references, mood, maps (later)." },
-    prompts:    { h:"Prompts",     s:"Reusable prompt templates (later)." },
-  };
+      <div class="storyBody mono">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          <span class="flag">Canon lock: <strong id="canonState">ON</strong></span>
+          <span class="flag">Book: <strong id="bookNo">1</strong></span>
+        </div>
 
-  // UI-only dataset
-  const data = {
-    world: [
-      { id:"w1", title:"Kingdom overview", body:"", tags:"kingdom,overview" },
-      { id:"w2", title:"Geography", body:"", tags:"map,biomes" },
-      { id:"w3", title:"Magic rules", body:"", tags:"magic,rules" },
-    ],
-    characters: [
-      { id:"c1", title:"Storm", body:"", tags:"protagonist" },
-      { id:"c2", title:"Thor the Goblinlord", body:"", tags:"goblin,lord" },
-      { id:"c3", title:"Beanie", body:"", tags:"ally" },
-    ],
-    plot: [
-      { id:"p1", title:"Act I — Setup", body:"", tags:"act1" },
-      { id:"p2", title:"Act II — Pressure", body:"", tags:"act2" },
-      { id:"p3", title:"Act III — Resolution", body:"", tags:"act3" },
-    ],
-    scenes: [
-      { id:"s1", title:"Arrival at the fjord", body:"", tags:"arrival" },
-      { id:"s2", title:"The oath", body:"", tags:"oath" },
-      { id:"s3", title:"Ambush in the pines", body:"", tags:"ambush" },
-    ],
-    lore: [
-      { id:"l1", title:"The Old Kings", body:"", tags:"history" },
-      { id:"l2", title:"Runes & blood", body:"", tags:"magic" },
-      { id:"l3", title:"The winter pact", body:"", tags:"religion" },
-    ],
-    assets: [
-      { id:"a1", title:"Moodboard (placeholder)", body:"", tags:"mood" },
-      { id:"a2", title:"Map drafts (placeholder)", body:"", tags:"map" },
-    ],
-    prompts: [
-      { id:"pr1", title:"Scene draft template", body:"", tags:"prompt" },
-      { id:"pr2", title:"Character sheet template", body:"", tags:"prompt" },
-    ],
-  };
+        <div class="beats" id="beats"></div>
 
-  let activeModule = "world";
-  let activeId = null;
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <input class="field" id="beatInput" placeholder="Add beat…" style="flex:1; min-width: 180px;" />
+          <button class="btn" id="beatAddBtn">Add</button>
+        </div>
 
-  // DOM
-  const modulePill = $("modulePill");
-  const libraryList = $("libraryList");
-  const searchBox = $("searchBox");
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" id="beatEditBtn">Edit</button>
+          <button class="btn" id="beatDelBtn">Delete</button>
+          <button class="btn" id="beatUpBtn">Up</button>
+          <button class="btn" id="beatDownBtn">Down</button>
+        </div>
 
-  const editorHeading = $("editorHeading");
-  const editorSub = $("editorSub");
-  const titleField = $("titleField");
-  const bodyField = $("bodyField");
-  const tagsField = $("tagsField");
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" id="toggleCanonBtn">Toggle lock</button>
+          <button class="btn" id="bookPlusBtn">Book +1</button>
+          <button class="btn" id="runLaterBtn">Run (later)</button>
+        </div>
+      </div>
 
-  const selectedInfo = $("selectedInfo");
-  const promptMode = $("promptMode");
-  const promptText = $("promptText");
+      <div class="panelFoot">panel</div>
+    </section>
 
-  function setModule(m) {
-    activeModule = m;
-    activeId = null;
+    <!-- WORLD -->
+    <section class="panel" id="pWorld">
+      <div class="panelHead">
+        <div class="panelTitle">World</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" id="worldOpenBtn" title="Select World module">↗</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
+      <div class="miniBody mono">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="chip">Project-bound</span>
+          <span class="chip" id="worldCountChip">Nodes: 0</span>
+        </div>
+        <div class="miniGrid" id="worldMiniList"></div>
+        <div class="muted">Secondary panel.</div>
+      </div>
+      <div class="panelFoot">panel</div>
+    </section>
 
-    const meta = moduleMeta[m];
-    editorHeading.textContent = meta.h;
-    editorSub.textContent = meta.s;
-    modulePill.innerHTML = `Module: <strong>${meta.h}</strong>`;
+    <!-- CHAPTERS -->
+    <section class="panel" id="pChapters">
+      <div class="panelHead">
+        <div class="panelTitle">chapters</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" id="chapOpenBtn" title="Select Scenes module">↗</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
+      <div class="miniBody mono">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="chip">Draft pool</span>
+          <span class="chip">Forks OK</span>
+        </div>
+        <div class="miniGrid" id="chapMiniList"></div>
+        <div class="muted">Secondary panel.</div>
+      </div>
+      <div class="panelFoot">panel</div>
+    </section>
 
-    titleField.value = "";
-    bodyField.value = "";
-    tagsField.value = "";
-    selectedInfo.innerHTML = "<strong>None</strong>";
+    <!-- CHARACTERS -->
+    <section class="panel" id="pCharacters">
+      <div class="panelHead">
+        <div class="panelTitle">Characters.</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" id="charOpenBtn" title="Select Characters module">↗</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
+      <div class="miniBody mono">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="chip">Project-bound</span>
+          <span class="chip" id="charCountChip">Nodes: 0</span>
+        </div>
+        <div class="miniGrid" id="charMiniList"></div>
+        <div class="muted">Secondary panel.</div>
+      </div>
+      <div class="panelFoot">panel</div>
+    </section>
 
-    renderList();
-  }
+    <!-- PIPELINE -->
+    <section class="panel" id="pPipeline">
+      <div class="panelHead">
+        <div class="panelTitle">Novelcrafter Pipeline</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" title="No-op">⧉</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
+      <div class="pipeBody mono">
+        <div class="muted">Set once. Rarely touched. (UI-only)</div>
+        <div class="pipeRow">
+          <span class="chip">1) Retrieve canon</span>
+          <span class="chip">2) Generate</span>
+          <span class="chip">3) Continuity checks</span>
+          <span class="chip">4) Update state</span>
+          <span class="chip">5) Store nodes</span>
+        </div>
+        <div class="pipeRow">
+          <button class="btn">Configure (later)</button>
+          <button class="btn">Run pipeline (later)</button>
+          <button class="btn">Export (later)</button>
+        </div>
+        <div class="muted">This exists so you don't have to babysit the workflow.</div>
+      </div>
+      <div class="panelFoot">panel</div>
+    </section>
 
-  function renderList() {
-    const q = (searchBox.value || "").trim().toLowerCase();
-    const items = (data[activeModule] || []).filter(it => {
-      if (!q) return true;
-      return (it.title || "").toLowerCase().includes(q) || (it.tags || "").toLowerCase().includes(q);
-    });
+    <!-- CONTEXT -->
+    <section class="panel" id="pContext">
+      <div class="panelHead">
+        <div class="panelTitle">context</div>
+        <div class="cornerBtns">
+          <button class="iconbtn" title="No-op">⧉</button>
+          <button class="iconbtn" title="No-op">×</button>
+        </div>
+      </div>
+      <div class="panelBody mono">
+        <div class="muted">Selected node</div>
+        <div class="contextBox" id="selectedNodeBox"><strong>None</strong></div>
 
-    libraryList.innerHTML = "";
-    items.forEach(it => {
-      const row = document.createElement("div");
-      row.className = "box";
-      row.style.padding = "10px";
-      row.style.borderRadius = "12px";
-      row.style.cursor = "pointer";
-      row.style.userSelect = "none";
-      row.style.borderColor = (it.id === activeId) ? "rgba(125,211,252,0.45)" : "";
+        <div class="muted" style="margin-top:12px;">Quick facts (placeholder)</div>
+        <div style="margin-top:8px; opacity:.9; display:flex; flex-direction: column; gap:6px;">
+          <div>• Tone: Nordic / cold</div>
+          <div>• Scope: Kingdom-level</div>
+          <div>• Focus: Worldbuilding + storyline spine</div>
+        </div>
+      </div>
+      <div class="panelFoot">panel</div>
+    </section>
+  </main>
 
-      row.innerHTML = `<strong>${escapeHtml(it.title)}</strong><div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(it.tags || "")}</div>`;
-      row.addEventListener("click", () => selectItem(it.id));
-      libraryList.appendChild(row);
-    });
-
-    if (items.length === 0) {
-      const empty = document.createElement("div");
-      empty.className = "muted mono";
-      empty.style.marginTop = "8px";
-      empty.textContent = "No items.";
-      libraryList.appendChild(empty);
-    }
-  }
-
-  function selectItem(id) {
-    activeId = id;
-    const it = (data[activeModule] || []).find(x => x.id === id);
-    if (!it) return;
-
-    titleField.value = it.title || "";
-    bodyField.value = it.body || "";
-    tagsField.value = it.tags || "";
-
-    selectedInfo.innerHTML = `<strong>${escapeHtml(it.title)}</strong><div class="muted" style="margin-top:6px;">${escapeHtml(it.tags || "")}</div>`;
-    renderList();
-  }
-
-  function addItem() {
-    const t = prompt("Title:");
-    if (t === null) return;
-    const title = t.trim();
-    if (!title) return;
-
-    const newIt = { id: (activeModule[0] + Date.now()), title, body:"", tags:"" };
-    data[activeModule] = data[activeModule] || [];
-    data[activeModule].unshift(newIt);
-    selectItem(newIt.id);
-    renderList();
-  }
-
-  function duplicateItem() {
-    if (!activeId) return alert("Select an item first.");
-    const it = (data[activeModule] || []).find(x => x.id === activeId);
-    if (!it) return;
-    const copy = { ...it, id: (activeModule[0] + Date.now()), title: it.title + " (copy)" };
-    data[activeModule].unshift(copy);
-    selectItem(copy.id);
-    renderList();
-  }
-
-  function deleteItem() {
-    if (!activeId) return alert("Select an item first.");
-    const ok = confirm("Delete selected item? (UI-only)");
-    if (!ok) return;
-    data[activeModule] = (data[activeModule] || []).filter(x => x.id !== activeId);
-    activeId = null;
-    titleField.value = "";
-    bodyField.value = "";
-    tagsField.value = "";
-    selectedInfo.innerHTML = "<strong>None</strong>";
-    renderList();
-  }
-
-  function buildPrompt() {
-    const mode = promptMode.value;
-    const title = (titleField.value || "").trim() || "(untitled)";
-    const tags = (tagsField.value || "").trim();
-    const body = (bodyField.value || "").trim();
-
-    let p = "";
-    if (mode === "outline") {
-      p = `Create a concise outline for: ${title}\nTags: ${tags}\nContext:\n${body}\n\nOutput: bullet outline + key beats.`;
-    } else if (mode === "scene") {
-      p = `Write a scene draft.\nTitle: ${title}\nTags: ${tags}\nContext:\n${body}\n\nConstraints: vivid but tight, clear conflict, strong ending hook.`;
-    } else if (mode === "character") {
-      p = `Create a character sheet.\nName/Title: ${title}\nTags: ${tags}\nContext:\n${body}\n\nInclude: appearance, voice, goals, fears, contradictions, arc, secrets.`;
-    } else {
-      p = `Write a lore entry.\nTitle: ${title}\nTags: ${tags}\nContext:\n${body}\n\nInclude: origin, rules, consequences, contradictions, story hooks.`;
-    }
-
-    promptText.value = p;
-  }
-
-  async function copyPrompt() {
-    const v = promptText.value || "";
-    if (!v.trim()) return;
-    try {
-      await navigator.clipboard.writeText(v);
-      alert("Copied.");
-    } catch {
-      alert("Copy failed (browser blocked clipboard).");
-    }
-  }
-
-  function escapeHtml(str){
-    return String(str)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  // Wire module buttons
-  document.querySelectorAll("[data-module]").forEach(btn => {
-    btn.addEventListener("click", () => setModule(btn.getAttribute("data-module")));
-  });
-
-  searchBox.addEventListener("input", renderList);
-
-  $("addItemBtn").addEventListener("click", addItem);
-  $("duplicateBtn").addEventListener("click", duplicateItem);
-  $("deleteBtn").addEventListener("click", deleteItem);
-
-  $("buildPromptBtn").addEventListener("click", buildPrompt);
-  $("copyPromptBtn").addEventListener("click", copyPrompt);
-
-  $("saveStubBtn").addEventListener("click", () => alert("Saving is later (persistence layer)."));
-  $("exportStubBtn").addEventListener("click", () => alert("Export is later."));
-
-  // Init
-  setModule("world");
-})();
-</script>
+  <script src="../assets/js/core.js" defer></script>
+  <script src="../assets/js/pages/novelcrafter.js" defer></script>
 </body>
 </html>
