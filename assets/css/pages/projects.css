@@ -1,0 +1,246 @@
+/* Page-isolated: Projects
+   - No cross-page selectors
+   - UI-only visual library + snapshot
+*/
+
+.pr-body{
+  margin:0;
+  min-height:100vh;
+}
+
+.pr-shell{
+  padding:14px;
+  display:grid;
+  gap:14px;
+
+  grid-template-columns: 360px 1fr 380px;
+  grid-template-rows: 520px 190px 240px;
+
+  grid-template-areas:
+    "library detail ops"
+    "library roadmap ops"
+    "snapshot snapshot snapshot";
+}
+
+.pr-panel{
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+}
+
+.pr-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.12);
+}
+
+.pr-title{
+  margin:0;
+  font-size:14px;
+  letter-spacing:.2px;
+  display:flex;
+  gap:10px;
+  align-items:baseline;
+}
+
+.pr-subtitle{
+  font-size:12px;
+  opacity:.72;
+  font-weight:500;
+}
+
+.pr-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.pr-iconbtn{
+  width:28px;
+  height:26px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.04);
+  color:inherit;
+  cursor:pointer;
+}
+
+.pr-bodypad{ padding:12px; }
+
+.pr-row{ display:flex; gap:10px; align-items:center; }
+.pr-tight{ gap:8px; }
+.pr-col{ display:flex; flex-direction:column; gap:10px; }
+
+.pr-pill{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.04);
+  white-space:nowrap;
+}
+
+.pr-ok{
+  background: rgba(80,255,150,0.18);
+  border-color: rgba(80,255,150,0.35);
+}
+
+.pr-dangerpill{
+  background: rgba(255,90,90,0.18);
+  border-color: rgba(255,90,90,0.35);
+}
+
+.pr-label{
+  font-size:12px;
+  opacity:.72;
+  margin-bottom:6px;
+}
+
+.pr-muted{
+  font-size:12px;
+  opacity:.72;
+  line-height:1.35;
+}
+.pr-muted2{
+  font-size:12px;
+  opacity:.60;
+  line-height:1.35;
+}
+
+input, select, textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(0,0,0,0.22);
+  color:inherit;
+  outline:none;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.pr-btn{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06);
+  color:inherit;
+  cursor:pointer;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.pr-ghost{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+
+.pr-okbtn{
+  background: rgba(80,255,150,0.18);
+  border-color: rgba(80,255,150,0.35);
+}
+
+.pr-danger{
+  background: rgba(255,90,90,0.18);
+  border-color: rgba(255,90,90,0.35);
+}
+
+.pr-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:290px;
+  overflow:auto;
+  padding-right:2px;
+}
+
+.pr-item{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  cursor:pointer;
+  user-select:none;
+}
+
+.pr-item.is-active{
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(255,255,255,0.15);
+}
+
+.pr-item .t{
+  font-size:13px;
+  margin:0 0 4px;
+}
+.pr-item .m{
+  font-size:12px;
+  opacity:.75;
+  line-height:1.25;
+}
+
+.pr-card{
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  border-radius:14px;
+  padding:12px;
+}
+
+.pr-card-title{
+  font-size:13px;
+  margin:6px 0;
+}
+
+.pr-mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  line-height:1.55;
+  white-space:pre-wrap;
+  opacity:.92;
+}
+
+.pr-steps{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:10px 0 12px;
+}
+.pr-step{
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  white-space:nowrap;
+}
+
+/* Grid areas */
+.pr-ga-library{ grid-area: library; }
+.pr-ga-detail{ grid-area: detail; }
+.pr-ga-ops{ grid-area: ops; }
+.pr-ga-roadmap{ grid-area: roadmap; }
+.pr-ga-snapshot{ grid-area: snapshot; }
+
+/* Responsive */
+@media (max-width: 1200px){
+  .pr-shell{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "library"
+      "detail"
+      "ops"
+      "roadmap"
+      "snapshot";
+  }
+
+  .pr-list{ max-height:220px; }
+}
