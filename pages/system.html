@@ -4,82 +4,165 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>System · Maneit Portal</title>
+  <title>Maneit Portal — System</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
+  <!-- Future-proof stack (shared, intentional) -->
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../theme.css" />
+
+  <!-- Page-isolated CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/system.css" />
 </head>
 
-<body>
-<header class="topbar">
-  <div class="wrap row">
-    <a class="brand" href="../index.html">
-      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">System</span>
-    </a>
+<body class="sy-body" data-page="system">
+  <main class="sy-shell">
+    <!-- LEFT: Nodes -->
+    <section class="sy-panel sy-ga-nodes" aria-label="Nodes">
+      <header class="sy-head">
+        <h2 class="sy-title">System <span class="sy-subtitle">Nodes</span></h2>
+        <div class="sy-actions">
+          <span class="sy-pill sy-ok" id="sNet">Net: OK</span>
+          <button class="sy-iconbtn" type="button" title="Dock">⧉</button>
+          <button class="sy-iconbtn" type="button" title="Close">×</button>
+        </div>
+      </header>
 
-    <nav class="tabs">
-      <a class="tab" href="../index.html">Home</a>
-      <a class="tab" href="hub.html">Hub</a>
-      <a class="tab" href="work.html">Work</a>
-      <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
-      <a class="tab" href="agentfactory.html">AgentFactory</a>
-      <a class="tab" href="pipelines.html">Pipelines</a>
-      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
-      <a class="tab" href="stream.html">Stream</a>
-      <a class="tab" href="notes.html">Notes</a>
-      <a class="tab" href="system.html">System</a>
-    </nav>
-  </div>
-</header>
+      <div class="sy-bodypad">
+        <div class="sy-col">
+          <div class="sy-row sy-tight">
+            <span class="sy-pill" id="sSelectedPill">Selected: none</span>
+            <span class="sy-pill" id="sModePill">Mode: observe</span>
+          </div>
 
-<main class="wrap">
-  <h1 class="h1">System</h1>
-  <p class="muted">Bootstraps, scripts, ops notes. Copy-ready blocks.</p>
+          <div>
+            <div class="sy-label">Filter</div>
+            <select id="sFilter">
+              <option value="all">All</option>
+              <option value="win">Windows</option>
+              <option value="linux">Linux</option>
+              <option value="gpu">GPU nodes</option>
+              <option value="cpu">CPU nodes</option>
+            </select>
+          </div>
 
-  <section class="grid">
-    <article class="card span12">
-      <h2>Principles</h2>
-      <div class="codepanel">
-        <button class="copybtn" data-copy-target="#principles">Copy</button>
-        <pre class="mono" id="principles">- Local-first
-- Automation over manual steps
-- Deterministic scripts
-- Clear agent boundaries
-- One-file-at-a-time when shipping
-- No unnecessary abstractions</pre>
+          <div>
+            <input id="sSearch" type="search" placeholder="Search nodes…" autocomplete="off" />
+          </div>
+
+          <div class="sy-list" id="sList" role="listbox" aria-label="Nodes list"></div>
+
+          <div class="sy-row">
+            <button class="sy-btn" type="button" id="sPing">Ping</button>
+            <button class="sy-btn sy-ghost" type="button" id="sWake">Wake</button>
+            <button class="sy-btn sy-ghost" type="button" id="sSleep">Sleep</button>
+          </div>
+
+          <div class="sy-card">
+            <div class="sy-label">Node snapshot</div>
+            <div class="sy-card sy-mono" id="sNodeSnap">// select a node</div>
+          </div>
+        </div>
       </div>
-    </article>
+    </section>
 
-    <article class="card span6">
-      <h2>GitHub Pages sanity check</h2>
-      <div class="codepanel">
-        <button class="copybtn" data-copy-target="#ghpages">Copy</button>
-        <pre class="mono" id="ghpages">Repo → Settings → Pages
-Branch: main
-Folder: / (root)
-Then open:
-https://&lt;user&gt;.github.io/&lt;repo&gt;/</pre>
+    <!-- CENTER: Dashboard -->
+    <section class="sy-panel sy-ga-dashboard" aria-label="Dashboard">
+      <header class="sy-head">
+        <h2 class="sy-title">Dashboard <span class="sy-subtitle" id="sDashTitle">No node</span></h2>
+        <div class="sy-actions">
+          <span class="sy-pill" id="sHealthPill">Health: —</span>
+          <span class="sy-pill" id="sUptimePill">Uptime: —</span>
+        </div>
+      </header>
+
+      <div class="sy-bodypad">
+        <div class="sy-muted">Visual-only observability: CPU/GPU/RAM/Disk + status flags.</div>
+        <div style="height:10px"></div>
+
+        <div class="sy-grid sy-metrics" id="sMetrics"></div>
+
+        <div style="height:10px"></div>
+
+        <div class="sy-card">
+          <div class="sy-label">Services (visual)</div>
+          <div class="sy-row sy-tight" style="flex-wrap:wrap;" id="sServices"></div>
+        </div>
       </div>
-    </article>
+    </section>
 
-    <article class="card span6">
-      <h2>PowerShell launch convention</h2>
-      <div class="codepanel">
-        <button class="copybtn" data-copy-target="#pslaunch">Copy</button>
-        <pre class="mono" id="pslaunch">Set-Location -LiteralPath "D:\maneit-portal"
-# run deterministic scripts from /scripts</pre>
+    <!-- RIGHT: Actions + Terminal -->
+    <section class="sy-panel sy-ga-actions" aria-label="Actions">
+      <header class="sy-head">
+        <h2 class="sy-title">Actions <span class="sy-subtitle">safe by default</span></h2>
+        <div class="sy-actions">
+          <span class="sy-pill sy-dangerpill" id="sAdminPill">Admin: OFF</span>
+          <button class="sy-btn sy-ghost" type="button" id="sAdminToggle">Admin toggle</button>
+        </div>
+      </header>
+
+      <div class="sy-bodypad">
+        <div class="sy-card" style="margin-bottom:12px;">
+          <div class="sy-label">Quick actions (visual)</div>
+          <div class="sy-row sy-tight" style="flex-wrap:wrap;">
+            <button class="sy-btn sy-ghost" type="button" id="sDeployAgentFactory">Deploy: AgentFactory</button>
+            <button class="sy-btn sy-ghost" type="button" id="sDeployAppCreator">Deploy: AppCreator</button>
+            <button class="sy-btn sy-ghost" type="button" id="sSyncRepo">Sync repo</button>
+            <button class="sy-btn sy-warn" type="button" id="sRestartSvc">Restart services</button>
+          </div>
+          <div class="sy-muted2" style="margin-top:10px;">No real execution — logs only.</div>
+        </div>
+
+        <div class="sy-term">
+          <div class="sy-term-head">
+            <span id="sTermTitle">Shell (visual)</span>
+            <span id="sTermLock">locked</span>
+          </div>
+          <div class="sy-term-body" id="sTermOut"></div>
+          <div class="sy-term-input-row">
+            <input class="sy-term-input" id="sTermIn" type="text" placeholder="Type a command (visual)…" autocomplete="off" />
+            <button class="sy-btn" type="button" id="sTermRun">Run</button>
+          </div>
+        </div>
       </div>
-    </article>
+    </section>
 
-    <article class="card span12">
-      <h2>Shortcuts</h2>
-      <p class="mono" style="margin:0;">
-        H Home · U Hub · W Work · P Projects · A Agents · N Notes · S System · C Crafter · F Factory · L Pipelines · T Stream
-      </p>
-    </article>
-  </section>
-</main>
+    <!-- DEPLOY PLAN -->
+    <section class="sy-panel sy-ga-deploy" aria-label="Deploy Plan">
+      <header class="sy-head">
+        <h2 class="sy-title">Deploy Plan <span class="sy-subtitle">targets</span></h2>
+        <div class="sy-actions">
+          <button class="sy-btn sy-ghost" type="button" id="sSelectAll">Select all</button>
+          <button class="sy-btn sy-ghost" type="button" id="sClearAll">Clear</button>
+        </div>
+      </header>
 
-<script src="../assets/js/app.js?v=2" defer></script>
+      <div class="sy-bodypad">
+        <div class="sy-muted">Visual planning across nodes: select targets and queue “deploy”.</div>
+        <div style="height:10px"></div>
+        <div class="sy-col" id="sTargets"></div>
+      </div>
+    </section>
+
+    <!-- LOGS -->
+    <section class="sy-panel sy-ga-logs" aria-label="Logs">
+      <header class="sy-head">
+        <h2 class="sy-title">Logs <span class="sy-subtitle">audit</span></h2>
+        <div class="sy-actions">
+          <span class="sy-pill sy-ok">Storage</span>
+          <button class="sy-btn sy-ghost" type="button" id="sClearLogs">Clear</button>
+        </div>
+      </header>
+
+      <div class="sy-bodypad">
+        <div class="sy-card sy-mono" id="sLogs">// logs</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared JS (intentional) -->
+  <script src="../core.js" defer></script>
+
+  <!-- Page-isolated JS -->
+  <script src="../assets/js/pages/system.js" defer></script>
 </body>
 </html>
