@@ -1,0 +1,375 @@
+/* Page-isolated: AppCreator
+   - No global refactors
+   - No cross-page selectors
+*/
+
+.ac-body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.ac-shell {
+  padding: 14px;
+  display: grid;
+  gap: 14px;
+
+  /* Layout inspired by NovelCrafter screenshot: 3 columns + 2 wide rows */
+  grid-template-columns: 320px 1fr 340px;
+  grid-template-rows: 520px 170px 210px;
+
+  grid-template-areas:
+    "library workbench roadmap"
+    "library pipeline  roadmap"
+    "context context  context";
+}
+
+.ac-panel {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  overflow: hidden;
+}
+
+.ac-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.ac-panel__body {
+  padding: 12px;
+}
+
+.ac-panel__foot {
+  padding: 10px 12px 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.ac-title {
+  font-size: 14px;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.ac-subtitle {
+  font-size: 12px;
+  opacity: 0.72;
+  margin-left: 10px;
+}
+
+.ac-head-left {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.ac-head-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ac-iconbtn {
+  width: 28px;
+  height: 26px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: inherit;
+  cursor: pointer;
+}
+
+.ac-pill {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+}
+
+.ac-muted {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 6px 0 10px;
+}
+
+.ac-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ac-tab {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.ac-tab.is-active {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.ac-section {
+  margin-bottom: 12px;
+}
+
+.ac-labelrow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ac-label {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.ac-input,
+.ac-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.22);
+  color: inherit;
+  outline: none;
+}
+
+.ac-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.ac-item {
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+}
+
+.ac-item.is-active {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.ac-item__title {
+  font-size: 13px;
+  margin: 0 0 4px;
+}
+
+.ac-item__meta {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.ac-btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.ac-btn--ghost {
+  background: rgba(255,255,255,0.03);
+}
+
+.ac-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ac-row--tight {
+  gap: 8px;
+}
+
+.ac-workbench__body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 0px);
+}
+
+.ac-chat {
+  flex: 1;
+  overflow: auto;
+  padding: 14px;
+}
+
+.ac-empty {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.ac-empty__box {
+  max-width: 520px;
+  width: 100%;
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 18px;
+  background: rgba(255,255,255,0.02);
+}
+
+.ac-empty__title {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.ac-empty__hint {
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
+.ac-msg {
+  max-width: 76%;
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.ac-msg.is-user {
+  margin-left: auto;
+  background: rgba(255,255,255,0.06);
+}
+
+.ac-composer {
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.18);
+}
+
+.ac-llm {
+  width: 150px;
+  flex: 0 0 auto;
+}
+
+.ac-compose {
+  flex: 1;
+}
+
+.ac-send {
+  flex: 0 0 auto;
+  width: 90px;
+}
+
+.ac-tasklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow: auto;
+  padding-right: 2px;
+  margin-bottom: 10px;
+}
+
+.ac-task {
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ac-task.is-active {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.ac-task__text {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.ac-task__tag {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.ac-card {
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.ac-card--mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  opacity: 0.9;
+}
+
+.ac-card__title {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.ac-card__meta {
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.35;
+}
+
+.ac-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 12px;
+}
+
+.ac-step {
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+}
+
+/* Grid areas */
+.ac-library  { grid-area: library; }
+.ac-workbench{ grid-area: workbench; }
+.ac-roadmap  { grid-area: roadmap; }
+.ac-pipeline { grid-area: pipeline; }
+.ac-context  { grid-area: context; }
+
+/* Responsive fallback */
+@media (max-width: 1100px) {
+  .ac-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "library"
+      "workbench"
+      "roadmap"
+      "pipeline"
+      "context";
+  }
+
+  .ac-list { max-height: 220px; }
+}
