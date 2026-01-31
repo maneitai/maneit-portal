@@ -1,0 +1,217 @@
+/* Page-isolated: Notes
+   - No cross-page selectors
+   - UI-only notes library + editor + tasks
+*/
+
+.nt-body{
+  margin:0;
+  min-height:100vh;
+}
+
+.nt-shell{
+  padding:14px;
+  display:grid;
+  gap:14px;
+
+  grid-template-columns: 360px 1fr 380px;
+  grid-template-rows: 520px 190px 240px;
+
+  grid-template-areas:
+    "library editor meta"
+    "library tasks  meta"
+    "activity activity activity";
+}
+
+.nt-panel{
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+}
+
+.nt-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.12);
+}
+
+.nt-title{
+  margin:0;
+  font-size:14px;
+  letter-spacing:.2px;
+  display:flex;
+  gap:10px;
+  align-items:baseline;
+}
+
+.nt-subtitle{
+  font-size:12px;
+  opacity:.72;
+  font-weight:500;
+}
+
+.nt-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.nt-iconbtn{
+  width:28px;
+  height:26px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.04);
+  color:inherit;
+  cursor:pointer;
+}
+
+.nt-bodypad{ padding:12px; }
+
+.nt-row{ display:flex; gap:10px; align-items:center; }
+.nt-tight{ gap:8px; }
+.nt-col{ display:flex; flex-direction:column; gap:10px; }
+
+.nt-pill{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.04);
+  white-space:nowrap;
+}
+
+.nt-ok{
+  background: rgba(80,255,150,0.18);
+  border-color: rgba(80,255,150,0.35);
+}
+
+.nt-label{
+  font-size:12px;
+  opacity:.72;
+  margin-bottom:6px;
+}
+
+.nt-muted{
+  font-size:12px;
+  opacity:.72;
+  line-height:1.35;
+}
+
+.nt-muted2{
+  font-size:12px;
+  opacity:.60;
+  line-height:1.35;
+}
+
+input, select, textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(0,0,0,0.22);
+  color:inherit;
+  outline:none;
+}
+
+textarea{
+  min-height:320px;
+  resize:vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  line-height:1.55;
+}
+
+.nt-btn{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06);
+  color:inherit;
+  cursor:pointer;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.nt-ghost{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+
+.nt-okbtn{
+  background: rgba(80,255,150,0.18);
+  border-color: rgba(80,255,150,0.35);
+}
+
+.nt-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:290px;
+  overflow:auto;
+  padding-right:2px;
+}
+
+.nt-item{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  cursor:pointer;
+  user-select:none;
+}
+
+.nt-item.is-active{
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(255,255,255,0.15);
+}
+
+.nt-item .t{ font-size:13px; margin:0 0 4px; }
+.nt-item .m{ font-size:12px; opacity:.75; line-height:1.25; }
+
+.nt-card{
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  border-radius:14px;
+  padding:12px;
+}
+
+.nt-card-title{
+  font-size:13px;
+  margin:6px 0;
+}
+
+.nt-mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  line-height:1.55;
+  white-space:pre-wrap;
+  opacity:.92;
+}
+
+/* Grid areas */
+.nt-ga-library{ grid-area: library; }
+.nt-ga-editor{ grid-area: editor; }
+.nt-ga-meta{ grid-area: meta; }
+.nt-ga-tasks{ grid-area: tasks; }
+.nt-ga-activity{ grid-area: activity; }
+
+/* Responsive */
+@media (max-width: 1200px){
+  .nt-shell{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "library"
+      "editor"
+      "meta"
+      "tasks"
+      "activity";
+  }
+  textarea{ min-height:220px; }
+}
