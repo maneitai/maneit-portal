@@ -4,77 +4,292 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>AgentFactory · Maneit Portal</title>
+  <title>Maneit Portal — AgentFactory</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
+  <!-- Future-proof stack (shared, intentional) -->
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../theme.css" />
+
+  <!-- Page-isolated CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/agentfactory.css" />
 </head>
 
-<body>
-<header class="topbar">
-  <div class="wrap row">
-    <a class="brand" href="../index.html">
-      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">AgentFactory</span>
-    </a>
+<body class="af-body" data-page="agentfactory">
+  <main class="af-shell" data-page="agentfactory-visual">
+    <!-- LEFT: Library -->
+    <section class="af-panel af-ga-library" aria-label="Library">
+      <header class="af-head">
+        <h2 class="af-title">
+          AgentFactory
+          <span class="af-subtitle" id="afSubtitle">Library</span>
+        </h2>
+        <div class="af-actions">
+          <span class="af-pill" id="afStorePill" title="Local storage state">Storage: ON</span>
+          <button class="af-iconbtn" type="button" data-af="noop" title="Dock">⧉</button>
+          <button class="af-iconbtn" type="button" data-af="noop" title="Close">×</button>
+        </div>
+      </header>
 
-    <nav class="tabs">
-      <a class="tab" href="../index.html">Home</a>
-      <a class="tab" href="hub.html">Hub</a>
-      <a class="tab" href="work.html">Work</a>
-      <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
-      <a class="tab" href="agentfactory.html">AgentFactory</a>
-      <a class="tab" href="pipelines.html">Pipelines</a>
-      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
-      <a class="tab" href="stream.html">Stream</a>
-      <a class="tab" href="notes.html">Notes</a>
-      <a class="tab" href="system.html">System</a>
-    </nav>
-  </div>
-</header>
+      <div class="af-bodypad">
+        <div class="af-tabs" role="tablist" aria-label="Library tabs">
+          <button class="af-tab is-active" type="button" data-af-tab="agents">Agents</button>
+          <button class="af-tab" type="button" data-af-tab="models">Models</button>
+          <button class="af-tab" type="button" data-af-tab="layers">Reasoning Layers</button>
+        </div>
 
-<main class="wrap">
-  <h1 class="h1">AgentFactory</h1>
-  <p class="muted">Define role → constraints → prompt → save profile (registry later).</p>
+        <div class="af-col" style="margin-top:12px">
+          <div>
+            <div class="af-label">Project scope</div>
+            <select id="afScope">
+              <option value="maneit-portal">Maneit Portal</option>
+              <option value="networksaint">NetworkSaint</option>
+              <option value="systemdwarf">SystemDwarf</option>
+              <option value="global">Global (shared)</option>
+            </select>
+          </div>
 
-  <section class="grid">
-    <article class="card span5">
-      <h2>Templates</h2>
-      <p class="muted">Router · Builder · Coder · Verifier · Design</p>
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="agents.html">See Agents →</a>
-        <a class="btn" href="pipelines.html">Attach to Pipeline →</a>
+          <div>
+            <input id="afSearch" type="search" placeholder="Search library…" autocomplete="off" />
+          </div>
+
+          <div class="af-list" id="afList" role="listbox" aria-label="Library items"></div>
+
+          <div class="af-row">
+            <button class="af-btn" type="button" id="afNewBtn">+ New</button>
+            <button class="af-btn af-ghost" type="button" id="afCloneBtn">Clone</button>
+            <button class="af-btn af-danger" type="button" id="afDeleteBtn">Delete</button>
+          </div>
+
+          <div class="af-card">
+            <div class="af-label">Selected</div>
+            <div id="afSelectedTitle" class="af-card-title">None</div>
+            <div id="afSelectedMeta" class="af-muted">Pick an item in the library.</div>
+          </div>
+        </div>
       </div>
-    </article>
+    </section>
 
-    <article class="card span7">
-      <h2>Spawn</h2>
+    <!-- CENTER: Workbench -->
+    <section class="af-panel af-ga-workbench" aria-label="Workbench">
+      <header class="af-head">
+        <div class="af-row af-tight" style="align-items:baseline;">
+          <h2 class="af-title" style="margin:0;">
+            Workbench
+            <span class="af-subtitle" id="afActiveLabel">No selection</span>
+          </h2>
+        </div>
+        <div class="af-actions">
+          <span class="af-pill" id="afModePill" title="Visual mode">Mode: Visual</span>
+          <span class="af-pill" id="afAdminPill" title="Admin privileges">Admin: OFF</span>
+        </div>
+      </header>
 
-      <label class="mono" for="name" style="display:block;margin:0 0 6px;">Agent name</label>
-      <input class="field" id="name" placeholder="e.g., Fedora Bootstrap Agent" />
+      <div class="af-workbench">
+        <div class="af-chat" id="afChat">
+          <div class="af-empty" id="afEmpty">
+            <div class="af-emptybox">
+              <div class="af-emptyh">AgentFactory (visual)</div>
+              <div class="af-emptyp">
+                This is a UI-only control hub for <strong>Agents</strong>, <strong>Models</strong>, and
+                <strong>Reasoning Layers</strong> — including deployment planning across nodes.
+                <br /><br />
+                Select something in the Library to start.
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div style="height:10px;"></div>
+        <div class="af-composer">
+          <div class="af-row">
+            <select class="af-mode" id="afWorkbenchMode">
+              <option value="spec">Spec</option>
+              <option value="build">Build</option>
+              <option value="deploy">Deploy</option>
+              <option value="audit">Audit</option>
+            </select>
 
-      <label class="mono" for="role" style="display:block;margin:0 0 6px;">Role / mission</label>
-      <input class="field" id="role" placeholder="What does this agent do (and not do)?" />
-
-      <div style="height:10px;"></div>
-
-      <label class="mono" for="constraints" style="display:block;margin:0 0 6px;">Constraints</label>
-      <input class="field" id="constraints" placeholder="Rules, boundaries, tooling, no-go zones..." />
-
-      <div style="height:10px;"></div>
-
-      <label class="mono" for="prompt" style="display:block;margin:0 0 6px;">System Prompt</label>
-      <textarea class="field" id="prompt" placeholder="Paste the final agent prompt here..." style="min-height:180px;"></textarea>
-
-      <div class="actions" style="margin-top:10px;">
-        <a class="btn" href="notes.html">Send to Notes →</a>
-        <a class="btn" href="pipelines.html">Attach to Pipeline →</a>
+            <input id="afPrompt" type="text" placeholder="Enter = send (visual)" autocomplete="off" />
+            <button class="af-btn af-send" type="button" id="afSend">Send</button>
+          </div>
+          <div class="af-muted2" style="margin-top:8px;">
+            Visual-only: no real execution. Messages are logged to simulate flow.
+          </div>
+        </div>
       </div>
-    </article>
-  </section>
-</main>
+    </section>
 
-<script src="../assets/js/app.js?v=2" defer></script>
+    <!-- RIGHT: Ops / Deploy -->
+    <section class="af-panel af-ga-ops" aria-label="Ops & Deploy">
+      <header class="af-head">
+        <h2 class="af-title">Ops & Deploy <span class="af-subtitle">Targets / Safety / Versions</span></h2>
+        <div class="af-actions">
+          <button class="af-iconbtn" type="button" data-af="noop" title="Dock">⧉</button>
+          <button class="af-iconbtn" type="button" data-af="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="af-bodypad">
+        <div class="af-row af-tight" style="margin-bottom:12px;">
+          <span class="af-pill af-ok" id="afIntegrityPill">Continuity: OK</span>
+          <span class="af-pill" id="afVersionPill">v: 1</span>
+          <span class="af-pill af-dangerpill" id="afPrivilegePill">Privileged: OFF</span>
+        </div>
+
+        <div class="af-card" style="margin-bottom:12px;">
+          <div class="af-label">Deployment targets</div>
+          <div class="af-muted">Select where this should deploy (visual).</div>
+          <div style="height:10px;"></div>
+          <div class="af-col" id="afTargets"></div>
+          <div style="height:10px;"></div>
+          <div class="af-row">
+            <button class="af-btn af-ghost" type="button" id="afSelectAllTargets">Select all</button>
+            <button class="af-btn af-ghost" type="button" id="afClearTargets">Clear</button>
+          </div>
+        </div>
+
+        <div class="af-card" style="margin-bottom:12px;">
+          <div class="af-label">Attach components</div>
+          <div class="af-muted">Bind a Model + Reasoning Layer to an Agent (visual links).</div>
+          <div style="height:10px;"></div>
+
+          <div class="af-col">
+            <div>
+              <div class="af-label">Model</div>
+              <select id="afBindModel"></select>
+            </div>
+            <div>
+              <div class="af-label">Reasoning layer</div>
+              <select id="afBindLayer"></select>
+            </div>
+            <div class="af-row">
+              <button class="af-btn af-okbtn" type="button" id="afBindBtn">Bind</button>
+              <button class="af-btn af-ghost" type="button" id="afUnbindBtn">Unbind</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="af-card">
+          <div class="af-label">Release notes (visual)</div>
+          <textarea id="afReleaseNotes" placeholder="What changed? Why? Risks?"></textarea>
+          <div style="height:10px;"></div>
+          <div class="af-row">
+            <button class="af-btn af-ghost" type="button" id="afSaveNotes">Save</button>
+            <button class="af-btn af-ghost" type="button" id="afClearNotes">Clear</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PIPELINE -->
+    <section class="af-panel af-ga-pipeline" aria-label="Pipeline">
+      <header class="af-head">
+        <h2 class="af-title">AgentFactory Pipeline <span class="af-subtitle">rarely touched</span></h2>
+        <div class="af-actions">
+          <button class="af-iconbtn" type="button" data-af="noop" title="Dock">⧉</button>
+          <button class="af-iconbtn" type="button" data-af="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="af-bodypad">
+        <div class="af-muted">Visualize end-to-end: spec → build → validate → deploy → audit.</div>
+
+        <div class="af-steps" role="list" aria-label="Pipeline steps">
+          <span class="af-step">1) Spec lock</span>
+          <span class="af-step">2) Generate scaffold</span>
+          <span class="af-step">3) Bind model/layer</span>
+          <span class="af-step">4) Deploy plan</span>
+          <span class="af-step">5) Continuity check</span>
+          <span class="af-step">6) Audit trail</span>
+        </div>
+
+        <div class="af-row af-tight">
+          <button class="af-btn af-ghost" type="button" id="afRunSpec">Run: Spec</button>
+          <button class="af-btn af-ghost" type="button" id="afRunBuild">Run: Build</button>
+          <button class="af-btn af-ghost" type="button" id="afRunDeploy">Run: Deploy</button>
+          <button class="af-btn af-ghost" type="button" id="afRunAudit">Run: Audit</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TERMINAL -->
+    <section class="af-panel af-ga-terminal" aria-label="Terminal">
+      <header class="af-head">
+        <h2 class="af-title">Terminal <span class="af-subtitle">visual only</span></h2>
+        <div class="af-actions">
+          <span class="af-pill" id="afTermModePill">Shell: local</span>
+          <button class="af-btn af-ghost" type="button" id="afAdminToggle">Admin toggle</button>
+          <button class="af-iconbtn" type="button" data-af="noop" title="Dock">⧉</button>
+          <button class="af-iconbtn" type="button" data-af="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="af-bodypad af-terminal-wrap">
+        <div class="af-term">
+          <div class="af-term-head">
+            <span id="afTermTitle">PS / bash (visual)</span>
+            <span id="afTermStatus">locked</span>
+          </div>
+          <div class="af-term-body" id="afTermOut"></div>
+          <div class="af-term-input-row">
+            <input class="af-term-input" id="afTermIn" type="text" placeholder="Type a command (visual)…" autocomplete="off" />
+            <button class="af-btn" type="button" id="afTermSend">Run</button>
+          </div>
+        </div>
+
+        <div class="af-col">
+          <div class="af-card">
+            <div class="af-label">Safety rails (visual)</div>
+            <div class="af-muted">
+              Admin is <strong>OFF</strong> by default.
+              Terminal is visual-only, but we show lock states to enforce good habits.
+            </div>
+            <div style="height:10px;"></div>
+            <div class="af-row af-tight">
+              <span class="af-pill af-dangerpill" id="afSafetyPill">Danger zone: locked</span>
+              <span class="af-pill" id="afAuditPill">Audit: ON</span>
+            </div>
+          </div>
+
+          <div class="af-card af-mono" id="afAuditLog">
+            <div>// Audit log</div>
+            <div>// - selections</div>
+            <div>// - binds</div>
+            <div>// - deploy plans</div>
+            <div>// - terminal attempts</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section class="af-panel af-ga-context" aria-label="Context">
+      <header class="af-head">
+        <h2 class="af-title">Context <span class="af-subtitle">state snapshot</span></h2>
+        <div class="af-actions">
+          <button class="af-btn af-ghost" type="button" id="afExportState">Export JSON</button>
+          <button class="af-btn af-ghost" type="button" id="afResetState">Reset</button>
+        </div>
+      </header>
+
+      <div class="af-bodypad">
+        <div class="af-row af-tight" style="margin-bottom:12px;">
+          <span class="af-pill" id="afActiveScopePill">Scope: maneit-portal</span>
+          <span class="af-pill" id="afActiveTypePill">Type: agents</span>
+          <span class="af-pill" id="afActiveSelectionPill">Selected: none</span>
+        </div>
+
+        <div class="af-card af-mono" id="afStatePreview">
+          <div>// state preview</div>
+          <div>// (visual)</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared JS (intentional) -->
+  <script src="../core.js" defer></script>
+
+  <!-- Page-isolated JS -->
+  <script src="../assets/js/pages/agentfactory.js" defer></script>
 </body>
 </html>
