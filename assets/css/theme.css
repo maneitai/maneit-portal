@@ -1,0 +1,44 @@
+/* theme.css — variables + background grid helper */
+
+:root{
+  --bg0:#070a10;
+  --bg1:#0b0f14;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.68);
+
+  --accent: rgba(125,211,252,.55);
+  --accentBg: rgba(125,211,252,.10);
+
+  --radius: 18px;
+  --topbarH: 58px;
+
+  --gridA: rgba(255,255,255,.06);
+  --gridB: rgba(255,255,255,.03);
+}
+
+/* Subtle background (used by pages that include .gridbg div) */
+body{
+  background:
+    radial-gradient(1200px 600px at 45% 35%, rgba(125,211,252,.08), transparent 60%),
+    radial-gradient(900px 500px at 70% 55%, rgba(167,139,250,.06), transparent 60%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+}
+
+/* optional overlay grid */
+.gridbg{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .95;
+  background-image:
+    linear-gradient(to right, var(--gridB) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--gridB) 1px, transparent 1px),
+    linear-gradient(to right, var(--gridA) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--gridA) 1px, transparent 1px);
+  background-size:
+    14px 14px,
+    14px 14px,
+    84px 84px,
+    84px 84px;
+  background-position: 0 0;
+}
