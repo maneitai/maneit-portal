@@ -1,0 +1,187 @@
+/* Page-isolated: Home (final pass UI widgets)
+   - No cross-page selectors
+   - Only styles elements inside .home-final
+*/
+
+.home-final {
+  display: grid;
+  gap: 14px;
+}
+
+.home-final .hf-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.home-final .hf-card {
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  overflow: hidden;
+}
+
+.home-final .hf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.12);
+}
+
+.home-final .hf-title {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.home-final .hf-subtitle {
+  font-size: 12px;
+  opacity: 0.72;
+  font-weight: 500;
+}
+
+.home-final .hf-body {
+  padding: 12px;
+}
+
+.home-final .hf-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.home-final .hf-row.tight { gap: 8px; }
+
+.home-final .hf-pill {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  white-space: nowrap;
+}
+
+.home-final .hf-muted {
+  font-size: 12px;
+  opacity: 0.72;
+  line-height: 1.35;
+}
+
+.home-final .hf-btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.home-final .hf-btn.ghost {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+
+.home-final .hf-input, .home-final .hf-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.22);
+  color: inherit;
+  outline: none;
+}
+
+.home-final .hf-cal {
+  display: grid;
+  gap: 10px;
+}
+
+.home-final .hf-cal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-final .hf-cal-title {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.home-final .hf-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.home-final .hf-day {
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 10px;
+  min-height: 68px;
+  cursor: pointer;
+}
+
+.home-final .hf-day .d {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.home-final .hf-day .e {
+  font-size: 11px;
+  opacity: 0.72;
+  line-height: 1.2;
+}
+
+.home-final .hf-day.is-today {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.home-final .hf-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.home-final .hf-item {
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+}
+
+.home-final .hf-item .t {
+  font-size: 13px;
+  margin: 0 0 4px;
+}
+
+.home-final .hf-item .m {
+  font-size: 12px;
+  opacity: 0.75;
+  line-height: 1.25;
+}
+
+.home-final .hf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 1100px) {
+  .home-final .hf-grid {
+    grid-template-columns: 1fr;
+  }
+}
