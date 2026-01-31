@@ -55,24 +55,19 @@
     glassBlur: $("glassBlur"),
   };
 
-  // ===== State =====
+  // ===== Theme Presets (keys match theme.css data-theme presets) =====
   const themes = {
-    obsidian: { bg0:"#070A10", bg1:"#0B1220", accent:"#7DD3FC", accent2:"#A78BFA" },
-    nord:     { bg0:"#0B0F14", bg1:"#0F172A", accent:"#93C5FD", accent2:"#A5B4FC" },
-    emerald:  { bg0:"#050B0A", bg1:"#0B1A16", accent:"#34D399", accent2:"#22C55E" },
-    amber:    { bg0:"#0A0906", bg1:"#17120A", accent:"#FBBF24", accent2:"#FB7185" },
-    pure:     { bg0:"#05070B", bg1:"#070A10", accent:"#E5E7EB", accent2:"#94A3B8" }
+    obsidian:   { label: "Obsidian" },
+    nord:       { label: "Nord" },
+    emerald:    { label: "Emerald" },
+    amber:      { label: "Amber" },
+    pure:       { label: "Pure Dark" },
+    darkforest: { label: "Dark Forest" },
+    maneitcyan: { label: "Maneit Cyan" },
   };
 
   const uid = () => Math.random().toString(16).slice(2) + "-" + Date.now().toString(16);
 
-  /** @type {{
-   *  chat: { chats: Array<any>, activeChatId: string|null },
-   *  today: { items: string[] },
-   *  calendar: { items: Array<{id:string,time:string,text:string}> },
-   *  chathub: { items: Array<{id:string,src:'Teams'|'Discord',text:string,unread:boolean,selected:boolean}>, inbox: Array<{id:string,text:string,src:string,ts:number}> },
-   *  theme: { themeKey: string, alpha: number, blur: number }
-   * }} */
   let state = {
     chat: { chats: [], activeChatId: null },
     today: { items: ["Keep portal consistent", "Build OS pages", "Integrations later"] },
@@ -94,7 +89,6 @@
     theme: { themeKey: "obsidian", alpha: 0.10, blur: 14 },
   };
 
-  // ===== Storage =====
   function save() {
     if (!STORAGE_ENABLED) return;
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
@@ -109,12 +103,20 @@
       const parsed = JSON.parse(raw);
       if (!parsed || typeof parsed !== "object") return false;
       state = deepMerge(state, parsed);
-      // normalize
+
       if (!Array.isArray(state.chat.chats)) state.chat.chats = [];
       if (!Array.isArray(state.today.items)) state.today.items = [];
       if (!Array.isArray(state.calendar.items)) state.calendar.items = [];
       if (!Array.isArray(state.chathub.items)) state.chathub.items = [];
       if (!Array.isArray(state.chathub.inbox)) state.chathub.inbox = [];
+
+      if (!state.theme || typeof state.theme !== "object") {
+        state.theme = { themeKey: "obsidian", alpha: 0.10, blur: 14 };
+      }
+      if (!themes[state.theme.themeKey]) state.theme.themeKey = "obsidian";
+      if (typeof state.theme.alpha !== "number") state.theme.alpha = 0.10;
+      if (typeof state.theme.blur !== "number") state.theme.blur = 14;
+
       return true;
     } catch {
       return false;
@@ -135,25 +137,23 @@
     return (incoming === undefined ? base : incoming);
   }
 
-  // ===== CSS variables (theme/glass) =====
   function setCSSVar(name, value) {
     document.documentElement.style.setProperty(name, value);
   }
-  function applyTheme() {
-    const t = themes[state.theme.themeKey] || themes.obsidian;
-    setCSSVar("--bg0", t.bg0);
-    setCSSVar("--bg1", t.bg1);
-    setCSSVar("--accent", t.accent);
-    setCSSVar("--accent2", t.accent2);
 
-    // Support both naming styles, in case your style.css uses either:
+  function applyTheme() {
+    const key = themes[state.theme.themeKey] ? state.theme.themeKey : "obsidian";
+    document.documentElement.dataset.theme = key;
+
+    setCSSVar("--glassAlpha", String(state.theme.alpha));
+    setCSSVar("--glassBlur", String(state.theme.blur) + "px");
+
     setCSSVar("--glassA", String(state.theme.alpha));
     setCSSVar("--glass-a", String(state.theme.alpha));
     setCSSVar("--blur", String(state.theme.blur) + "px");
     setCSSVar("--glass-blur", String(state.theme.blur) + "px");
   }
 
-  // ===== Chat =====
   function ensureChat() {
     if (state.chat.chats.length === 0) {
       const c = newChat();
@@ -205,8 +205,6 @@
     renderChat();
     save();
 
-    // UI-only assistant placeholder (optional, minimal)
-    // Comment out if you want pure user-only logs:
     window.setTimeout(() => {
       c.messages.push({
         id: uid(),
@@ -221,7 +219,6 @@
   }
 
   function renderChat() {
-    // chat list
     dom.chatList.innerHTML = "";
     const chatsSorted = [...state.chat.chats].sort((a, b) => {
       const aLast = a.messages?.[a.messages.length - 1]?.ts ?? a.createdAt;
@@ -242,12 +239,10 @@
       dom.chatList.appendChild(btn);
     }
 
-    // messages
     const c = activeChat();
     dom.chatMessages.innerHTML = "";
     if (!c) return;
 
-    // keep model dropdown aligned
     if (dom.modelSelect && c.model) dom.modelSelect.value = c.model;
 
     for (const m of c.messages) {
@@ -261,11 +256,9 @@
       dom.chatMessages.appendChild(row);
     }
 
-    // scroll to bottom
     dom.chatMessages.scrollTop = dom.chatMessages.scrollHeight;
   }
 
-  // ===== Today =====
   function renderToday() {
     dom.todayList.innerHTML = "";
     const items = state.today.items.slice(0, 3);
@@ -299,7 +292,6 @@
       del.title = "Remove";
       del.addEventListener("click", () => {
         state.today.items.splice(idx, 1);
-        // keep max 3 but allow fewer
         renderToday();
         save();
       });
@@ -309,25 +301,19 @@
       dom.todayList.appendChild(li);
     });
 
-    // enforce max 3 (hard)
     if (state.today.items.length > 3) state.today.items = state.today.items.slice(0, 3);
   }
 
   function addTodayItem() {
     const v = (dom.todayAdd.value || "").trim();
     if (!v) return;
-    if (state.today.items.length >= 3) {
-      // replace last (strict Top 3)
-      state.today.items[2] = v;
-    } else {
-      state.today.items.push(v);
-    }
+    if (state.today.items.length >= 3) state.today.items[2] = v;
+    else state.today.items.push(v);
     dom.todayAdd.value = "";
     renderToday();
     save();
   }
 
-  // ===== Calendar =====
   function renderCalendar() {
     dom.calendarList.innerHTML = "";
     const items = [...state.calendar.items].sort((a, b) => (a.time || "").localeCompare(b.time || ""));
@@ -389,7 +375,6 @@
     save();
   }
 
-  // ===== Chat Hub =====
   function renderChatHub() {
     const items = state.chathub.items;
 
@@ -425,7 +410,6 @@
       dom.chatHubList.appendChild(row);
     });
 
-    // inbox list
     dom.hubInboxList.innerHTML = "";
     state.chathub.inbox.slice().reverse().forEach((it) => {
       const row = document.createElement("div");
@@ -476,17 +460,24 @@
     save();
   }
 
-  // ===== Theme modal =====
   function openTheme() { dom.themeModal.style.display = "block"; }
   function closeTheme() { dom.themeModal.style.display = "none"; }
 
   function wireThemeControls() {
     dom.glassAlpha.value = String(state.theme.alpha);
     dom.glassBlur.value = String(state.theme.blur);
-    dom.themeSelect.value = state.theme.themeKey;
+
+    if (dom.themeSelect) {
+      const opt = Array.from(dom.themeSelect.options || []).some(o => o.value === state.theme.themeKey);
+      if (!opt && dom.themeSelect.options?.length) {
+        state.theme.themeKey = dom.themeSelect.options[0].value;
+      }
+      dom.themeSelect.value = state.theme.themeKey;
+    }
 
     dom.themeSelect.addEventListener("change", () => {
       state.theme.themeKey = dom.themeSelect.value;
+      if (!themes[state.theme.themeKey]) state.theme.themeKey = "obsidian";
       applyTheme();
       save();
     });
@@ -506,13 +497,11 @@
     dom.openThemeBtn.addEventListener("click", openTheme);
     dom.closeThemeBtn.addEventListener("click", closeTheme);
 
-    // click outside card closes
     dom.themeModal.addEventListener("click", (e) => {
       if (e.target === dom.themeModal) closeTheme();
     });
   }
 
-  // ===== Utilities =====
   function escapeHtml(str) {
     return String(str)
       .replaceAll("&", "&amp;")
@@ -522,9 +511,7 @@
       .replaceAll("'", "&#039;");
   }
 
-  // ===== Wiring =====
   function wireEvents() {
-    // Chat controls
     dom.newChatBtn.addEventListener("click", () => {
       const c = newChat();
       state.chat.chats.unshift(c);
@@ -552,7 +539,6 @@
       }
     });
 
-    // Today
     dom.todayAddBtn.addEventListener("click", addTodayItem);
     dom.todayAdd.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
@@ -561,7 +547,6 @@
       }
     });
 
-    // Calendar
     dom.calAddBtn.addEventListener("click", addCalendarItem);
     dom.calText.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
@@ -570,12 +555,10 @@
       }
     });
 
-    // Chat hub
     dom.chatHubMarkReadBtn.addEventListener("click", markChatHubRead);
     dom.routeToInboxBtn.addEventListener("click", routeChatHubToInbox);
     dom.chatHubClearBtn.addEventListener("click", clearChatHub);
 
-    // Global Esc closes modal
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeTheme();
     });
@@ -594,7 +577,7 @@
     wireThemeControls();
     wireEvents();
 
-    save(); // write normalized state
+    save();
   }
 
   if (document.readyState === "loading") {
