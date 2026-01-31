@@ -4,55 +4,192 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>Projects · Maneit Portal</title>
+  <title>Maneit Portal — Projects</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
+  <!-- Future-proof stack (shared, intentional) -->
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../theme.css" />
+
+  <!-- Page-isolated CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/projects.css" />
 </head>
 
-<body>
-<header class="topbar">
-  <div class="wrap row">
-    <a class="brand" href="../index.html">
-      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Projects</span>
-    </a>
-    <nav class="tabs">
-      <a class="tab" href="../index.html">Home</a>
-      <a class="tab" href="hub.html">Hub</a>
-      <a class="tab" href="work.html">Work</a>
-      <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
-      <a class="tab" href="agentfactory.html">AgentFactory</a>
-      <a class="tab" href="pipelines.html">Pipelines</a>
-      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
-      <a class="tab" href="stream.html">Stream</a>
-      <a class="tab" href="notes.html">Notes</a>
-      <a class="tab" href="system.html">System</a>
-    </nav>
-  </div>
-</header>
+<body class="pr-body" data-page="projects">
+  <main class="pr-shell">
+    <!-- LEFT: Projects Library -->
+    <section class="pr-panel pr-ga-library" aria-label="Projects Library">
+      <header class="pr-head">
+        <h2 class="pr-title">Projects <span class="pr-subtitle" id="pSub">Library</span></h2>
+        <div class="pr-actions">
+          <span class="pr-pill" id="pStore">Storage: ON</span>
+          <button class="pr-iconbtn" type="button" title="Dock">⧉</button>
+          <button class="pr-iconbtn" type="button" title="Close">×</button>
+        </div>
+      </header>
 
-<main class="wrap">
-  <h1 class="h1">Projects</h1>
-  <p class="muted">Active, paused, and idea-stage initiatives.</p>
+      <div class="pr-bodypad">
+        <div class="pr-col">
+          <div class="pr-row pr-tight">
+            <span class="pr-pill pr-ok">Canonical</span>
+            <span class="pr-pill">UI-only</span>
+            <span class="pr-pill" id="pCount">0</span>
+          </div>
 
-  <section class="grid">
-    <article class="card span6">
-      <h2>Active</h2>
-      <p class="muted">Maneit Portal, AI Lab console, NovelCrafter.</p>
-    </article>
+          <div>
+            <div class="pr-label">Scope</div>
+            <select id="pScope">
+              <option value="all">All</option>
+              <option value="portal">Maneit Portal</option>
+              <option value="apps">Apps</option>
+              <option value="agents">Agents/Models</option>
+              <option value="creative">Creative</option>
+            </select>
+          </div>
 
-    <article class="card span6">
-      <h2>Systems</h2>
-      <p class="muted">NetworkSaint, SystemDwarf, GameEngine.</p>
-    </article>
+          <div>
+            <input id="pSearch" type="search" placeholder="Search projects…" autocomplete="off" />
+          </div>
 
-    <article class="card span12">
-      <h2>Next to build</h2>
-      <p class="muted">Showcase page + nav injector + persistent registry.</p>
-    </article>
-  </section>
-</main>
+          <div class="pr-list" id="pList" role="listbox" aria-label="Projects list"></div>
 
-<script src="../assets/js/app.js?v=2" defer></script>
+          <div class="pr-row">
+            <button class="pr-btn" type="button" id="pNew">+ New</button>
+            <button class="pr-btn pr-ghost" type="button" id="pClone">Clone</button>
+            <button class="pr-btn pr-danger" type="button" id="pArchive">Archive</button>
+          </div>
+
+          <div class="pr-card">
+            <div class="pr-label">Selected</div>
+            <div id="pSelTitle" class="pr-card-title">None</div>
+            <div id="pSelMeta" class="pr-muted">Pick a project.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CENTER: Project Detail -->
+    <section class="pr-panel pr-ga-detail" aria-label="Project Detail">
+      <header class="pr-head">
+        <h2 class="pr-title">Project <span class="pr-subtitle" id="pActive">No selection</span></h2>
+        <div class="pr-actions">
+          <span class="pr-pill" id="pTier">Tier: —</span>
+          <span class="pr-pill" id="pStage">Stage: —</span>
+        </div>
+      </header>
+
+      <div class="pr-bodypad">
+        <div class="pr-col">
+          <div class="pr-card">
+            <div class="pr-label">Summary</div>
+            <div class="pr-muted" id="pSummary">Select a project to see the full snapshot.</div>
+            <div style="height:10px"></div>
+            <div class="pr-row pr-tight">
+              <span class="pr-pill" id="pOwner">Owner: Maneit</span>
+              <span class="pr-pill" id="pUpdated">Updated: —</span>
+            </div>
+          </div>
+
+          <div class="pr-row" style="align-items:flex-start;">
+            <div style="flex:1;">
+              <div class="pr-label">Milestone notes (visual)</div>
+              <textarea id="pNotes" placeholder="Notes, constraints, decisions…"></textarea>
+            </div>
+            <div style="width:280px;">
+              <div class="pr-label">Tags</div>
+              <div class="pr-card pr-mono" id="pTags">// tags</div>
+            </div>
+          </div>
+
+          <div class="pr-row">
+            <button class="pr-btn pr-okbtn" type="button" id="pSave">Save snapshot</button>
+            <button class="pr-btn pr-ghost" type="button" id="pExport">Export JSON</button>
+            <button class="pr-btn pr-ghost" type="button" id="pReset">Reset</button>
+          </div>
+
+          <div class="pr-muted2">
+            Visual-only: this page is for “project truth” and planning. No cross-page writes.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Ops / Work Orders -->
+    <section class="pr-panel pr-ga-ops" aria-label="Project Ops">
+      <header class="pr-head">
+        <h2 class="pr-title">Ops <span class="pr-subtitle">Work orders</span></h2>
+        <div class="pr-actions">
+          <span class="pr-pill pr-ok" id="pHealth">Continuity: OK</span>
+          <span class="pr-pill pr-dangerpill">Admin: OFF</span>
+        </div>
+      </header>
+
+      <div class="pr-bodypad">
+        <div class="pr-card" style="margin-bottom:12px;">
+          <div class="pr-label">Next actions (visual)</div>
+          <div class="pr-muted">Turn “decisions” into tasks without leaving Projects.</div>
+          <div style="height:10px"></div>
+          <div class="pr-col" id="pNext"></div>
+          <div style="height:10px"></div>
+          <div class="pr-row pr-tight">
+            <input id="pTaskIn" type="text" placeholder="Add task…" autocomplete="off" />
+            <button class="pr-btn" type="button" id="pTaskAdd">Add</button>
+          </div>
+        </div>
+
+        <div class="pr-card">
+          <div class="pr-label">Activity (visual)</div>
+          <div class="pr-card pr-mono" id="pLog">// audit log</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="pr-panel pr-ga-roadmap" aria-label="Roadmap">
+      <header class="pr-head">
+        <h2 class="pr-title">Roadmap <span class="pr-subtitle">rarely edited</span></h2>
+        <div class="pr-actions">
+          <button class="pr-iconbtn" type="button" title="Dock">⧉</button>
+          <button class="pr-iconbtn" type="button" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="pr-bodypad">
+        <div class="pr-muted">Visualizing your “what’s next” pipeline per project.</div>
+        <div class="pr-steps">
+          <span class="pr-step">1) Lock scope</span>
+          <span class="pr-step">2) Define deliverables</span>
+          <span class="pr-step">3) Build page/UI</span>
+          <span class="pr-step">4) Integrate</span>
+          <span class="pr-step">5) Validate</span>
+          <span class="pr-step">6) Ship</span>
+        </div>
+        <div class="pr-row pr-tight">
+          <button class="pr-btn pr-ghost" id="pRunPlan" type="button">Run: Plan</button>
+          <button class="pr-btn pr-ghost" id="pRunBuild" type="button">Run: Build</button>
+          <button class="pr-btn pr-ghost" id="pRunShip" type="button">Run: Ship</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW / SNAPSHOT -->
+    <section class="pr-panel pr-ga-snapshot" aria-label="Overview">
+      <header class="pr-head">
+        <h2 class="pr-title">Overview <span class="pr-subtitle">state snapshot</span></h2>
+        <div class="pr-actions">
+          <span class="pr-pill" id="pSnap">v:1</span>
+        </div>
+      </header>
+
+      <div class="pr-bodypad">
+        <div class="pr-card pr-mono" id="pState">// state snapshot</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared JS (intentional) -->
+  <script src="../core.js" defer></script>
+
+  <!-- Page-isolated JS -->
+  <script src="../assets/js/pages/projects.js" defer></script>
 </body>
 </html>
