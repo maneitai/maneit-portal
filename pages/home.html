@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit Portal — Home</title>
+
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+
+<body>
+<header class="topbar">
+  <div class="wrap row">
+    <a class="brand" href="home.html">
+      <span class="dot"></span>
+      <strong>Maneit Portal</strong>
+      <span class="pill">Home</span>
+    </a>
+
+    <nav class="tabs">
+      <a class="tab" href="hub.html">Hub</a>
+      <a class="tab" href="work.html">Work</a>
+      <a class="tab" href="projects.html">Projects</a>
+      <a class="tab" href="agents.html">Agents</a>
+      <a class="tab" href="agentfactory.html">AgentFactory</a>
+      <a class="tab" href="pipelines.html">Pipelines</a>
+      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
+      <a class="tab" href="stream.html">Stream</a>
+      <a class="tab" href="notes.html">Notes</a>
+      <a class="tab" href="system.html">System</a>
+    </nav>
+
+    <!-- Home-only quick settings -->
+    <button class="btn" id="openThemeBtn" style="margin-left:auto;">Theme</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 class="h1">Home</h1>
+  <p class="muted">Your replacement for ChatGPT + Calendar + Day Planner + Teams/Discord.</p>
+
+  <section class="grid">
+    <!-- CHAT -->
+    <article class="card span7">
+      <h2>Chat</h2>
+      <p class="muted">Self-reflection, thinking out loud, idea exploration.</p>
+
+      <div class="chat-layout">
+        <!-- Sidebar -->
+        <aside class="chat-sidebar">
+          <div class="chat-sidebar-header mono">Chats</div>
+          <div class="chat-list" id="chatList"></div>
+          <button class="btn" id="newChatBtn" style="margin:10px;">+ New chat</button>
+        </aside>
+
+        <!-- Main chat -->
+        <div class="chat-main">
+          <div class="chat-messages" id="chatMessages"></div>
+
+          <div class="chat-input">
+            <select class="field" id="modelSelect">
+              <option>Local LLM</option>
+              <option>Reasoning model</option>
+              <option>Fast draft</option>
+            </select>
+
+            <textarea
+              class="field chat-textarea"
+              id="chatInput"
+              placeholder="Write here… (Enter = send, Shift+Enter = new line)"
+            ></textarea>
+
+            <button class="btn" id="sendChat">Send</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- TODAY -->
+    <article class="card span5">
+      <h2>Today</h2>
+      <p class="muted">Top 3 (click to edit)</p>
+
+      <div class="box mono" id="todayBox">
+        <ol id="todayList" style="margin:0; padding-left:18px; line-height:1.7;"></ol>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <input class="field" id="todayAdd" placeholder="Add item…" style="flex:1; min-width:180px;" />
+          <button class="btn" id="todayAddBtn">Add</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">Rule: max 3 here. Backlog lives elsewhere.</p>
+      </div>
+    </article>
+
+    <!-- CALENDAR -->
+    <article class="card span6">
+      <h2>Calendar</h2>
+      <p class="muted">Daily slice (UI-only)</p>
+
+      <div class="box mono">
+        <div id="calendarList" style="display:flex; flex-direction:column; gap:8px;"></div>
+
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+          <input class="field" id="calTime" placeholder="HH:MM" style="width:110px;" />
+          <input class="field" id="calText" placeholder="What?" style="flex:1; min-width:200px;" />
+          <button class="btn" id="calAddBtn">Add</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">No real calendar sync yet. Just your day slice.</p>
+      </div>
+    </article>
+
+    <!-- CHAT HUB -->
+    <article class="card span6">
+      <h2>Chat Hub</h2>
+      <p class="muted">Teams + Discord DMs. UI shell now. Real sync later.</p>
+
+      <div class="box mono">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <span class="pill">Teams: <strong id="teamsCount">0</strong></span>
+          <span class="pill">Discord: <strong id="discordCount">0</strong></span>
+          <span class="pill">Unread: <strong id="chatHubUnread">0</strong></span>
+        </div>
+
+        <div style="margin-top:12px;" class="muted">Latest (click to select)</div>
+        <div id="chatHubList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <button class="btn" id="chatHubMarkReadBtn">Mark read</button>
+          <button class="btn" id="routeToInboxBtn">Send → Inbox</button>
+          <button class="btn" id="chatHubClearBtn">Clear</button>
+        </div>
+
+        <div class="box mono" style="margin-top:12px;">
+          <div class="muted">Inbox (routed items)</div>
+          <div id="hubInboxList" style="margin-top:8px; display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          Later: Teams via Microsoft Graph OAuth. Discord via bot/OAuth + backend relay.
+        </p>
+      </div>
+    </article>
+
+    <!-- STATUS -->
+    <article class="card span12">
+      <h2>Status</h2>
+      <p class="muted">Portal ~10% complete. This is the thinking layer.</p>
+      <p class="muted">Execution lives elsewhere.</p>
+    </article>
+  </section>
+</main>
+
+<!-- Theme / Glass Modal -->
+<div id="themeModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9999;">
+  <div class="wrap" style="height:100%; display:flex; align-items:center; justify-content:center;">
+    <div class="card" style="max-width:760px; width:100%;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+        <div>
+          <h2 style="margin:0;">Theme & Glass</h2>
+          <p class="muted" style="margin:6px 0 0;">UI-only settings. Saved locally.</p>
+        </div>
+        <button class="btn" id="closeThemeBtn">Close</button>
+      </div>
+
+      <div class="box mono" style="margin-top:12px;">
+        <div style="display:grid; grid-template-columns: 160px 1fr; gap:12px; align-items:center;">
+          <div class="muted">Theme</div>
+          <select class="field" id="themeSelect">
+            <option value="obsidian">Obsidian</option>
+            <option value="nord">Nord</option>
+            <option value="emerald">Emerald</option>
+            <option value="amber">Amber</option>
+            <option value="pure">Pure Dark</option>
+          </select>
+
+          <div class="muted">Transparency</div>
+          <input id="glassAlpha" type="range" min="0.04" max="0.20" step="0.01" />
+
+          <div class="muted">Blur</div>
+          <input id="glassBlur" type="range" min="6" max="26" step="1" />
+        </div>
+
+        <p class="muted" style="margin-top:10px;">
+          These set CSS variables on <code>:root</code>. Your style.css stays the source of layout.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/app.js" defer></script>
+</body>
+</html>
