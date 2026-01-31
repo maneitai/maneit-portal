@@ -4,65 +4,163 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="color-scheme" content="dark" />
-  <title>Notes · Maneit Portal</title>
+  <title>Maneit Portal — Notes</title>
 
-  <link rel="stylesheet" href="../assets/css/style.css?v=2" />
+  <!-- Future-proof stack (shared, intentional) -->
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../theme.css" />
+
+  <!-- Page-isolated CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/notes.css" />
 </head>
 
-<body>
-<header class="topbar">
-  <div class="wrap row">
-    <a class="brand" href="../index.html">
-      <span class="dot"></span><strong>Maneit Portal</strong><span class="pill">Notes</span>
-    </a>
-
-    <nav class="tabs">
-      <a class="tab" href="../index.html">Home</a>
-      <a class="tab" href="hub.html">Hub</a>
-      <a class="tab" href="work.html">Work</a>
-      <a class="tab" href="projects.html">Projects</a>
-      <a class="tab" href="agents.html">Agents</a>
-      <a class="tab" href="agentfactory.html">AgentFactory</a>
-      <a class="tab" href="pipelines.html">Pipelines</a>
-      <a class="tab" href="novelcrafter.html">NovelCrafter</a>
-      <a class="tab" href="stream.html">Stream</a>
-      <a class="tab" href="notes.html">Notes</a>
-      <a class="tab" href="system.html">System</a>
-    </nav>
-  </div>
-</header>
-
-<main class="wrap">
-  <h1 class="h1">Notes</h1>
-  <p class="muted">Autosaves instantly. Use drafts as a shelf.</p>
-
-  <section class="grid">
-    <article class="card span7">
-      <h2>Scratchpad</h2>
-      <textarea class="field" data-notes placeholder="Write anything. No formatting pressure." style="min-height:320px;"></textarea>
-
-      <div class="grid" style="padding:0;margin-top:10px;">
-        <div class="span4">
-          <label class="mono" style="display:block;margin:0 0 6px;">Draft title</label>
-          <input class="field" data-draft-title placeholder="e.g., Sponsor email draft" />
+<body class="nt-body" data-page="notes">
+  <main class="nt-shell">
+    <!-- LEFT: Notes Library -->
+    <section class="nt-panel nt-ga-library" aria-label="Notes Library">
+      <header class="nt-head">
+        <h2 class="nt-title">Notes <span class="nt-subtitle">Library</span></h2>
+        <div class="nt-actions">
+          <span class="nt-pill nt-ok">UI-only</span>
+          <button class="nt-iconbtn" type="button" title="Dock">⧉</button>
+          <button class="nt-iconbtn" type="button" title="Close">×</button>
         </div>
-        <div class="span8" style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
-          <button class="btn" type="button" data-save-draft>Save as Draft</button>
-          <a class="btn" href="../index.html#compose">Send to Compose →</a>
+      </header>
+
+      <div class="nt-bodypad">
+        <div class="nt-col">
+          <div>
+            <div class="nt-label">Notebook</div>
+            <select id="nBook">
+              <option value="portal">Portal</option>
+              <option value="agentfactory">AgentFactory</option>
+              <option value="appcreator">AppCreator</option>
+              <option value="personal">Personal</option>
+            </select>
+          </div>
+
+          <div>
+            <input id="nSearch" type="search" placeholder="Search notes…" autocomplete="off" />
+          </div>
+
+          <div class="nt-list" id="nList" role="listbox" aria-label="Notes list"></div>
+
+          <div class="nt-row">
+            <button class="nt-btn" type="button" id="nNew">+ New</button>
+            <button class="nt-btn nt-ghost" type="button" id="nPin">Pin</button>
+            <button class="nt-btn nt-ghost" type="button" id="nDelete">Delete</button>
+          </div>
+
+          <div class="nt-card">
+            <div class="nt-label">Selected</div>
+            <div id="nSel" class="nt-card-title">None</div>
+            <div class="nt-muted" id="nSelMeta">Pick a note.</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <p class="mono" style="margin-top:10px;">Stored locally (localStorage).</p>
-    </article>
+    <!-- CENTER: Editor -->
+    <section class="nt-panel nt-ga-editor" aria-label="Editor">
+      <header class="nt-head">
+        <h2 class="nt-title">Editor <span class="nt-subtitle" id="nActive">No selection</span></h2>
+        <div class="nt-actions">
+          <span class="nt-pill" id="nUpdated">Updated: —</span>
+          <span class="nt-pill" id="nStatus">Draft</span>
+        </div>
+      </header>
 
-    <article class="card span5">
-      <h2>Drafts</h2>
-      <div data-drafts-list style="display:flex;flex-direction:column;gap:10px;"></div>
-      <p class="mono" style="margin-top:10px;">Click a draft card to load it.</p>
-    </article>
-  </section>
-</main>
+      <div class="nt-bodypad">
+        <div class="nt-col">
+          <div>
+            <div class="nt-label">Title</div>
+            <input id="nTitle" type="text" placeholder="Note title…" />
+          </div>
 
-<script src="../assets/js/app.js?v=2" defer></script>
+          <div>
+            <div class="nt-label">Body (mono)</div>
+            <textarea id="nBody" placeholder="// write here…"></textarea>
+          </div>
+
+          <div class="nt-row">
+            <button class="nt-btn nt-okbtn" type="button" id="nSave">Save</button>
+            <button class="nt-btn nt-ghost" type="button" id="nExport">Export</button>
+            <button class="nt-btn nt-ghost" type="button" id="nClear">Clear</button>
+          </div>
+
+          <div class="nt-muted2">Visual-only: simulates a clean note workflow for decisions & scratchpads.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Metadata / Backlinks -->
+    <section class="nt-panel nt-ga-meta" aria-label="Meta">
+      <header class="nt-head">
+        <h2 class="nt-title">Meta <span class="nt-subtitle">links / tags</span></h2>
+        <div class="nt-actions">
+          <span class="nt-pill" id="nBookPill">Book: portal</span>
+        </div>
+      </header>
+
+      <div class="nt-bodypad">
+        <div class="nt-card" style="margin-bottom:12px;">
+          <div class="nt-label">Tags</div>
+          <input id="nTags" type="text" placeholder="comma,separated,tags" />
+          <div class="nt-muted" style="margin-top:8px;">Used later for search + cross-linking.</div>
+        </div>
+
+        <div class="nt-card" style="margin-bottom:12px;">
+          <div class="nt-label">Backlinks (visual)</div>
+          <div class="nt-card nt-mono" id="nBacklinks">// none</div>
+        </div>
+
+        <div class="nt-card">
+          <div class="nt-label">Pinned</div>
+          <div class="nt-card nt-mono" id="nPinned">// none</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TASKS -->
+    <section class="nt-panel nt-ga-tasks" aria-label="Tasks">
+      <header class="nt-head">
+        <h2 class="nt-title">Tasks <span class="nt-subtitle">from notes</span></h2>
+        <div class="nt-actions">
+          <button class="nt-btn nt-ghost" type="button" id="nTaskClear">Clear</button>
+        </div>
+      </header>
+
+      <div class="nt-bodypad">
+        <div class="nt-col">
+          <div class="nt-muted">Turn a note into tasks without switching page.</div>
+          <div class="nt-list" id="nTasks" aria-label="Tasks list"></div>
+          <div class="nt-row nt-tight">
+            <input id="nTaskIn" type="text" placeholder="Add task…" autocomplete="off" />
+            <button class="nt-btn" type="button" id="nTaskAdd">Add</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVITY -->
+    <section class="nt-panel nt-ga-activity" aria-label="Activity">
+      <header class="nt-head">
+        <h2 class="nt-title">Activity <span class="nt-subtitle">audit</span></h2>
+        <div class="nt-actions">
+          <span class="nt-pill nt-ok">Storage</span>
+        </div>
+      </header>
+
+      <div class="nt-bodypad">
+        <div class="nt-card nt-mono" id="nAudit">// audit</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared JS (intentional) -->
+  <script src="../core.js" defer></script>
+
+  <!-- Page-isolated JS -->
+  <script src="../assets/js/pages/notes.js" defer></script>
 </body>
 </html>
