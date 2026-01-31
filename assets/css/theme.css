@@ -1,4 +1,4 @@
-/* theme.css — variables + background grid helper */
+/* theme.css — variables + background grid helper + theme presets */
 
 :root{
   --bg0:#070a10;
@@ -14,9 +14,16 @@
 
   --gridA: rgba(255,255,255,.06);
   --gridB: rgba(255,255,255,.03);
+
+  /* Theme-driven dot (used by core.css if present) */
+  --dot: rgba(74,222,128,.9);
+
+  /* UI-only “glass” controls (used by app.js sliders if it sets vars) */
+  --glassAlpha: 0.10;
+  --glassBlur: 14px;
 }
 
-/* Subtle background (used by pages that include .gridbg div) */
+/* Default background */
 body{
   background:
     radial-gradient(1200px 600px at 45% 35%, rgba(125,211,252,.08), transparent 60%),
@@ -41,4 +48,109 @@ body{
     84px 84px,
     84px 84px;
   background-position: 0 0;
+}
+
+/* ===============================
+   Theme Presets (set on :root)
+   Usage (example): document.documentElement.dataset.theme = "nord";
+   =============================== */
+
+/* Obsidian (default-ish) */
+:root[data-theme="obsidian"]{
+  --bg0:#070a10;
+  --bg1:#0b0f14;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.68);
+  --accent: rgba(125,211,252,.55);
+  --accentBg: rgba(125,211,252,.10);
+  --dot: rgba(74,222,128,.9);
+  --gridA: rgba(255,255,255,.06);
+  --gridB: rgba(255,255,255,.03);
+}
+
+/* Nord */
+:root[data-theme="nord"]{
+  --bg0:#0b111a;
+  --bg1:#0f1722;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.70);
+  --accent: rgba(136,192,208,.60);
+  --accentBg: rgba(136,192,208,.12);
+  --dot: rgba(136,192,208,.85);
+  --gridA: rgba(236,239,244,.06);
+  --gridB: rgba(236,239,244,.03);
+}
+
+/* Emerald */
+:root[data-theme="emerald"]{
+  --bg0:#070c0a;
+  --bg1:#0b1210;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.66);
+  --accent: rgba(74,222,128,.58);
+  --accentBg: rgba(74,222,128,.12);
+  --dot: rgba(74,222,128,.92);
+  --gridA: rgba(230,237,243,.06);
+  --gridB: rgba(230,237,243,.03);
+}
+
+/* Amber */
+:root[data-theme="amber"]{
+  --bg0:#0c0a07;
+  --bg1:#14100b;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.66);
+  --accent: rgba(251,191,36,.55);
+  --accentBg: rgba(251,191,36,.12);
+  --dot: rgba(251,191,36,.85);
+  --gridA: rgba(230,237,243,.06);
+  --gridB: rgba(230,237,243,.03);
+}
+
+/* Pure Dark */
+:root[data-theme="pure"]{
+  --bg0:#000000;
+  --bg1:#0a0a0a;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.64);
+  --accent: rgba(230,237,243,.35);
+  --accentBg: rgba(230,237,243,.08);
+  --dot: rgba(230,237,243,.65);
+  --gridA: rgba(230,237,243,.05);
+  --gridB: rgba(230,237,243,.02);
+}
+
+/* Dark Forest (requested) */
+:root[data-theme="darkforest"]{
+  --bg0:#050a07;
+  --bg1:#08110c;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.66);
+  --accent: rgba(34,197,94,.55);     /* forest green */
+  --accentBg: rgba(34,197,94,.12);
+  --dot: rgba(34,197,94,.92);
+  --gridA: rgba(230,237,243,.055);
+  --gridB: rgba(230,237,243,.028);
+}
+
+/* Maneit Cyan (requested) */
+:root[data-theme="maneitcyan"]{
+  --bg0:#060b10;
+  --bg1:#08121a;
+  --text:#e6edf3;
+  --muted: rgba(230,237,243,.67);
+  --accent: rgba(34,211,238,.62);     /* cyan */
+  --accentBg: rgba(34,211,238,.12);
+  --dot: rgba(34,211,238,.92);
+  --gridA: rgba(230,237,243,.06);
+  --gridB: rgba(230,237,243,.03);
+}
+
+/* Optional: if you want the background hue to react a bit per theme */
+:root[data-theme="nord"] body,
+:root[data-theme="emerald"] body,
+:root[data-theme="amber"] body,
+:root[data-theme="darkforest"] body,
+:root[data-theme="maneitcyan"] body{
+  /* no-op placeholder (kept empty intentionally to avoid surprises) */
 }
