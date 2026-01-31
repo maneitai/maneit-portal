@@ -1,0 +1,265 @@
+/* Page-isolated: System
+   - No cross-page selectors
+   - UI-only nodes + dashboard + actions + deploy plan + logs
+*/
+
+.sy-body{
+  margin:0;
+  min-height:100vh;
+}
+
+.sy-shell{
+  padding:14px;
+  display:grid;
+  gap:14px;
+
+  grid-template-columns: 360px 1fr 380px;
+  grid-template-rows: 520px 190px 240px;
+
+  grid-template-areas:
+    "nodes dashboard actions"
+    "nodes deploy    actions"
+    "logs logs logs";
+}
+
+.sy-panel{
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.22);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+}
+
+.sy-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.12);
+}
+
+.sy-title{
+  margin:0;
+  font-size:14px;
+  letter-spacing:.2px;
+  display:flex;
+  gap:10px;
+  align-items:baseline;
+}
+
+.sy-subtitle{
+  font-size:12px;
+  opacity:.72;
+  font-weight:500;
+}
+
+.sy-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.sy-iconbtn{
+  width:28px;
+  height:26px;
+  border-radius:9px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.04);
+  color:inherit;
+  cursor:pointer;
+}
+
+.sy-bodypad{ padding:12px; }
+
+.sy-row{ display:flex; gap:10px; align-items:center; }
+.sy-tight{ gap:8px; }
+.sy-col{ display:flex; flex-direction:column; gap:10px; }
+
+.sy-pill{
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.04);
+  white-space:nowrap;
+}
+
+.sy-ok{
+  background: rgba(80,255,150,0.18);
+  border-color: rgba(80,255,150,0.35);
+}
+
+.sy-warn{
+  background: rgba(255,200,80,0.18);
+  border-color: rgba(255,200,80,0.35);
+}
+
+.sy-dangerpill{
+  background: rgba(255,90,90,0.18);
+  border-color: rgba(255,90,90,0.35);
+}
+
+.sy-label{
+  font-size:12px;
+  opacity:.72;
+  margin-bottom:6px;
+}
+
+.sy-muted{
+  font-size:12px;
+  opacity:.72;
+  line-height:1.35;
+}
+.sy-muted2{
+  font-size:12px;
+  opacity:.60;
+  line-height:1.35;
+}
+
+input, select{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(0,0,0,0.22);
+  color:inherit;
+  outline:none;
+}
+
+.sy-btn{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.06);
+  color:inherit;
+  cursor:pointer;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.sy-ghost{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+
+.sy-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:310px;
+  overflow:auto;
+  padding-right:2px;
+}
+
+.sy-item{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  cursor:pointer;
+  user-select:none;
+}
+
+.sy-item.is-active{
+  background:rgba(255,255,255,0.07);
+  border-color:rgba(255,255,255,0.15);
+}
+
+.sy-item .t{ font-size:13px; margin:0 0 4px; }
+.sy-item .m{ font-size:12px; opacity:.75; line-height:1.25; }
+
+.sy-card{
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(255,255,255,0.03);
+  border-radius:14px;
+  padding:12px;
+}
+
+.sy-mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  line-height:1.55;
+  white-space:pre-wrap;
+  opacity:.92;
+}
+
+/* Metrics grid */
+.sy-grid{
+  display:grid;
+  gap:10px;
+}
+.sy-metrics{
+  grid-template-columns: repeat(3, 1fr);
+}
+.sy-metric{
+  border:1px solid rgba(255,255,255,0.10);
+  border-radius:14px;
+  background:rgba(0,0,0,0.18);
+  padding:12px;
+}
+.sy-metric .k{ font-size:12px; opacity:.70; }
+.sy-metric .v{ font-size:18px; margin-top:6px; }
+
+/* Terminal */
+.sy-term{
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.10);
+  background:rgba(0,0,0,0.30);
+  overflow:hidden;
+}
+.sy-term-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  background:rgba(0,0,0,0.18);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+}
+.sy-term-body{
+  padding:10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  line-height:1.55;
+  height:168px;
+  overflow:auto;
+  white-space:pre-wrap;
+  opacity:.92;
+}
+.sy-term-input-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  background:rgba(0,0,0,0.18);
+}
+.sy-term-input{
+  flex:1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Grid areas */
+.sy-ga-nodes{ grid-area: nodes; }
+.sy-ga-dashboard{ grid-area: dashboard; }
+.sy-ga-actions{ grid-area: actions; }
+.sy-ga-deploy{ grid-area: deploy; }
+.sy-ga-logs{ grid-area: logs; }
+
+/* Responsive */
+@media (max-width: 1200px){
+  .sy-shell{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "nodes"
+      "dashboard"
+      "actions"
+      "deploy"
+      "logs";
+  }
+  .sy-metrics{ grid-template-columns: 1fr; }
+}
