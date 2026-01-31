@@ -1,1 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit Portal — AppCreator</title>
+
+  <!-- Future-proof stack (shared, intentional) -->
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../theme.css" />
+
+  <!-- Page-isolated CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/appcreator.css" />
+</head>
+
+<body class="ac-body" data-page="appcreator">
+  <!-- NOTE: This page does NOT modify shared nav. It only renders its own content. -->
+
+  <main class="ac-shell">
+    <!-- LEFT: Library -->
+    <section class="ac-panel ac-library" aria-label="Library">
+      <header class="ac-panel__head">
+        <h2 class="ac-title">Library</h2>
+        <div class="ac-head-actions">
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Add">+</button>
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="ac-panel__body">
+        <div class="ac-tabs">
+          <button class="ac-tab is-active" type="button" data-ac-tab="apps">Apps</button>
+          <button class="ac-tab" type="button" data-ac-tab="templates">Templates</button>
+        </div>
+
+        <div class="ac-section">
+          <div class="ac-labelrow">
+            <span class="ac-label">Project</span>
+          </div>
+          <select class="ac-select" id="acProject">
+            <option value="Maneit Portal">Maneit Portal</option>
+            <option value="NetworkSaint">NetworkSaint</option>
+            <option value="SystemDwarf">SystemDwarf</option>
+          </select>
+        </div>
+
+        <div class="ac-section">
+          <input class="ac-input" id="acSearch" type="search" placeholder="Search…" autocomplete="off" />
+        </div>
+
+        <div class="ac-list" id="acAppList" role="listbox" aria-label="Apps">
+          <!-- JS populates -->
+        </div>
+
+        <footer class="ac-panel__foot">
+          <button class="ac-btn" type="button" id="acNewAppBtn">+ New app</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- CENTER: Builder / Chat-like workbench -->
+    <section class="ac-panel ac-workbench" aria-label="Workbench">
+      <header class="ac-panel__head">
+        <div class="ac-head-left">
+          <h2 class="ac-title">AppCreator</h2>
+          <span class="ac-subtitle" id="acActiveAppLabel">No app selected</span>
+        </div>
+
+        <div class="ac-head-actions">
+          <span class="ac-pill" title="Module">Module: App</span>
+        </div>
+      </header>
+
+      <div class="ac-panel__body ac-workbench__body">
+        <div class="ac-chat" id="acChat">
+          <div class="ac-empty" id="acEmptyState">
+            <div class="ac-empty__box">
+              <div class="ac-empty__title">Select an app or create a new one</div>
+              <div class="ac-empty__hint">
+                This page is UI-only. It’s a structured hub for building programs like NetworkSaint and SystemDwarf.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ac-composer">
+          <div class="ac-row">
+            <select class="ac-select ac-llm" id="acTarget">
+              <option>Local LLM</option>
+              <option>Remote Node</option>
+            </select>
+
+            <input class="ac-input ac-compose" id="acPrompt" type="text"
+                   placeholder="Enter = send, Shift+Enter = newline"
+                   autocomplete="off" />
+
+            <button class="ac-btn ac-send" type="button" id="acSendBtn">Send</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: Roadmap / Tasks -->
+    <section class="ac-panel ac-roadmap" aria-label="Roadmap">
+      <header class="ac-panel__head">
+        <h2 class="ac-title">Roadmap</h2>
+        <div class="ac-head-actions">
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Add">+</button>
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="ac-panel__body">
+        <div class="ac-row ac-row--tight">
+          <span class="ac-pill">Spec lock: <strong>ON</strong></span>
+          <span class="ac-pill">v: <strong>1</strong></span>
+        </div>
+
+        <div class="ac-section">
+          <div class="ac-labelrow">
+            <span class="ac-label">Next tasks</span>
+          </div>
+
+          <div class="ac-tasklist" id="acTasks">
+            <!-- JS populates -->
+          </div>
+
+          <div class="ac-row ac-row--tight">
+            <input class="ac-input" id="acTaskInput" type="text" placeholder="Add task…" autocomplete="off" />
+            <button class="ac-btn" type="button" id="acAddTaskBtn">Add</button>
+          </div>
+        </div>
+
+        <div class="ac-section">
+          <div class="ac-row ac-row--tight">
+            <button class="ac-btn ac-btn--ghost" type="button" id="acTaskUpBtn">Up</button>
+            <button class="ac-btn ac-btn--ghost" type="button" id="acTaskDownBtn">Down</button>
+            <button class="ac-btn ac-btn--ghost" type="button" id="acTaskDeleteBtn">Delete</button>
+          </div>
+        </div>
+
+        <div class="ac-section">
+          <div class="ac-labelrow">
+            <span class="ac-label">Selected app</span>
+          </div>
+          <div class="ac-card" id="acAppMeta">
+            <div class="ac-card__title">None</div>
+            <div class="ac-card__meta">Pick an app from the Library.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM: Pipeline -->
+    <section class="ac-panel ac-pipeline" aria-label="Pipeline">
+      <header class="ac-panel__head">
+        <h2 class="ac-title">AppCreator Pipeline</h2>
+        <div class="ac-head-actions">
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Dock">⧉</button>
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="ac-panel__body">
+        <div class="ac-muted">Set once. Rarely touched. (UI-only)</div>
+
+        <div class="ac-steps" role="list" aria-label="Pipeline steps">
+          <span class="ac-step">1) Define spec</span>
+          <span class="ac-step">2) Generate skeleton</span>
+          <span class="ac-step">3) Wire CLI/GUI</span>
+          <span class="ac-step">4) Continuity checks</span>
+          <span class="ac-step">5) Store state</span>
+        </div>
+
+        <div class="ac-row ac-row--tight">
+          <button class="ac-btn ac-btn--ghost" type="button" id="acConfigureBtn">Configure (later)</button>
+          <button class="ac-btn ac-btn--ghost" type="button" id="acRunBtn">Run pipeline (later)</button>
+          <button class="ac-btn ac-btn--ghost" type="button" id="acExportBtn">Export (later)</button>
+        </div>
+
+        <div class="ac-muted">This exists so you don’t have to babysit the workflow.</div>
+      </div>
+    </section>
+
+    <!-- VERY BOTTOM: Context -->
+    <section class="ac-panel ac-context" aria-label="Context">
+      <header class="ac-panel__head">
+        <h2 class="ac-title">Context</h2>
+        <div class="ac-head-actions">
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Dock">⧉</button>
+          <button class="ac-iconbtn" type="button" data-ac="noop" title="Close">×</button>
+        </div>
+      </header>
+
+      <div class="ac-panel__body">
+        <div class="ac-section">
+          <div class="ac-labelrow"><span class="ac-label">Selected node</span></div>
+          <div class="ac-card">
+            <div class="ac-card__title" id="acSelectedNode">None</div>
+            <div class="ac-card__meta">Placeholder for future integration.</div>
+          </div>
+        </div>
+
+        <div class="ac-section">
+          <div class="ac-labelrow"><span class="ac-label">Quick facts (placeholder)</span></div>
+          <div class="ac-card ac-card--mono">
+            <div>• Tier: Nordic / cold</div>
+            <div>• Scope: Program-level</div>
+            <div>• Focus: CLI + GUI + pipelines</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared JS (intentional) -->
+  <script src="../core.js" defer></script>
+
+  <!-- Page-isolated JS -->
+  <script src="../assets/js/pages/appcreator.js" defer></script>
+</body>
+</html>
 
