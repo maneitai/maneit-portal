@@ -1,0 +1,156 @@
+/* core.css — shared primitives (safe across pages) */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color: var(--text, #e6edf3);
+  background: var(--bg0, #070a10);
+}
+
+/* Utilities */
+.muted { color: var(--muted, rgba(230,237,243,.68)); }
+.mono  { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 12px; }
+
+a { color: inherit; text-decoration: none; }
+
+/* Layout helpers */
+.wrap { max-width: 1600px; margin: 0 auto; padding: 12px 14px; width: 100%; }
+.row { display: flex; align-items: center; gap: 12px; }
+
+/* Inputs */
+.field {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.05);
+  color: inherit;
+  padding: 10px;
+  outline: none;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.05);
+  color: inherit;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  user-select: none;
+}
+.btn:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.07); }
+.btn:active { transform: translateY(1px); }
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: var(--topbarH, 58px);
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.dot { width: 10px; height: 10px; border-radius: 999px; background: rgba(74,222,128,.9); }
+
+.pill {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.03);
+  color: rgba(230,237,243,.86);
+  white-space: nowrap;
+}
+
+/* Top tabs */
+.tabsTop {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-left: 14px;
+  padding-bottom: 4px;
+}
+
+.tab {
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.09);
+  background: rgba(255,255,255,.03);
+  white-space: nowrap;
+  opacity: .92;
+}
+.tab:hover { opacity: 1; border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.05); }
+
+/* Panel primitive */
+.panel {
+  border-radius: var(--radius, 18px);
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.30);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 48px rgba(0,0,0,.35);
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
+}
+
+.panel::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  opacity: .85;
+}
+
+.panelHead {
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap:10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.panelTitle { font-size: 13px; color: rgba(230,237,243,.92); }
+
+.panelFoot {
+  position:absolute;
+  left: 12px;
+  bottom: 10px;
+  font-size: 12px;
+  color: rgba(230,237,243,.35);
+  pointer-events:none;
+}
+
+.cornerBtns { display:flex; gap: 6px; align-items:center; }
+
+.iconbtn {
+  width: 28px;
+  height: 26px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  cursor: pointer;
+  color: rgba(230,237,243,.85);
+  font-size: 12px;
+  display: grid;
+  place-items: center;
+}
+.iconbtn:hover { border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.06); }
+.iconbtn:active { transform: translateY(1px); }
+
+.panelBody { padding: 12px; min-height: 0; }
