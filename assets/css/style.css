@@ -40,7 +40,7 @@ a { color: inherit; text-decoration: none; }
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: #4ade80;
+  background: var(--dot, #4ade80);
 }
 
 .pill {
@@ -63,6 +63,14 @@ a { color: inherit; text-decoration: none; }
   background: rgba(255,255,255,.03);
   white-space: nowrap;
 }
+
+.tab:hover{
+  border-color: rgba(255,255,255,.20);
+  background: rgba(255,255,255,.05);
+}
+
+/* Optional deprecated styling if you decide to use a class later */
+.tab.old { opacity: .72; }
 
 /* Grid & cards */
 .grid {
