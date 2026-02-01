@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="maneit-core">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -13,13 +13,13 @@
 <body>
   <header class="topbar">
     <div class="wrap row">
-      <div class="brand">
+      <a class="brand" href="../index.html">
         <span class="dot"></span>
         <strong>Maneit Portal</strong>
         <span class="pill">Theme</span>
-      </div>
+      </a>
 
-      <nav class="tabsTop">
+      <nav class="tabsTop" aria-label="Portal navigation">
         <a class="tab" href="../index.html">Home</a>
         <a class="tab" href="./notes.html">Notes</a>
         <a class="tab" href="./projects.html">Projects</a>
@@ -36,59 +36,63 @@
     <section class="panel theme-panel">
       <div class="panelHead">
         <div class="panelTitle">Theme Selector</div>
+        <div class="pill" id="themeCurrent">Current: —</div>
       </div>
 
       <div class="panelBody theme-body">
 
-        <!-- FOREST -->
         <div class="theme-group">
           <h3>🌲 Forest</h3>
           <div class="theme-row">
-            <button data-theme="forest-deep">Deep</button>
-            <button data-theme="forest-core">Core</button>
-            <button data-theme="forest-light">Light</button>
+            <button class="btn" data-theme="forest-deep">Deep</button>
+            <button class="btn" data-theme="forest-core">Core</button>
+            <button class="btn" data-theme="forest-light">Light</button>
           </div>
         </div>
 
-        <!-- MANEIT -->
         <div class="theme-group">
           <h3>🌊 Maneitic Blue</h3>
           <div class="theme-row">
-            <button data-theme="maneit-deep">Deep</button>
-            <button data-theme="maneit-core">Core</button>
-            <button data-theme="maneit-light">Light</button>
+            <button class="btn" data-theme="maneit-deep">Deep</button>
+            <button class="btn" data-theme="maneit-core">Core</button>
+            <button class="btn" data-theme="maneit-light">Light</button>
           </div>
         </div>
 
-        <!-- EMBER -->
         <div class="theme-group">
           <h3>🔥 Ember</h3>
           <div class="theme-row">
-            <button data-theme="ember-deep">Deep</button>
-            <button data-theme="ember-core">Core</button>
-            <button data-theme="ember-light">Light</button>
+            <button class="btn" data-theme="ember-deep">Deep</button>
+            <button class="btn" data-theme="ember-core">Core</button>
+            <button class="btn" data-theme="ember-light">Light</button>
           </div>
         </div>
 
-        <!-- ARCANE -->
         <div class="theme-group">
           <h3>🟣 Arcane</h3>
           <div class="theme-row">
-            <button data-theme="arcane-deep">Deep</button>
-            <button data-theme="arcane-core">Core</button>
-            <button data-theme="arcane-light">Light</button>
+            <button class="btn" data-theme="arcane-deep">Deep</button>
+            <button class="btn" data-theme="arcane-core">Core</button>
+            <button class="btn" data-theme="arcane-light">Light</button>
           </div>
         </div>
 
-        <div class="muted">
-          Theme is applied instantly and stored locally.  
-          All pages read the same theme state.
+        <div class="theme-current muted">
+          Theme is applied instantly and stored locally. All pages read the same theme state.
         </div>
-
       </div>
     </section>
   </main>
 
   <script src="../assets/js/theme.js"></script>
+  <script>
+    // purely visual label (still UI-only)
+    const cur = document.documentElement.dataset.theme || "maneit-core";
+    document.getElementById("themeCurrent").textContent = "Current: " + cur;
+    window.addEventListener("click", () => {
+      const c = document.documentElement.dataset.theme || "maneit-core";
+      document.getElementById("themeCurrent").textContent = "Current: " + c;
+    });
+  </script>
 </body>
 </html>
