@@ -1,47 +1,94 @@
-<section class="panel theme-app" aria-label="Theme selector">
-  <div class="panelHead">
-    <div class="panelTitle">Theme</div>
-    <div class="cornerBtns">
-      <button class="iconbtn" data-theme-close>×</button>
-    </div>
-  </div>
+<!doctype html>
+<html lang="en" data-theme="maneit-core">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit Portal — Theme</title>
 
-  <div class="panelBody theme-body">
-    <div class="theme-group">
-      <h4>Forest</h4>
-      <div class="theme-row">
-        <button data-theme="forest-deep">Deep</button>
-        <button data-theme="forest-core">Core</button>
-        <button data-theme="forest-light">Light</button>
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap row">
+      <div class="brand">
+        <span class="dot"></span>
+        <strong>Maneit Portal</strong>
+        <span class="pill">Theme</span>
       </div>
-    </div>
 
-    <div class="theme-group">
-      <h4>Maneitic Blue</h4>
-      <div class="theme-row">
-        <button data-theme="maneit-deep">Deep</button>
-        <button data-theme="maneit-core">Core</button>
-        <button data-theme="maneit-light">Light</button>
+      <nav class="tabsTop">
+        <a class="tab" href="../index.html">Home</a>
+        <a class="tab" href="./notes.html">Notes</a>
+        <a class="tab" href="./projects.html">Projects</a>
+        <a class="tab" href="./agentfactory.html">AgentFactory</a>
+        <a class="tab" href="./novelcrafter.html">NovelCrafter</a>
+        <a class="tab" href="./appcreator.html">AppCreator</a>
+        <a class="tab" href="./system.html">System</a>
+        <a class="tab" data-active="true">Theme</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap theme-root">
+    <section class="panel theme-panel">
+      <div class="panelHead">
+        <div class="panelTitle">Theme Selector</div>
       </div>
-    </div>
 
-    <div class="theme-group">
-      <h4>Ember</h4>
-      <div class="theme-row">
-        <button data-theme="ember-deep">Deep</button>
-        <button data-theme="ember-core">Core</button>
-        <button data-theme="ember-light">Light</button>
+      <div class="panelBody theme-body">
+
+        <!-- FOREST -->
+        <div class="theme-group">
+          <h3>🌲 Forest</h3>
+          <div class="theme-row">
+            <button data-theme="forest-deep">Deep</button>
+            <button data-theme="forest-core">Core</button>
+            <button data-theme="forest-light">Light</button>
+          </div>
+        </div>
+
+        <!-- MANEIT -->
+        <div class="theme-group">
+          <h3>🌊 Maneitic Blue</h3>
+          <div class="theme-row">
+            <button data-theme="maneit-deep">Deep</button>
+            <button data-theme="maneit-core">Core</button>
+            <button data-theme="maneit-light">Light</button>
+          </div>
+        </div>
+
+        <!-- EMBER -->
+        <div class="theme-group">
+          <h3>🔥 Ember</h3>
+          <div class="theme-row">
+            <button data-theme="ember-deep">Deep</button>
+            <button data-theme="ember-core">Core</button>
+            <button data-theme="ember-light">Light</button>
+          </div>
+        </div>
+
+        <!-- ARCANE -->
+        <div class="theme-group">
+          <h3>🟣 Arcane</h3>
+          <div class="theme-row">
+            <button data-theme="arcane-deep">Deep</button>
+            <button data-theme="arcane-core">Core</button>
+            <button data-theme="arcane-light">Light</button>
+          </div>
+        </div>
+
+        <div class="muted">
+          Theme is applied instantly and stored locally.  
+          All pages read the same theme state.
+        </div>
+
       </div>
-    </div>
+    </section>
+  </main>
 
-    <div class="theme-group">
-      <h4>Arcane</h4>
-      <div class="theme-row">
-        <button data-theme="arcane-deep">Deep</button>
-        <button data-theme="arcane-core">Core</button>
-        <button data-theme="arcane-light">Light</button>
-      </div>
-    </div>
-  </div>
-</section>
-
+  <script src="../assets/js/theme.js"></script>
+</body>
+</html>
