@@ -8,8 +8,93 @@
   min-height:100vh;
 }
 
+/* =========================
+   TOP NAV (NOTES ONLY)
+   ========================= */
+
+body[data-page="notes"]{
+  --topnav-h: 56px;
+}
+
+body[data-page="notes"] .mp-topnav{
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: var(--topnav-h);
+  background: rgba(10,10,12,0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+body[data-page="notes"] .mp-topnav-inner{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+}
+
+body[data-page="notes"] .mp-brand{
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+body[data-page="notes"] .mp-tabs{
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding-bottom: 2px;
+}
+
+body[data-page="notes"] .mp-tab{
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.75;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+body[data-page="notes"] .mp-tab.active,
+body[data-page="notes"] .mp-tab:hover{
+  background: rgba(255,255,255,0.06);
+  opacity: 1;
+}
+
+body[data-page="notes"] .mp-topnav-right{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+body[data-page="notes"] .mp-pill{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  user-select:none;
+  white-space:nowrap;
+}
+body[data-page="notes"] .mp-pill.ghost{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+
+/* =========================
+   PAGE LAYOUT
+   ========================= */
+
 .nt-shell{
   padding:14px;
+  padding-top: calc(14px + var(--topnav-h));
   display:grid;
   gap:14px;
 
@@ -20,6 +105,8 @@
     "library editor meta"
     "library tasks  meta"
     "activity activity activity";
+
+  min-height: 0;
 }
 
 .nt-panel{
@@ -28,6 +115,7 @@
   background: rgba(0,0,0,0.22);
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+  min-height: 0;
 }
 
 .nt-head{
@@ -70,11 +158,11 @@
   cursor:pointer;
 }
 
-.nt-bodypad{ padding:12px; }
+.nt-bodypad{ padding:12px; min-height:0; }
 
 .nt-row{ display:flex; gap:10px; align-items:center; }
 .nt-tight{ gap:8px; }
-.nt-col{ display:flex; flex-direction:column; gap:10px; }
+.nt-col{ display:flex; flex-direction:column; gap:10px; min-height:0; }
 
 .nt-pill{
   font-size:12px;
@@ -155,6 +243,7 @@ textarea{
   max-height:290px;
   overflow:auto;
   padding-right:2px;
+  min-height:0;
 }
 
 .nt-item{
@@ -195,11 +284,11 @@ textarea{
 }
 
 /* Grid areas */
-.nt-ga-library{ grid-area: library; }
-.nt-ga-editor{ grid-area: editor; }
-.nt-ga-meta{ grid-area: meta; }
-.nt-ga-tasks{ grid-area: tasks; }
-.nt-ga-activity{ grid-area: activity; }
+.nt-ga-library{ grid-area: library; min-height:0; }
+.nt-ga-editor{ grid-area: editor; min-height:0; }
+.nt-ga-meta{ grid-area: meta; min-height:0; }
+.nt-ga-tasks{ grid-area: tasks; min-height:0; }
+.nt-ga-activity{ grid-area: activity; min-height:0; }
 
 /* Responsive */
 @media (max-width: 1200px){
