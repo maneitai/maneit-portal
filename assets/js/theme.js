@@ -1,16 +1,21 @@
-(function(){
+// assets/js/theme.js
+(function () {
   const KEY = "maneit-theme";
   const root = document.documentElement;
 
-  // load saved theme
+  // Apply saved theme on load
   const saved = localStorage.getItem(KEY);
   if (saved) root.dataset.theme = saved;
 
-  document.addEventListener("click", e => {
-    const t = e.target.dataset.theme;
-    if (!t) return;
+  // Click handler (Theme app page uses data-theme buttons)
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-theme]");
+    if (!btn) return;
 
-    root.dataset.theme = t;
-    localStorage.setItem(KEY, t);
+    const theme = btn.getAttribute("data-theme");
+    if (!theme) return;
+
+    root.dataset.theme = theme;
+    localStorage.setItem(KEY, theme);
   });
 })();
