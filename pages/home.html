@@ -15,13 +15,12 @@
 </head>
 
 <body data-page="home">
-
   <!-- TOP NAV (HOME ONLY, STICKY) -->
   <header class="mp-topnav">
     <div class="mp-topnav-inner">
       <div class="mp-brand">Maneit Portal</div>
 
-      <nav class="mp-tabs">
+      <nav class="mp-tabs" aria-label="Primary navigation">
         <a class="mp-tab active" href="../index.html">Home</a>
         <a class="mp-tab" href="./notes.html">Notes</a>
         <a class="mp-tab" href="./projects.html">Projects</a>
@@ -32,106 +31,183 @@
       </nav>
 
       <div class="mp-topnav-right">
-        <span class="mp-pill ghost">UI-only</span>
+        <button class="mp-theme" type="button">Theme</button>
       </div>
     </div>
   </header>
 
   <main class="mp-main">
+    <!-- HEADER -->
     <section class="home-final" aria-label="Home">
-
-      <!-- HEADER CARD -->
       <div class="hf-card">
         <div class="hf-head">
           <h1 class="hf-title">
             Home
-            <span class="hf-subtitle">thinking layer · coordination hub</span>
+            <span class="hf-subtitle">Your replacement for ChatGPT + Calendar + Day Planner + Teams/Discord.</span>
           </h1>
           <div class="hf-row tight">
             <span class="hf-pill" id="hfTodayPill">Today</span>
             <span class="hf-pill">Stability &gt; cleverness</span>
           </div>
         </div>
-        <div class="hf-body">
-          <div class="hf-muted">
-            This page is the stable control surface for Maneit Portal.
-            Communication and scheduling are visual placeholders only.
-          </div>
-        </div>
       </div>
 
-      <!-- MAIN GRID -->
-      <div class="hf-grid">
+      <!-- GRID: reference layout -->
+      <section class="home-grid" aria-label="Home Grid">
+        <!-- CHAT (dominant) -->
+        <section class="hf-card home-chat" aria-label="Chat">
+          <div class="hf-head">
+            <h3 class="hf-title">Chat <span class="hf-subtitle">Self-reflection, thinking out loud, idea exploration.</span></h3>
+          </div>
 
-        <!-- CALENDAR -->
-        <div class="hf-card">
+          <div class="hf-body chat-wrap">
+            <div class="chat-left">
+              <div class="chat-left-head">
+                <div class="hf-label">Chats</div>
+                <button class="hf-btn ghost" type="button">New chat</button>
+              </div>
+
+              <div class="chat-list">
+                <!-- placeholder list -->
+                <button class="chat-item is-active" type="button">Main</button>
+                <button class="chat-item" type="button">Scratch</button>
+                <button class="chat-item" type="button">Decisions</button>
+              </div>
+
+              <div class="chat-left-foot">
+                <button class="hf-btn ghost" type="button">+ New chat</button>
+              </div>
+            </div>
+
+            <div class="chat-right">
+              <div class="chat-messages" id="homeChatMsgs" aria-label="Chat messages"></div>
+
+              <div class="chat-composer">
+                <select class="hf-select chat-model" id="homeModel">
+                  <option>Local LLM</option>
+                  <option>Reasoning model</option>
+                  <option>Fast draft</option>
+                </select>
+
+                <textarea class="hf-input chat-input" id="homeChatInput" placeholder="Write here… (Enter = send, Shift+Enter = newline)"></textarea>
+
+                <button class="hf-btn chat-send" type="button">Send</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TODAY -->
+        <section class="hf-card home-today" aria-label="Today">
+          <div class="hf-head">
+            <h3 class="hf-title">Today</h3>
+          </div>
+
+          <div class="hf-body">
+            <div class="hf-label">Top 3 (click to edit)</div>
+
+            <div class="today-items">
+              <div class="today-chip">Keep portal consistent <button class="x" type="button">×</button></div>
+              <div class="today-chip">Build OS pages <button class="x" type="button">×</button></div>
+              <div class="today-chip">Integrations later <button class="x" type="button">×</button></div>
+            </div>
+
+            <div class="today-add">
+              <input class="hf-input" type="text" placeholder="Add item…" />
+              <button class="hf-btn ghost" type="button">Add</button>
+            </div>
+
+            <div class="hf-muted">Rule: max 3 here. Backlog lives elsewhere.</div>
+          </div>
+        </section>
+
+        <!-- CALENDAR (uses your existing hf ids so home.js keeps working) -->
+        <section class="hf-card home-calendar" aria-label="Calendar">
           <div class="hf-head">
             <h3 class="hf-title">Calendar <span class="hf-subtitle" id="hfCalMonth">Month</span></h3>
             <div class="hf-row tight">
-              <button class="hf-btn ghost" id="hfCalPrev">Prev</button>
-              <button class="hf-btn ghost" id="hfCalNext">Next</button>
+              <button class="hf-btn ghost" type="button" id="hfCalPrev">Prev</button>
+              <button class="hf-btn ghost" type="button" id="hfCalNext">Next</button>
             </div>
           </div>
+
           <div class="hf-body">
             <div class="hf-cal-grid" id="hfCalGrid"></div>
 
             <div class="hf-subcard">
               <div class="hf-label">Create meeting (visual)</div>
-              <div class="hf-row wrap">
-                <input class="hf-input" placeholder="Title" />
-                <input class="hf-input" placeholder="YYYY-MM-DD" />
-                <input class="hf-input" placeholder="HH:MM" />
-                <button class="hf-btn">Create</button>
+              <div class="hf-row tight wrap">
+                <input class="hf-input" id="hfMeetingTitle" type="text" placeholder="Title" />
+                <input class="hf-input" id="hfMeetingDate" type="text" placeholder="YYYY-MM-DD" />
+                <input class="hf-input" id="hfMeetingTime" type="text" placeholder="HH:MM" />
+                <button class="hf-btn" type="button" id="hfMeetingCreate">Create</button>
               </div>
-              <div class="hf-muted">
-                UI-only · future server sync
-              </div>
+              <div class="hf-muted">UI-only: later this will sync to server + propagate to staff calendars.</div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <!-- COMMS -->
-        <div class="hf-card">
+        <!-- CHAT HUB (Teams + Discord + Activity) -->
+        <section class="hf-card home-hub" aria-label="Chat Hub">
           <div class="hf-head">
-            <h3 class="hf-title">Comms <span class="hf-subtitle">Teams + Discord</span></h3>
-            <span class="hf-pill">local</span>
+            <h3 class="hf-title">Chat Hub <span class="hf-subtitle">Teams + Discord DMs. UI shell now. Real sync later.</span></h3>
+            <div class="hf-row tight">
+              <span class="hf-pill">Teams: 2</span>
+              <span class="hf-pill">Discord: 1</span>
+              <span class="hf-pill">Unread: 3</span>
+            </div>
           </div>
-          <div class="hf-body">
 
-            <div class="hf-subcard">
+          <div class="hf-body">
+            <div class="hub-sender">
               <div class="hf-label">Teams</div>
-              <div class="hf-row wrap">
-                <input class="hf-input" placeholder="Channel" />
-                <input class="hf-input" placeholder="Message…" />
-                <button class="hf-btn">Send</button>
+              <div class="hf-row tight wrap">
+                <input class="hf-input" id="hfTeamsChannel" type="text" placeholder="Channel" />
+                <input class="hf-input" id="hfTeamsMsg" type="text" placeholder="Message…" />
+                <button class="hf-btn" type="button" id="hfTeamsSend">Send</button>
               </div>
             </div>
 
-            <div class="hf-subcard">
+            <div class="hub-sender">
               <div class="hf-label">Discord</div>
-              <div class="hf-row wrap">
-                <input class="hf-input" placeholder="Channel" />
-                <input class="hf-input" placeholder="Message…" />
-                <button class="hf-btn">Send</button>
+              <div class="hf-row tight wrap">
+                <input class="hf-input" id="hfDiscChannel" type="text" placeholder="Channel" />
+                <input class="hf-input" id="hfDiscMsg" type="text" placeholder="Message…" />
+                <button class="hf-btn" type="button" id="hfDiscSend">Send</button>
               </div>
             </div>
 
             <div class="hf-subcard">
               <div class="hf-head slim">
                 <h3 class="hf-title">Activity <span class="hf-subtitle">recent</span></h3>
-                <button class="hf-btn ghost">Clear</button>
+                <button class="hf-btn ghost" type="button" id="hfActivityClear">Clear</button>
               </div>
               <div class="hf-list" id="hfActivityList"></div>
             </div>
 
+            <div class="hf-muted">Inbox (routed items)</div>
+            <div class="hf-muted">Later: Teams via Microsoft Graph OAuth. Discord via bot/OAuth + backend relay.</div>
           </div>
-        </div>
+        </section>
 
-      </div>
+        <!-- STATUS (full width) -->
+        <section class="hf-card home-status" aria-label="Status">
+          <div class="hf-head">
+            <h3 class="hf-title">Status</h3>
+          </div>
+          <div class="hf-body">
+            <div class="hf-muted">Portal ~10% complete. This is the thinking layer.</div>
+            <div class="hf-muted">Execution lives elsewhere.</div>
+          </div>
+        </section>
+      </section>
     </section>
   </main>
 
+  <!-- Shared JS (intentional) -->
   <script src="../core.js" defer></script>
+
+  <!-- Page-isolated JS -->
   <script src="../assets/js/pages/home.js" defer></script>
 </body>
 </html>
