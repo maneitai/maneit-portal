@@ -8,8 +8,93 @@
   min-height:100vh;
 }
 
+/* =========================
+   TOP NAV (PROJECTS ONLY)
+   ========================= */
+
+body[data-page="projects"]{
+  --topnav-h: 56px;
+}
+
+body[data-page="projects"] .mp-topnav{
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: var(--topnav-h);
+  background: rgba(10,10,12,0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+body[data-page="projects"] .mp-topnav-inner{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+}
+
+body[data-page="projects"] .mp-brand{
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+body[data-page="projects"] .mp-tabs{
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding-bottom: 2px;
+}
+
+body[data-page="projects"] .mp-tab{
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.75;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+body[data-page="projects"] .mp-tab.active,
+body[data-page="projects"] .mp-tab:hover{
+  background: rgba(255,255,255,0.06);
+  opacity: 1;
+}
+
+body[data-page="projects"] .mp-topnav-right{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+body[data-page="projects"] .mp-pill{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  user-select:none;
+  white-space:nowrap;
+}
+body[data-page="projects"] .mp-pill.ghost{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
+}
+
+/* =========================
+   PAGE LAYOUT
+   ========================= */
+
 .pr-shell{
   padding:14px;
+  padding-top: calc(14px + var(--topnav-h));
   display:grid;
   gap:14px;
 
@@ -20,6 +105,8 @@
     "library detail ops"
     "library roadmap ops"
     "snapshot snapshot snapshot";
+
+  min-height: 0;
 }
 
 .pr-panel{
@@ -28,6 +115,7 @@
   background: rgba(0,0,0,0.22);
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+  min-height: 0;
 }
 
 .pr-head{
@@ -161,6 +249,7 @@ textarea{
   max-height:290px;
   overflow:auto;
   padding-right:2px;
+  min-height: 0;
 }
 
 .pr-item{
