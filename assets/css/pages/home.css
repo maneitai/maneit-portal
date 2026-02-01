@@ -1,187 +1,229 @@
-/* Page-isolated: Home (final pass UI widgets)
-   - No cross-page selectors
-   - Only styles elements inside .home-final
-*/
+/* ============================
+   HOME — PAGE ISOLATED OVERHAUL
+   ============================ */
 
-.home-final {
-  display: grid;
-  gap: 14px;
+body[data-page="home"] {
+  --topnav-h: 56px;
 }
 
-.home-final .hf-grid {
-  display: grid;
-  gap: 14px;
-  grid-template-columns: 1.1fr 0.9fr;
+/* ---------- TOP NAV ---------- */
+
+.mp-topnav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--topnav-h);
+  background: rgba(10,10,12,0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.home-final .hf-card {
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 14px;
-  background: rgba(0,0,0,0.22);
-  overflow: hidden;
-}
-
-.home-final .hf-head {
+.mp-topnav-inner {
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  background: rgba(0,0,0,0.12);
+  gap: 20px;
+  padding: 0 18px;
 }
 
-.home-final .hf-title {
-  margin: 0;
-  font-size: 14px;
-  letter-spacing: 0.2px;
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-}
-
-.home-final .hf-subtitle {
-  font-size: 12px;
-  opacity: 0.72;
-  font-weight: 500;
-}
-
-.home-final .hf-body {
-  padding: 12px;
-}
-
-.home-final .hf-row {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.home-final .hf-row.tight { gap: 8px; }
-
-.home-final .hf-pill {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.04);
+.mp-brand {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  opacity: 0.9;
   white-space: nowrap;
 }
 
-.home-final .hf-muted {
+.mp-tabs {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+.mp-tab {
   font-size: 12px;
-  opacity: 0.72;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.mp-tab.active,
+.mp-tab:hover {
+  background: rgba(255,255,255,0.06);
+  opacity: 1;
+}
+
+.mp-topnav-right {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- MAIN ---------- */
+
+.mp-main {
+  padding: 16px;
+  padding-top: calc(16px + var(--topnav-h));
+}
+
+/* ---------- HOME LAYOUT ---------- */
+
+.home-final {
+  display: grid;
+  gap: 16px;
+}
+
+.hf-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .hf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- CARDS ---------- */
+
+.hf-card {
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.hf-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.18);
+}
+
+.hf-head.slim {
+  padding: 8px 12px;
+}
+
+.hf-body {
+  padding: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+/* ---------- TEXT ---------- */
+
+.hf-title {
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0;
+}
+
+.hf-subtitle {
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.hf-muted {
+  font-size: 12px;
+  opacity: 0.7;
   line-height: 1.35;
 }
 
-.home-final .hf-btn {
+.hf-label {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ---------- CONTROLS ---------- */
+
+.hf-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.hf-row.wrap {
+  flex-wrap: wrap;
+}
+
+.hf-btn {
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.06);
-  color: inherit;
-  cursor: pointer;
   font-size: 12px;
-  white-space: nowrap;
+  cursor: pointer;
 }
 
-.home-final .hf-btn.ghost {
+.hf-btn.ghost {
   background: rgba(255,255,255,0.03);
-  border-color: rgba(255,255,255,0.10);
 }
 
-.home-final .hf-input, .home-final .hf-select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 10px;
+.hf-input {
+  min-width: 160px;
+  flex: 1;
+  padding: 10px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(0,0,0,0.22);
+  background: rgba(0,0,0,0.25);
   color: inherit;
-  outline: none;
 }
 
-.home-final .hf-cal {
+/* ---------- SUBCARDS ---------- */
+
+.hf-subcard {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
   display: grid;
   gap: 10px;
 }
 
-.home-final .hf-cal-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+/* ---------- CALENDAR ---------- */
 
-.home-final .hf-cal-title {
-  font-size: 13px;
-  opacity: 0.9;
-}
-
-.home-final .hf-cal-grid {
+.hf-cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
 }
 
-.home-final .hf-day {
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 12px;
+.hf-day {
+  min-height: 64px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.03);
-  padding: 10px;
-  min-height: 68px;
-  cursor: pointer;
 }
 
-.home-final .hf-day .d {
-  font-size: 12px;
-  opacity: 0.8;
-  margin-bottom: 6px;
-}
+/* ---------- ACTIVITY ---------- */
 
-.home-final .hf-day .e {
-  font-size: 11px;
-  opacity: 0.72;
-  line-height: 1.2;
-}
-
-.home-final .hf-day.is-today {
-  background: rgba(255,255,255,0.07);
-  border-color: rgba(255,255,255,0.18);
-}
-
-.home-final .hf-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 260px;
+.hf-list {
+  max-height: 220px;
   overflow: auto;
-  padding-right: 2px;
-}
-
-.home-final .hf-item {
-  padding: 10px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.03);
-}
-
-.home-final .hf-item .t {
-  font-size: 13px;
-  margin: 0 0 4px;
-}
-
-.home-final .hf-item .m {
-  font-size: 12px;
-  opacity: 0.75;
-  line-height: 1.25;
-}
-
-.home-final .hf-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 8px;
 }
 
-@media (max-width: 1100px) {
-  .home-final .hf-grid {
-    grid-template-columns: 1fr;
-  }
+.hf-item {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+
+/* ---------- PILL ---------- */
+
+.hf-pill {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
 }
