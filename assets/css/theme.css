@@ -1,181 +1,102 @@
-/* =====================================================
-   Maneit Portal — Theme System
-   All themes are variable-based. No layout logic here.
-   ===================================================== */
+/* =========================
+   Theme UI (page only)
+   ========================= */
 
-:root{
-  /* fallback (used if no data-theme is set) */
-  --bg-main: #0b0b0e;
-  --bg-panel: rgba(255,255,255,0.03);
-  --bg-panel-strong: rgba(255,255,255,0.06);
-
-  --border-soft: rgba(255,255,255,0.08);
-  --border-strong: rgba(255,255,255,0.14);
-
-  --text-main: rgba(255,255,255,0.92);
-  --text-muted: rgba(255,255,255,0.72);
-  --text-dim: rgba(255,255,255,0.55);
-
-  --accent: #5cc8ff;
-  --accent-soft: rgba(92,200,255,0.18);
+.theme-root{
+  padding-top: 20px;
 }
 
-/* =====================================================
-   🌲 FOREST GREEN
-   ===================================================== */
+.theme-panel{
+  max-width: 720px;
+  margin: 0 auto;
+}
 
+.theme-body{
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.theme-group h3{
+  font-size: 13px;
+  opacity: .85;
+  margin: 0 0 8px;
+}
+
+.theme-row{
+  display: flex;
+  gap: 10px;
+}
+
+.theme-row button{
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(255,255,255,.05);
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.theme-row button:hover{
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.30);
+}
+
+/* =========================
+   Theme Variables
+   ========================= */
+
+html{
+  --bg0: #070a10;
+  --panel: rgba(0,0,0,.30);
+  --border: rgba(255,255,255,.14);
+  --text: rgba(230,237,243,.92);
+  --muted: rgba(230,237,243,.68);
+  --dot: rgba(92,200,255,.9);
+}
+
+/* 🌲 Forest */
 html[data-theme="forest-deep"]{
-  --bg-main: #0b0f0c;
-  --bg-panel: rgba(110,170,130,0.05);
-  --bg-panel-strong: rgba(110,170,130,0.10);
-
-  --border-soft: rgba(120,190,150,0.14);
-  --border-strong: rgba(120,190,150,0.28);
-
-  --accent: #6fbf8f;
-  --accent-soft: rgba(111,191,143,0.20);
+  --bg0:#0b0f0c; --dot:#6fbf8f;
 }
-
 html[data-theme="forest-core"]{
-  --bg-main: #0e1411;
-  --bg-panel: rgba(130,200,160,0.06);
-  --bg-panel-strong: rgba(130,200,160,0.12);
-
-  --border-soft: rgba(140,210,170,0.18);
-  --border-strong: rgba(140,210,170,0.32);
-
-  --accent: #7fd9a6;
-  --accent-soft: rgba(127,217,166,0.22);
+  --bg0:#0e1411; --dot:#7fd9a6;
 }
-
 html[data-theme="forest-light"]{
-  --bg-main: #141b17;
-  --bg-panel: rgba(160,220,190,0.10);
-  --bg-panel-strong: rgba(160,220,190,0.18);
-
-  --border-soft: rgba(170,230,200,0.28);
-  --border-strong: rgba(170,230,200,0.45);
-
-  --accent: #9ff0c8;
-  --accent-soft: rgba(159,240,200,0.30);
+  --bg0:#141b17; --dot:#9ff0c8;
 }
 
-/* =====================================================
-   🌊 MANEITIC BLUE (DEFAULT VIBE)
-   ===================================================== */
-
+/* 🌊 Maneit */
 html[data-theme="maneit-deep"]{
-  --bg-main: #0a0e14;
-  --bg-panel: rgba(80,140,200,0.05);
-  --bg-panel-strong: rgba(80,140,200,0.10);
-
-  --border-soft: rgba(90,150,210,0.14);
-  --border-strong: rgba(90,150,210,0.28);
-
-  --accent: #5cc8ff;
-  --accent-soft: rgba(92,200,255,0.20);
+  --bg0:#0a0e14; --dot:#5cc8ff;
 }
-
 html[data-theme="maneit-core"]{
-  --bg-main: #0c1119;
-  --bg-panel: rgba(100,170,230,0.06);
-  --bg-panel-strong: rgba(100,170,230,0.12);
-
-  --border-soft: rgba(110,180,240,0.18);
-  --border-strong: rgba(110,180,240,0.32);
-
-  --accent: #6fd4ff;
-  --accent-soft: rgba(111,212,255,0.22);
+  --bg0:#0c1119; --dot:#6fd4ff;
 }
-
 html[data-theme="maneit-light"]{
-  --bg-main: #121826;
-  --bg-panel: rgba(130,200,255,0.10);
-  --bg-panel-strong: rgba(130,200,255,0.18);
-
-  --border-soft: rgba(140,210,255,0.28);
-  --border-strong: rgba(140,210,255,0.45);
-
-  --accent: #9fe4ff;
-  --accent-soft: rgba(159,228,255,0.30);
+  --bg0:#121826; --dot:#9fe4ff;
 }
 
-/* =====================================================
-   🔥 EMBER RED
-   ===================================================== */
-
+/* 🔥 Ember */
 html[data-theme="ember-deep"]{
-  --bg-main: #120b0b;
-  --bg-panel: rgba(200,90,90,0.05);
-  --bg-panel-strong: rgba(200,90,90,0.10);
-
-  --border-soft: rgba(220,100,100,0.16);
-  --border-strong: rgba(220,100,100,0.30);
-
-  --accent: #ff6b6b;
-  --accent-soft: rgba(255,107,107,0.20);
+  --bg0:#120b0b; --dot:#ff6b6b;
 }
-
 html[data-theme="ember-core"]{
-  --bg-main: #1a0f10;
-  --bg-panel: rgba(230,110,110,0.07);
-  --bg-panel-strong: rgba(230,110,110,0.14);
-
-  --border-soft: rgba(240,120,120,0.22);
-  --border-strong: rgba(240,120,120,0.38);
-
-  --accent: #ff7f7f;
-  --accent-soft: rgba(255,127,127,0.24);
+  --bg0:#1a0f10; --dot:#ff7f7f;
 }
-
 html[data-theme="ember-light"]{
-  --bg-main: #241415;
-  --bg-panel: rgba(255,140,140,0.12);
-  --bg-panel-strong: rgba(255,140,140,0.22);
-
-  --border-soft: rgba(255,150,150,0.32);
-  --border-strong: rgba(255,150,150,0.50);
-
-  --accent: #ffaaaa;
-  --accent-soft: rgba(255,170,170,0.34);
+  --bg0:#241415; --dot:#ffaaaa;
 }
 
-/* =====================================================
-   🟣 ARCANE VIOLET
-   ===================================================== */
-
+/* 🟣 Arcane */
 html[data-theme="arcane-deep"]{
-  --bg-main: #0d0b14;
-  --bg-panel: rgba(150,110,220,0.05);
-  --bg-panel-strong: rgba(150,110,220,0.10);
-
-  --border-soft: rgba(160,120,230,0.16);
-  --border-strong: rgba(160,120,230,0.30);
-
-  --accent: #b58cff;
-  --accent-soft: rgba(181,140,255,0.20);
+  --bg0:#0d0b14; --dot:#b58cff;
 }
-
 html[data-theme="arcane-core"]{
-  --bg-main: #130f1c;
-  --bg-panel: rgba(170,130,240,0.07);
-  --bg-panel-strong: rgba(170,130,240,0.14);
-
-  --border-soft: rgba(180,140,250,0.22);
-  --border-strong: rgba(180,140,250,0.38);
-
-  --accent: #c39bff;
-  --accent-soft: rgba(195,155,255,0.24);
+  --bg0:#130f1c; --dot:#c39bff;
 }
-
 html[data-theme="arcane-light"]{
-  --bg-main: #1c162a;
-  --bg-panel: rgba(200,170,255,0.12);
-  --bg-panel-strong: rgba(200,170,255,0.22);
-
-  --border-soft: rgba(210,180,255,0.32);
-  --border-strong: rgba(210,180,255,0.50);
-
-  --accent: #d6c2ff;
-  --accent-soft: rgba(214,194,255,0.34);
+  --bg0:#1c162a; --dot:#d6c2ff;
 }
