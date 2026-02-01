@@ -15,6 +15,28 @@
 </head>
 
 <body class="ac-body" data-page="appcreator">
+
+  <!-- TOP NAV (APPCREATOR ONLY, STICKY) -->
+  <header class="mp-topnav">
+    <div class="mp-topnav-inner">
+      <div class="mp-brand">Maneit Portal</div>
+
+      <nav class="mp-tabs" aria-label="Primary navigation">
+        <a class="mp-tab" href="../index.html">Home</a>
+        <a class="mp-tab" href="./notes.html">Notes</a>
+        <a class="mp-tab" href="./projects.html">Projects</a>
+        <a class="mp-tab" href="./agentfactory.html">AgentFactory</a>
+        <a class="mp-tab" href="./novelcrafter.html">NovelCrafter</a>
+        <a class="mp-tab active" href="./appcreator.html">AppCreator</a>
+        <a class="mp-tab" href="./system.html">System</a>
+      </nav>
+
+      <div class="mp-topnav-right">
+        <span class="mp-pill ghost">UI-only</span>
+      </div>
+    </div>
+  </header>
+
   <!-- NOTE: This page does NOT modify shared nav. It only renders its own content. -->
 
   <main class="ac-shell">
@@ -49,9 +71,7 @@
           <input class="ac-input" id="acSearch" type="search" placeholder="Search…" autocomplete="off" />
         </div>
 
-        <div class="ac-list" id="acAppList" role="listbox" aria-label="Apps">
-          <!-- JS populates -->
-        </div>
+        <div class="ac-list" id="acAppList" role="listbox" aria-label="Apps"></div>
 
         <footer class="ac-panel__foot">
           <button class="ac-btn" type="button" id="acNewAppBtn">+ New app</button>
@@ -59,7 +79,7 @@
       </div>
     </section>
 
-    <!-- CENTER: Builder / Chat-like workbench -->
+    <!-- CENTER: Builder / Workbench -->
     <section class="ac-panel ac-workbench" aria-label="Workbench">
       <header class="ac-panel__head">
         <div class="ac-head-left">
@@ -101,7 +121,7 @@
       </div>
     </section>
 
-    <!-- RIGHT: Roadmap / Tasks -->
+    <!-- RIGHT: Roadmap -->
     <section class="ac-panel ac-roadmap" aria-label="Roadmap">
       <header class="ac-panel__head">
         <h2 class="ac-title">Roadmap</h2>
@@ -122,9 +142,7 @@
             <span class="ac-label">Next tasks</span>
           </div>
 
-          <div class="ac-tasklist" id="acTasks">
-            <!-- JS populates -->
-          </div>
+          <div class="ac-tasklist" id="acTasks"></div>
 
           <div class="ac-row ac-row--tight">
             <input class="ac-input" id="acTaskInput" type="text" placeholder="Add task…" autocomplete="off" />
@@ -165,7 +183,7 @@
       <div class="ac-panel__body">
         <div class="ac-muted">Set once. Rarely touched. (UI-only)</div>
 
-        <div class="ac-steps" role="list" aria-label="Pipeline steps">
+        <div class="ac-steps">
           <span class="ac-step">1) Define spec</span>
           <span class="ac-step">2) Generate skeleton</span>
           <span class="ac-step">3) Wire CLI/GUI</span>
@@ -174,16 +192,16 @@
         </div>
 
         <div class="ac-row ac-row--tight">
-          <button class="ac-btn ac-btn--ghost" type="button" id="acConfigureBtn">Configure (later)</button>
-          <button class="ac-btn ac-btn--ghost" type="button" id="acRunBtn">Run pipeline (later)</button>
-          <button class="ac-btn ac-btn--ghost" type="button" id="acExportBtn">Export (later)</button>
+          <button class="ac-btn ac-btn--ghost">Configure (later)</button>
+          <button class="ac-btn ac-btn--ghost">Run pipeline (later)</button>
+          <button class="ac-btn ac-btn--ghost">Export (later)</button>
         </div>
 
         <div class="ac-muted">This exists so you don’t have to babysit the workflow.</div>
       </div>
     </section>
 
-    <!-- VERY BOTTOM: Context -->
+    <!-- CONTEXT -->
     <section class="ac-panel ac-context" aria-label="Context">
       <header class="ac-panel__head">
         <h2 class="ac-title">Context</h2>
@@ -221,4 +239,3 @@
   <script src="../assets/js/pages/appcreator.js" defer></script>
 </body>
 </html>
-
