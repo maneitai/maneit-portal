@@ -6,35 +6,35 @@
   <meta name="color-scheme" content="dark" />
   <title>Maneit Portal — NovelCrafter</title>
 
-  <!-- New future-proof stack (only this page uses it for now) -->
-  <link rel="stylesheet" href="../assets/css/core.css" />
-  <link rel="stylesheet" href="../assets/css/theme.css" />
+  <!-- Future-proof stack (shared, intentional) -->
+  <link rel="stylesheet" href="../core.css" />
+  <link rel="stylesheet" href="../theme.css" />
+
+  <!-- Page-isolated CSS -->
   <link rel="stylesheet" href="../assets/css/pages/novelcrafter.css" />
 </head>
 
-<body>
+<body data-page="novelcrafter">
   <div class="gridbg" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <div class="wrap row">
-      <a class="brand" href="../index.html">
-        <span class="dot"></span>
-        <strong>Maneit Portal</strong>
-        <span class="pill">NovelCrafter</span>
-      </a>
+  <!-- TOP NAV (NOVELCRAFTER ONLY, STICKY) -->
+  <header class="mp-topnav">
+    <div class="mp-topnav-inner">
+      <div class="mp-brand">Maneit Portal</div>
 
-      <nav class="tabsTop" aria-label="Portal navigation">
-        <a class="tab" href="hub.html">Hub</a>
-        <a class="tab" href="work.html">Work</a>
-        <a class="tab" href="projects.html">Projects</a>
-        <a class="tab" href="agents.html">Agents</a>
-        <a class="tab" href="agentfactory.html">AgentFactory</a>
-        <a class="tab" href="pipelines.html">Pipelines</a>
-        <a class="tab" href="novelcrafter.html" data-active="true">NovelCrafter</a>
-        <a class="tab" href="stream.html">Stream</a>
-        <a class="tab" href="notes.html">Notes</a>
-        <a class="tab" href="system.html">System</a>
+      <nav class="mp-tabs" aria-label="Primary navigation">
+        <a class="mp-tab" href="../index.html">Home</a>
+        <a class="mp-tab" href="./notes.html">Notes</a>
+        <a class="mp-tab" href="./projects.html">Projects</a>
+        <a class="mp-tab" href="./agentfactory.html">AgentFactory</a>
+        <a class="mp-tab active" href="./novelcrafter.html">NovelCrafter</a>
+        <a class="mp-tab" href="./appcreator.html">AppCreator</a>
+        <a class="mp-tab" href="./system.html">System</a>
       </nav>
+
+      <div class="mp-topnav-right">
+        <span class="mp-pill ghost">UI-only</span>
+      </div>
     </div>
   </header>
 
@@ -276,7 +276,7 @@
     </section>
   </main>
 
-  <script src="../assets/js/core.js" defer></script>
+  <script src="../core.js" defer></script>
   <script src="../assets/js/pages/novelcrafter.js" defer></script>
 </body>
 </html>
