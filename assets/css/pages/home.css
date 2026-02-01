@@ -1,24 +1,27 @@
-/* ============================
-   HOME — PAGE ISOLATED OVERHAUL
-   ============================ */
+/* Page-isolated: Home
+   - Uses hf-* styling but with reference layout grid:
+     Chat (dominant) + Today + Calendar + Chat Hub + Status
+*/
 
-body[data-page="home"] {
+body[data-page="home"]{
   --topnav-h: 56px;
 }
 
-/* ---------- TOP NAV ---------- */
+/* =========================
+   TOP NAV (HOME ONLY)
+   ========================= */
 
-.mp-topnav {
+body[data-page="home"] .mp-topnav{
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 60;
   height: var(--topnav-h);
   background: rgba(10,10,12,0.88);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.mp-topnav-inner {
+body[data-page="home"] .mp-topnav-inner{
   height: 100%;
   display: flex;
   align-items: center;
@@ -26,7 +29,7 @@ body[data-page="home"] {
   padding: 0 18px;
 }
 
-.mp-brand {
+body[data-page="home"] .mp-brand{
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.4px;
@@ -34,68 +37,73 @@ body[data-page="home"] {
   white-space: nowrap;
 }
 
-.mp-tabs {
+body[data-page="home"] .mp-tabs{
   display: flex;
   gap: 10px;
   flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding-bottom: 2px;
 }
 
-.mp-tab {
+body[data-page="home"] .mp-tab{
   font-size: 12px;
   padding: 8px 12px;
   border-radius: 10px;
   text-decoration: none;
   color: inherit;
   opacity: 0.75;
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 
-.mp-tab.active,
-.mp-tab:hover {
+body[data-page="home"] .mp-tab.active,
+body[data-page="home"] .mp-tab:hover{
   background: rgba(255,255,255,0.06);
   opacity: 1;
 }
 
-.mp-topnav-right {
+body[data-page="home"] .mp-topnav-right{
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
-/* ---------- MAIN ---------- */
+body[data-page="home"] .mp-theme{
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
 
-.mp-main {
+/* =========================
+   MAIN
+   ========================= */
+
+body[data-page="home"] .mp-main{
   padding: 16px;
   padding-top: calc(16px + var(--topnav-h));
 }
 
-/* ---------- HOME LAYOUT ---------- */
+/* =========================
+   BASE HF STYLES
+   ========================= */
 
-.home-final {
-  display: grid;
-  gap: 16px;
-}
+.home-final { display: grid; gap: 16px; }
 
-.hf-grid {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 16px;
-}
-
-@media (max-width: 1100px) {
-  .hf-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------- CARDS ---------- */
-
-.hf-card {
+.hf-card{
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: 14px;
   background: rgba(0,0,0,0.25);
   overflow: hidden;
+  min-height: 0;
 }
 
-.hf-head {
+.hf-head{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -104,19 +112,16 @@ body[data-page="home"] {
   background: rgba(0,0,0,0.18);
 }
 
-.hf-head.slim {
-  padding: 8px 12px;
-}
+.hf-head.slim{ padding: 8px 12px; }
 
-.hf-body {
+.hf-body{
   padding: 14px;
   display: grid;
-  gap: 14px;
+  gap: 12px;
+  min-height: 0;
 }
 
-/* ---------- TEXT ---------- */
-
-.hf-title {
+.hf-title{
   font-size: 14px;
   display: flex;
   gap: 8px;
@@ -124,106 +129,294 @@ body[data-page="home"] {
   margin: 0;
 }
 
-.hf-subtitle {
+.hf-subtitle{
   font-size: 12px;
   opacity: 0.65;
 }
 
-.hf-muted {
+.hf-label{
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.hf-muted{
   font-size: 12px;
   opacity: 0.7;
   line-height: 1.35;
 }
 
-.hf-label {
+.hf-row{ display: flex; gap: 10px; align-items: center; }
+.hf-row.tight{ gap: 8px; }
+.wrap{ flex-wrap: wrap; }
+
+.hf-pill{
   font-size: 12px;
-  opacity: 0.85;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  white-space: nowrap;
 }
 
-/* ---------- CONTROLS ---------- */
-
-.hf-row {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.hf-row.wrap {
-  flex-wrap: wrap;
-}
-
-.hf-btn {
+.hf-btn{
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.06);
-  font-size: 12px;
+  color: inherit;
   cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
-.hf-btn.ghost {
+.hf-btn.ghost{
   background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.10);
 }
 
-.hf-input {
-  min-width: 160px;
-  flex: 1;
+.hf-input, .hf-select{
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(0,0,0,0.25);
   color: inherit;
+  outline: none;
 }
 
-/* ---------- SUBCARDS ---------- */
-
-.hf-subcard {
+.hf-subcard{
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
   padding: 12px;
   background: rgba(255,255,255,0.02);
   display: grid;
   gap: 10px;
+  min-height: 0;
 }
 
-/* ---------- CALENDAR ---------- */
+/* =========================
+   HOME GRID (REFERENCE)
+   ========================= */
 
-.hf-cal-grid {
+.home-grid{
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1.55fr 1fr;
+  grid-template-areas:
+    "chat    today"
+    "cal     hub"
+    "status  status";
+  align-items: stretch;
+}
+
+.home-chat{ grid-area: chat; }
+.home-today{ grid-area: today; }
+.home-calendar{ grid-area: cal; }
+.home-hub{ grid-area: hub; }
+.home-status{ grid-area: status; }
+
+/* =========================
+   CHAT (DOMINANT)
+   ========================= */
+
+.chat-wrap{
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  min-height: 520px;
+}
+
+.chat-left{
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 0;
+}
+
+.chat-left-head{
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-list{
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+  overflow: auto;
+  min-height: 0;
+}
+
+.chat-item{
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  color: inherit;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.chat-item.is-active{
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.chat-left-foot{
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.chat-right{
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 0;
+}
+
+.chat-messages{
+  padding: 12px;
+  overflow: auto;
+  min-height: 0;
+}
+
+.chat-composer{
+  padding: 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,0,0,0.18);
+  display: grid;
+  grid-template-columns: 160px 1fr 90px;
+  gap: 8px;
+  align-items: center;
+}
+
+.chat-model{ width: 100%; }
+.chat-input{ min-height: 46px; max-height: 160px; resize: vertical; }
+.chat-send{ width: 90px; }
+
+/* =========================
+   TODAY
+   ========================= */
+
+.today-items{
+  display: grid;
+  gap: 8px;
+}
+
+.today-chip{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  font-size: 12px;
+}
+
+.today-chip .x{
+  width: 26px;
+  height: 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  color: inherit;
+  cursor: pointer;
+}
+
+.today-add{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+/* =========================
+   CALENDAR + ACTIVITY
+   ========================= */
+
+.hf-cal-grid{
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
 }
 
-.hf-day {
-  min-height: 64px;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-}
-
-/* ---------- ACTIVITY ---------- */
-
-.hf-list {
-  max-height: 220px;
-  overflow: auto;
-  display: grid;
-  gap: 8px;
-}
-
-.hf-item {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
-}
-
-/* ---------- PILL ---------- */
-
-.hf-pill {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
+.hf-day{
   border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 10px;
+  min-height: 68px;
+  cursor: pointer;
+}
+
+.hf-day.is-today{
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+}
+
+.hf-list{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 240px;
+  overflow: auto;
+  padding-right: 2px;
+  min-height: 0;
+}
+
+.hf-item{
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+}
+
+/* =========================
+   HUB
+   ========================= */
+
+.hub-sender{
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1100px){
+  .home-grid{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "chat"
+      "today"
+      "cal"
+      "hub"
+      "status";
+  }
+
+  .chat-wrap{
+    grid-template-columns: 1fr;
+    min-height: 560px;
+  }
+
+  .chat-composer{
+    grid-template-columns: 1fr;
+  }
+
+  .chat-send{ width: 100%; }
 }
