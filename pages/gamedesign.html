@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit Portal — Game Design</title>
+
+  <!-- Portal core -->
+  <link rel="stylesheet" href="../assets/css/core.css" />
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="../assets/css/pages/gamedesign.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap row">
+      <a class="brand" href="../index.html">
+        <span class="dot"></span>
+        <strong>Maneit Portal</strong>
+        <span class="pill">Game Design</span>
+      </a>
+
+      <nav class="tabs" id="topTabs">
+        <a class="tab" href="../index.html">Home</a>
+        <a class="tab" href="./notes.html">Notes</a>
+        <a class="tab" href="./projects.html">Projects</a>
+        <a class="tab" href="./agentfactory.html">AgentFactory</a>
+        <a class="tab" href="./novelcrafter.html">NovelCrafter</a>
+        <a class="tab" href="./appcreator.html">AppCreator</a>
+        <a class="tab" href="./system.html">System</a>
+      </nav>
+
+      <div class="right">
+        <button class="btn" id="btnTheme">Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap gd-wrap">
+    <section class="gd-grid">
+      <!-- Left -->
+      <aside class="card gd-panel" aria-label="Navigator">
+        <div class="card-h">
+          <div class="h-title">Navigator</div>
+          <div class="h-sub">Templates • Systems • Targets</div>
+        </div>
+        <div class="card-b">
+          <input class="input gd-search" id="navSearch" placeholder="Search nodes / systems..." />
+
+          <div class="gd-section">
+            <div class="gd-section-h">Game Blueprints (drag into canvas)</div>
+            <div class="gd-list" id="blueprints"></div>
+          </div>
+
+          <div class="gd-section">
+            <div class="gd-section-h">Production Nodes (drag into canvas)</div>
+            <div class="gd-list" id="prodNodes"></div>
+          </div>
+
+          <div class="gd-section">
+            <div class="gd-section-h">Targets</div>
+            <div class="gd-list" id="targets"></div>
+          </div>
+
+          <div class="gd-tip">
+            <b>Use:</b><br/>
+            • Drag items into canvas.<br/>
+            • Click a node to edit in Inspector.<br/>
+            • Wire: click <i>OUT</i> then <i>IN</i>.<br/>
+            • Pan: <b>Space</b> + Drag. Zoom: <b>Ctrl</b> + Wheel.<br/>
+            • Delete: <b>Del</b>, Cancel wire: <b>Esc</b>.
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center -->
+      <section class="card gd-panel" aria-label="Canvas">
+        <div class="card-h gd-toolbar">
+          <div>
+            <div class="h-title">Pipeline Canvas</div>
+            <div class="h-sub" id="stats">0 nodes • 0 wires</div>
+          </div>
+
+          <div class="gd-actions">
+            <button class="btn btn-primary" id="btnAdd">+ Add Node</button>
+            <button class="btn" id="btnCenter">Center</button>
+            <button class="btn" id="btnClear">Clear</button>
+            <button class="btn btn-good" id="btnDemo">Load Demo</button>
+          </div>
+        </div>
+
+        <div class="gd-canvasWrap" id="canvasWrap">
+          <div class="gd-hud">
+            <div class="chip" id="chipZoom">Zoom 100%</div>
+            <div class="chip" id="chipPan">Pan (0,0)</div>
+            <div class="chip">Grid • Snap • Wires</div>
+          </div>
+
+          <div class="gd-menu" id="addMenu">
+            <div class="gd-menu-h">Add a pipeline node</div>
+            <div class="gd-menu-grid" id="tplGrid"></div>
+          </div>
+
+          <svg class="gd-wires" id="wires"></svg>
+          <div class="gd-viewport" id="viewport"></div>
+        </div>
+      </section>
+
+      <!-- Right -->
+      <aside class="card gd-panel" aria-label="Inspector">
+        <div class="card-h">
+          <div class="h-title">Inspector</div>
+          <div class="h-sub" id="selInfo">No selection</div>
+        </div>
+
+        <div class="card-b">
+          <div class="gd-ins-actions">
+            <button class="btn" id="btnDuplicate">Duplicate</button>
+            <button class="btn" id="btnDelete">Delete</button>
+            <button class="btn" id="btnExport">Export JSON</button>
+          </div>
+
+          <div class="gd-hr"></div>
+
+          <label class="gd-label">Title</label>
+          <input class="input" id="fTitle" placeholder="Node title..." disabled />
+
+          <label class="gd-label">Type</label>
+          <input class="input" id="fType" placeholder="Node type..." disabled />
+
+          <label class="gd-label">Stage</label>
+          <select class="input" id="fStage" disabled>
+            <option>Design</option>
+            <option>Generate</option>
+            <option>Validate</option>
+            <option>Build</option>
+            <option>Package</option>
+            <option>Publish</option>
+            <option>Test</option>
+            <option>Ops</option>
+          </select>
+
+          <label class="gd-label">Tags (comma)</label>
+          <input class="input" id="fTags" placeholder="unreal, factory, towerdefense..." disabled />
+
+          <label class="gd-label">Config (JSON)</label>
+          <textarea class="input gd-ta" id="fCfg" placeholder='{"platform":"Win64","profile":"Shipping"}' disabled></textarea>
+
+          <div class="gd-hr"></div>
+
+          <div class="gd-tip" id="hint">
+            This page is a <b>visualizer</b> for your Game Design Portal + pipeline flow.
+            Later we map it to real jobs (UAT/UBT/BuildGraph).
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="gd-toast" id="toast">Copied</div>
+
+  <!-- Portal core -->
+  <script src="../assets/js/core.js"></script>
+  <script src="../assets/js/theme.js"></script>
+
+  <!-- Page JS -->
+  <script src="../assets/js/pages/gamedesign.js"></script>
+</body>
+</html>
