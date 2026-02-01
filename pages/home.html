@@ -15,14 +15,37 @@
 </head>
 
 <body data-page="home">
-  <main style="padding:14px;">
-    <!-- Minimal Home header (page-local, no shared nav assumptions) -->
-    <section class="home-final" aria-label="Home Header">
+
+  <!-- TOP NAV (HOME ONLY, STICKY) -->
+  <header class="mp-topnav">
+    <div class="mp-topnav-inner">
+      <div class="mp-brand">Maneit Portal</div>
+
+      <nav class="mp-tabs">
+        <a class="mp-tab active" href="../index.html">Home</a>
+        <a class="mp-tab" href="./notes.html">Notes</a>
+        <a class="mp-tab" href="./projects.html">Projects</a>
+        <a class="mp-tab" href="./agentfactory.html">AgentFactory</a>
+        <a class="mp-tab" href="./novelcrafter.html">NovelCrafter</a>
+        <a class="mp-tab" href="./appcreator.html">AppCreator</a>
+        <a class="mp-tab" href="./system.html">System</a>
+      </nav>
+
+      <div class="mp-topnav-right">
+        <span class="mp-pill ghost">UI-only</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="mp-main">
+    <section class="home-final" aria-label="Home">
+
+      <!-- HEADER CARD -->
       <div class="hf-card">
         <div class="hf-head">
-          <h1 class="hf-title" style="font-size:16px;">
+          <h1 class="hf-title">
             Home
-            <span class="hf-subtitle">final widgets: Calendar + Teams + Discord (UI-only)</span>
+            <span class="hf-subtitle">thinking layer · coordination hub</span>
           </h1>
           <div class="hf-row tight">
             <span class="hf-pill" id="hfTodayPill">Today</span>
@@ -31,127 +54,84 @@
         </div>
         <div class="hf-body">
           <div class="hf-muted">
-            This page is a stable hub. Communication + scheduling are visual placeholders for later integration.
-            Nothing here touches other pages.
-          </div>
-
-          <div style="height:12px;"></div>
-
-          <!-- Optional quick links (purely UI; does not assume nav rewrite) -->
-          <div class="hf-card" style="border-radius:12px;">
-            <div class="hf-body" style="padding:12px;">
-              <div class="hf-label">Quick links (manual for now)</div>
-              <div class="hf-actions">
-                <a class="hf-btn ghost" href="../index.html">Legacy Home (index)</a>
-                <a class="hf-btn ghost" href="./agentfactory.html">AgentFactory</a>
-                <a class="hf-btn ghost" href="./appcreator.html">AppCreator</a>
-                <a class="hf-btn ghost" href="./novelcrafter.html">NovelCrafter</a>
-              </div>
-              <div class="hf-muted" style="margin-top:10px;">
-                We’ll normalize routing/paths later when all pages are done.
-              </div>
-            </div>
+            This page is the stable control surface for Maneit Portal.
+            Communication and scheduling are visual placeholders only.
           </div>
         </div>
       </div>
 
-      <!-- HOME FINAL (Calendar + Teams + Discord) — UI-only placeholders -->
-      <section aria-label="Home Final Widgets">
-        <div class="hf-grid">
-          <!-- Calendar -->
-          <div class="hf-card">
-            <div class="hf-head">
-              <h3 class="hf-title">Calendar <span class="hf-subtitle" id="hfCalMonth">Month</span></h3>
-              <div class="hf-row tight">
-                <button class="hf-btn ghost" type="button" id="hfCalPrev">Prev</button>
-                <button class="hf-btn ghost" type="button" id="hfCalNext">Next</button>
-              </div>
-            </div>
-            <div class="hf-body">
-              <div class="hf-cal">
-                <div class="hf-cal-grid" id="hfCalGrid"></div>
-              </div>
+      <!-- MAIN GRID -->
+      <div class="hf-grid">
 
-              <div style="height:10px"></div>
-
-              <div class="hf-card" style="border-radius:12px;">
-                <div class="hf-body" style="padding:12px;">
-                  <div class="hf-label">Create meeting (visual)</div>
-                  <div class="hf-row tight" style="flex-wrap:wrap;">
-                    <input class="hf-input" id="hfMeetingTitle" type="text" placeholder="Title" />
-                    <input class="hf-input" id="hfMeetingDate" type="text" placeholder="YYYY-MM-DD" />
-                    <input class="hf-input" id="hfMeetingTime" type="text" placeholder="HH:MM" />
-                    <button class="hf-btn" type="button" id="hfMeetingCreate">Create</button>
-                  </div>
-                  <div class="hf-muted" style="margin-top:8px;">
-                    UI-only: later this will sync to server + propagate to staff calendars.
-                  </div>
-                </div>
-              </div>
+        <!-- CALENDAR -->
+        <div class="hf-card">
+          <div class="hf-head">
+            <h3 class="hf-title">Calendar <span class="hf-subtitle" id="hfCalMonth">Month</span></h3>
+            <div class="hf-row tight">
+              <button class="hf-btn ghost" id="hfCalPrev">Prev</button>
+              <button class="hf-btn ghost" id="hfCalNext">Next</button>
             </div>
           </div>
+          <div class="hf-body">
+            <div class="hf-cal-grid" id="hfCalGrid"></div>
 
-          <!-- Comms -->
-          <div class="hf-card">
-            <div class="hf-head">
-              <h3 class="hf-title">Comms <span class="hf-subtitle">Teams + Discord</span></h3>
-              <div class="hf-row tight">
-                <span class="hf-pill">UI-only</span>
+            <div class="hf-subcard">
+              <div class="hf-label">Create meeting (visual)</div>
+              <div class="hf-row wrap">
+                <input class="hf-input" placeholder="Title" />
+                <input class="hf-input" placeholder="YYYY-MM-DD" />
+                <input class="hf-input" placeholder="HH:MM" />
+                <button class="hf-btn">Create</button>
               </div>
-            </div>
-            <div class="hf-body">
-              <div class="hf-card" style="border-radius:12px; margin-bottom:12px;">
-                <div class="hf-body" style="padding:12px;">
-                  <div class="hf-label">Teams</div>
-                  <div class="hf-row tight" style="margin-bottom:8px;">
-                    <input class="hf-input" id="hfTeamsChannel" type="text" placeholder="Channel (e.g. General)" />
-                  </div>
-                  <div class="hf-row tight">
-                    <input class="hf-input" id="hfTeamsMsg" type="text" placeholder="Message…" />
-                    <button class="hf-btn" type="button" id="hfTeamsSend">Send</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="hf-card" style="border-radius:12px;">
-                <div class="hf-body" style="padding:12px;">
-                  <div class="hf-label">Discord</div>
-                  <div class="hf-row tight" style="margin-bottom:8px;">
-                    <input class="hf-input" id="hfDiscChannel" type="text" placeholder="Channel (e.g. general)" />
-                  </div>
-                  <div class="hf-row tight">
-                    <input class="hf-input" id="hfDiscMsg" type="text" placeholder="Message…" />
-                    <button class="hf-btn" type="button" id="hfDiscSend">Send</button>
-                  </div>
-                </div>
-              </div>
-
-              <div style="height:12px"></div>
-
-              <div class="hf-card" style="border-radius:12px;">
-                <div class="hf-head" style="border-bottom:1px solid rgba(255,255,255,0.07);">
-                  <h3 class="hf-title">Activity <span class="hf-subtitle">recent</span></h3>
-                  <button class="hf-btn ghost" type="button" id="hfActivityClear">Clear</button>
-                </div>
-                <div class="hf-body">
-                  <div class="hf-list" id="hfActivityList"></div>
-                </div>
-              </div>
-
-              <div class="hf-muted" style="margin-top:10px;">
-                All actions are logged locally (visual). No external calls.
+              <div class="hf-muted">
+                UI-only · future server sync
               </div>
             </div>
           </div>
         </div>
-      </section>
+
+        <!-- COMMS -->
+        <div class="hf-card">
+          <div class="hf-head">
+            <h3 class="hf-title">Comms <span class="hf-subtitle">Teams + Discord</span></h3>
+            <span class="hf-pill">local</span>
+          </div>
+          <div class="hf-body">
+
+            <div class="hf-subcard">
+              <div class="hf-label">Teams</div>
+              <div class="hf-row wrap">
+                <input class="hf-input" placeholder="Channel" />
+                <input class="hf-input" placeholder="Message…" />
+                <button class="hf-btn">Send</button>
+              </div>
+            </div>
+
+            <div class="hf-subcard">
+              <div class="hf-label">Discord</div>
+              <div class="hf-row wrap">
+                <input class="hf-input" placeholder="Channel" />
+                <input class="hf-input" placeholder="Message…" />
+                <button class="hf-btn">Send</button>
+              </div>
+            </div>
+
+            <div class="hf-subcard">
+              <div class="hf-head slim">
+                <h3 class="hf-title">Activity <span class="hf-subtitle">recent</span></h3>
+                <button class="hf-btn ghost">Clear</button>
+              </div>
+              <div class="hf-list" id="hfActivityList"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </section>
   </main>
 
-  <!-- Shared JS (intentional) -->
   <script src="../core.js" defer></script>
-
-  <!-- Page-isolated JS -->
   <script src="../assets/js/pages/home.js" defer></script>
 </body>
 </html>
