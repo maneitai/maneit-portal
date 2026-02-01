@@ -1,156 +1,181 @@
-/* theme.css — variables + background grid helper + theme presets */
+/* =====================================================
+   Maneit Portal — Theme System
+   All themes are variable-based. No layout logic here.
+   ===================================================== */
 
 :root{
-  --bg0:#070a10;
-  --bg1:#0b0f14;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.68);
+  /* fallback (used if no data-theme is set) */
+  --bg-main: #0b0b0e;
+  --bg-panel: rgba(255,255,255,0.03);
+  --bg-panel-strong: rgba(255,255,255,0.06);
 
-  --accent: rgba(125,211,252,.55);
-  --accentBg: rgba(125,211,252,.10);
+  --border-soft: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.14);
 
-  --radius: 18px;
-  --topbarH: 58px;
+  --text-main: rgba(255,255,255,0.92);
+  --text-muted: rgba(255,255,255,0.72);
+  --text-dim: rgba(255,255,255,0.55);
 
-  --gridA: rgba(255,255,255,.06);
-  --gridB: rgba(255,255,255,.03);
-
-  /* Theme-driven dot (used by core.css if present) */
-  --dot: rgba(74,222,128,.9);
-
-  /* UI-only “glass” controls (used by app.js sliders if it sets vars) */
-  --glassAlpha: 0.10;
-  --glassBlur: 14px;
+  --accent: #5cc8ff;
+  --accent-soft: rgba(92,200,255,0.18);
 }
 
-/* Default background */
-body{
-  background:
-    radial-gradient(1200px 600px at 45% 35%, rgba(125,211,252,.08), transparent 60%),
-    radial-gradient(900px 500px at 70% 55%, rgba(167,139,250,.06), transparent 60%),
-    linear-gradient(180deg, var(--bg0), var(--bg1));
+/* =====================================================
+   🌲 FOREST GREEN
+   ===================================================== */
+
+html[data-theme="forest-deep"]{
+  --bg-main: #0b0f0c;
+  --bg-panel: rgba(110,170,130,0.05);
+  --bg-panel-strong: rgba(110,170,130,0.10);
+
+  --border-soft: rgba(120,190,150,0.14);
+  --border-strong: rgba(120,190,150,0.28);
+
+  --accent: #6fbf8f;
+  --accent-soft: rgba(111,191,143,0.20);
 }
 
-/* optional overlay grid */
-.gridbg{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .95;
-  background-image:
-    linear-gradient(to right, var(--gridB) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--gridB) 1px, transparent 1px),
-    linear-gradient(to right, var(--gridA) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--gridA) 1px, transparent 1px);
-  background-size:
-    14px 14px,
-    14px 14px,
-    84px 84px,
-    84px 84px;
-  background-position: 0 0;
+html[data-theme="forest-core"]{
+  --bg-main: #0e1411;
+  --bg-panel: rgba(130,200,160,0.06);
+  --bg-panel-strong: rgba(130,200,160,0.12);
+
+  --border-soft: rgba(140,210,170,0.18);
+  --border-strong: rgba(140,210,170,0.32);
+
+  --accent: #7fd9a6;
+  --accent-soft: rgba(127,217,166,0.22);
 }
 
-/* ===============================
-   Theme Presets (set on :root)
-   Usage (example): document.documentElement.dataset.theme = "nord";
-   =============================== */
+html[data-theme="forest-light"]{
+  --bg-main: #141b17;
+  --bg-panel: rgba(160,220,190,0.10);
+  --bg-panel-strong: rgba(160,220,190,0.18);
 
-/* Obsidian (default-ish) */
-:root[data-theme="obsidian"]{
-  --bg0:#070a10;
-  --bg1:#0b0f14;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.68);
-  --accent: rgba(125,211,252,.55);
-  --accentBg: rgba(125,211,252,.10);
-  --dot: rgba(74,222,128,.9);
-  --gridA: rgba(255,255,255,.06);
-  --gridB: rgba(255,255,255,.03);
+  --border-soft: rgba(170,230,200,0.28);
+  --border-strong: rgba(170,230,200,0.45);
+
+  --accent: #9ff0c8;
+  --accent-soft: rgba(159,240,200,0.30);
 }
 
-/* Nord */
-:root[data-theme="nord"]{
-  --bg0:#0b111a;
-  --bg1:#0f1722;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.70);
-  --accent: rgba(136,192,208,.60);
-  --accentBg: rgba(136,192,208,.12);
-  --dot: rgba(136,192,208,.85);
-  --gridA: rgba(236,239,244,.06);
-  --gridB: rgba(236,239,244,.03);
+/* =====================================================
+   🌊 MANEITIC BLUE (DEFAULT VIBE)
+   ===================================================== */
+
+html[data-theme="maneit-deep"]{
+  --bg-main: #0a0e14;
+  --bg-panel: rgba(80,140,200,0.05);
+  --bg-panel-strong: rgba(80,140,200,0.10);
+
+  --border-soft: rgba(90,150,210,0.14);
+  --border-strong: rgba(90,150,210,0.28);
+
+  --accent: #5cc8ff;
+  --accent-soft: rgba(92,200,255,0.20);
 }
 
-/* Emerald */
-:root[data-theme="emerald"]{
-  --bg0:#070c0a;
-  --bg1:#0b1210;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.66);
-  --accent: rgba(74,222,128,.58);
-  --accentBg: rgba(74,222,128,.12);
-  --dot: rgba(74,222,128,.92);
-  --gridA: rgba(230,237,243,.06);
-  --gridB: rgba(230,237,243,.03);
+html[data-theme="maneit-core"]{
+  --bg-main: #0c1119;
+  --bg-panel: rgba(100,170,230,0.06);
+  --bg-panel-strong: rgba(100,170,230,0.12);
+
+  --border-soft: rgba(110,180,240,0.18);
+  --border-strong: rgba(110,180,240,0.32);
+
+  --accent: #6fd4ff;
+  --accent-soft: rgba(111,212,255,0.22);
 }
 
-/* Amber */
-:root[data-theme="amber"]{
-  --bg0:#0c0a07;
-  --bg1:#14100b;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.66);
-  --accent: rgba(251,191,36,.55);
-  --accentBg: rgba(251,191,36,.12);
-  --dot: rgba(251,191,36,.85);
-  --gridA: rgba(230,237,243,.06);
-  --gridB: rgba(230,237,243,.03);
+html[data-theme="maneit-light"]{
+  --bg-main: #121826;
+  --bg-panel: rgba(130,200,255,0.10);
+  --bg-panel-strong: rgba(130,200,255,0.18);
+
+  --border-soft: rgba(140,210,255,0.28);
+  --border-strong: rgba(140,210,255,0.45);
+
+  --accent: #9fe4ff;
+  --accent-soft: rgba(159,228,255,0.30);
 }
 
-/* Pure Dark */
-:root[data-theme="pure"]{
-  --bg0:#000000;
-  --bg1:#0a0a0a;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.64);
-  --accent: rgba(230,237,243,.35);
-  --accentBg: rgba(230,237,243,.08);
-  --dot: rgba(230,237,243,.65);
-  --gridA: rgba(230,237,243,.05);
-  --gridB: rgba(230,237,243,.02);
+/* =====================================================
+   🔥 EMBER RED
+   ===================================================== */
+
+html[data-theme="ember-deep"]{
+  --bg-main: #120b0b;
+  --bg-panel: rgba(200,90,90,0.05);
+  --bg-panel-strong: rgba(200,90,90,0.10);
+
+  --border-soft: rgba(220,100,100,0.16);
+  --border-strong: rgba(220,100,100,0.30);
+
+  --accent: #ff6b6b;
+  --accent-soft: rgba(255,107,107,0.20);
 }
 
-/* Dark Forest (requested) */
-:root[data-theme="darkforest"]{
-  --bg0:#050a07;
-  --bg1:#08110c;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.66);
-  --accent: rgba(34,197,94,.55);     /* forest green */
-  --accentBg: rgba(34,197,94,.12);
-  --dot: rgba(34,197,94,.92);
-  --gridA: rgba(230,237,243,.055);
-  --gridB: rgba(230,237,243,.028);
+html[data-theme="ember-core"]{
+  --bg-main: #1a0f10;
+  --bg-panel: rgba(230,110,110,0.07);
+  --bg-panel-strong: rgba(230,110,110,0.14);
+
+  --border-soft: rgba(240,120,120,0.22);
+  --border-strong: rgba(240,120,120,0.38);
+
+  --accent: #ff7f7f;
+  --accent-soft: rgba(255,127,127,0.24);
 }
 
-/* Maneit Cyan (requested) */
-:root[data-theme="maneitcyan"]{
-  --bg0:#060b10;
-  --bg1:#08121a;
-  --text:#e6edf3;
-  --muted: rgba(230,237,243,.67);
-  --accent: rgba(34,211,238,.62);     /* cyan */
-  --accentBg: rgba(34,211,238,.12);
-  --dot: rgba(34,211,238,.92);
-  --gridA: rgba(230,237,243,.06);
-  --gridB: rgba(230,237,243,.03);
+html[data-theme="ember-light"]{
+  --bg-main: #241415;
+  --bg-panel: rgba(255,140,140,0.12);
+  --bg-panel-strong: rgba(255,140,140,0.22);
+
+  --border-soft: rgba(255,150,150,0.32);
+  --border-strong: rgba(255,150,150,0.50);
+
+  --accent: #ffaaaa;
+  --accent-soft: rgba(255,170,170,0.34);
 }
 
-/* Optional: if you want the background hue to react a bit per theme */
-:root[data-theme="nord"] body,
-:root[data-theme="emerald"] body,
-:root[data-theme="amber"] body,
-:root[data-theme="darkforest"] body,
-:root[data-theme="maneitcyan"] body{
-  /* no-op placeholder (kept empty intentionally to avoid surprises) */
+/* =====================================================
+   🟣 ARCANE VIOLET
+   ===================================================== */
+
+html[data-theme="arcane-deep"]{
+  --bg-main: #0d0b14;
+  --bg-panel: rgba(150,110,220,0.05);
+  --bg-panel-strong: rgba(150,110,220,0.10);
+
+  --border-soft: rgba(160,120,230,0.16);
+  --border-strong: rgba(160,120,230,0.30);
+
+  --accent: #b58cff;
+  --accent-soft: rgba(181,140,255,0.20);
+}
+
+html[data-theme="arcane-core"]{
+  --bg-main: #130f1c;
+  --bg-panel: rgba(170,130,240,0.07);
+  --bg-panel-strong: rgba(170,130,240,0.14);
+
+  --border-soft: rgba(180,140,250,0.22);
+  --border-strong: rgba(180,140,250,0.38);
+
+  --accent: #c39bff;
+  --accent-soft: rgba(195,155,255,0.24);
+}
+
+html[data-theme="arcane-light"]{
+  --bg-main: #1c162a;
+  --bg-panel: rgba(200,170,255,0.12);
+  --bg-panel-strong: rgba(200,170,255,0.22);
+
+  --border-soft: rgba(210,180,255,0.32);
+  --border-strong: rgba(210,180,255,0.50);
+
+  --accent: #d6c2ff;
+  --accent-soft: rgba(214,194,255,0.34);
 }
