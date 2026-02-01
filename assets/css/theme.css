@@ -1,35 +1,84 @@
+/* =====================================================
+   Maneit Portal — Theme System (vars) + Theme App UI
+   Location: /assets/css/theme.css
+   ===================================================== */
+
+/* -------------------------
+   Default variables
+   ------------------------- */
+html{
+  color-scheme: dark;
+
+  /* Core tokens used by core.css */
+  --bg0: #070a10;
+  --text: rgba(230,237,243,.92);
+  --muted: rgba(230,237,243,.68);
+
+  /* Branding dot in core.css */
+  --dot: rgba(92,200,255,.9);
+}
+
 /* =========================
-   Theme UI (page only)
+   🌲 Forest (3 levels)
    ========================= */
+html[data-theme="forest-deep"]{  --bg0:#0b0f0c; --dot:#6fbf8f; }
+html[data-theme="forest-core"]{  --bg0:#0e1411; --dot:#7fd9a6; }
+html[data-theme="forest-light"]{ --bg0:#141b17; --dot:#9ff0c8; }
+
+/* =========================
+   🌊 Maneitic Blue (3 levels)
+   ========================= */
+html[data-theme="maneit-deep"]{  --bg0:#0a0e14; --dot:#5cc8ff; }
+html[data-theme="maneit-core"]{  --bg0:#0c1119; --dot:#6fd4ff; }
+html[data-theme="maneit-light"]{ --bg0:#121826; --dot:#9fe4ff; }
+
+/* =========================
+   🔥 Ember Red (3 levels)
+   ========================= */
+html[data-theme="ember-deep"]{  --bg0:#120b0b; --dot:#ff6b6b; }
+html[data-theme="ember-core"]{  --bg0:#1a0f10; --dot:#ff7f7f; }
+html[data-theme="ember-light"]{ --bg0:#241415; --dot:#ffaaaa; }
+
+/* =========================
+   🟣 Arcane Violet (3 levels)
+   ========================= */
+html[data-theme="arcane-deep"]{  --bg0:#0d0b14; --dot:#b58cff; }
+html[data-theme="arcane-core"]{  --bg0:#130f1c; --dot:#c39bff; }
+html[data-theme="arcane-light"]{ --bg0:#1c162a; --dot:#d6c2ff; }
+
+/* =====================================================
+   Theme App UI (pages/theme.html)
+   ===================================================== */
 
 .theme-root{
-  padding-top: 20px;
+  padding-top: 18px;
 }
 
 .theme-panel{
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
 .theme-body{
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
 }
 
 .theme-group h3{
   font-size: 13px;
-  opacity: .85;
+  opacity: .88;
   margin: 0 0 8px;
 }
 
 .theme-row{
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .theme-row button{
-  flex: 1;
+  flex: 1 1 160px;
   padding: 12px;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,.15);
@@ -44,59 +93,7 @@
   border-color: rgba(255,255,255,.30);
 }
 
-/* =========================
-   Theme Variables
-   ========================= */
-
-html{
-  --bg0: #070a10;
-  --panel: rgba(0,0,0,.30);
-  --border: rgba(255,255,255,.14);
-  --text: rgba(230,237,243,.92);
-  --muted: rgba(230,237,243,.68);
-  --dot: rgba(92,200,255,.9);
-}
-
-/* 🌲 Forest */
-html[data-theme="forest-deep"]{
-  --bg0:#0b0f0c; --dot:#6fbf8f;
-}
-html[data-theme="forest-core"]{
-  --bg0:#0e1411; --dot:#7fd9a6;
-}
-html[data-theme="forest-light"]{
-  --bg0:#141b17; --dot:#9ff0c8;
-}
-
-/* 🌊 Maneit */
-html[data-theme="maneit-deep"]{
-  --bg0:#0a0e14; --dot:#5cc8ff;
-}
-html[data-theme="maneit-core"]{
-  --bg0:#0c1119; --dot:#6fd4ff;
-}
-html[data-theme="maneit-light"]{
-  --bg0:#121826; --dot:#9fe4ff;
-}
-
-/* 🔥 Ember */
-html[data-theme="ember-deep"]{
-  --bg0:#120b0b; --dot:#ff6b6b;
-}
-html[data-theme="ember-core"]{
-  --bg0:#1a0f10; --dot:#ff7f7f;
-}
-html[data-theme="ember-light"]{
-  --bg0:#241415; --dot:#ffaaaa;
-}
-
-/* 🟣 Arcane */
-html[data-theme="arcane-deep"]{
-  --bg0:#0d0b14; --dot:#b58cff;
-}
-html[data-theme="arcane-core"]{
-  --bg0:#130f1c; --dot:#c39bff;
-}
-html[data-theme="arcane-light"]{
-  --bg0:#1c162a; --dot:#d6c2ff;
+.theme-current{
+  font-size: 12px;
+  opacity: .72;
 }
