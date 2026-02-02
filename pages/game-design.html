@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Maneit — Game Design Portal (Visualizer)</title>
+
+  <!-- Portal core + theme (future-proof stack) -->
+  <link rel="stylesheet" href="../assets/css/core.css" />
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+
+  <!-- Page-scoped styles -->
+  <link rel="stylesheet" href="../assets/css/pages/game-design.css" />
+</head>
+
+<body>
+  <!-- Page root (isolated) -->
+  <div id="gdv-root" class="gdv">
+    <header class="gdv-topbar">
+      <div class="gdv-brand">
+        <span class="gdv-dot"></span>
+        <strong>Maneit</strong>
+        <span class="gdv-pill">Game Design Portal — Visualizer</span>
+      </div>
+
+      <div class="gdv-kbd" title="Quick keys">
+        <span>Pan: <b>Space</b> + Drag</span>
+        <span>Zoom: <b>Ctrl</b> + Wheel</span>
+        <span>Delete: <b>Del</b></span>
+      </div>
+
+      <div class="gdv-toolbar">
+        <button class="gdv-btn gdv-primary" id="gdv-btnAdd">+ Add Node</button>
+        <button class="gdv-btn" id="gdv-btnCenter">Center</button>
+        <button class="gdv-btn gdv-warn" id="gdv-btnClear">Clear</button>
+        <button class="gdv-btn gdv-good" id="gdv-btnDemo">Load Demo</button>
+      </div>
+
+      <div class="gdv-menu" id="gdv-addMenu">
+        <h3>Add a pipeline node (click to drop into canvas)</h3>
+        <div class="gdv-grid" id="gdv-tplGrid"></div>
+      </div>
+    </header>
+
+    <main class="gdv-layout">
+      <!-- Left -->
+      <section class="gdv-panel" aria-label="Navigator">
+        <div class="gdv-ph">
+          <h2>Navigator</h2>
+          <div class="gdv-sub">Templates • Systems • Targets</div>
+        </div>
+        <div class="gdv-ps">
+          <input class="gdv-search" id="gdv-navSearch" placeholder="Search nodes / systems..." />
+
+          <div class="gdv-section">
+            <div class="gdv-sh">Game Blueprints (drag into canvas)</div>
+            <div class="gdv-list" id="gdv-blueprints"></div>
+          </div>
+
+          <div class="gdv-section">
+            <div class="gdv-sh">Production Nodes (drag into canvas)</div>
+            <div class="gdv-list" id="gdv-prodNodes"></div>
+          </div>
+
+          <div class="gdv-section">
+            <div class="gdv-sh">Targets</div>
+            <div class="gdv-list" id="gdv-targets"></div>
+          </div>
+
+          <div class="gdv-hr"></div>
+          <div class="gdv-tips">
+            <b>How to use:</b><br/>
+            • Drag items from the left into the canvas.<br/>
+            • Click a node to inspect/edit it.<br/>
+            • Create wires: click an <i>OUT</i> port then an <i>IN</i> port.<br/>
+            • Pan: hold <b>Space</b> and drag. Zoom: <b>Ctrl</b> + mousewheel.<br/>
+            • Snap-to-grid is enabled (soft).
+          </div>
+        </div>
+      </section>
+
+      <!-- Center -->
+      <section class="gdv-panel" aria-label="Canvas">
+        <div class="gdv-ph">
+          <h2>Pipeline Canvas</h2>
+          <div class="gdv-sub"><span id="gdv-stats">0 nodes • 0 wires</span></div>
+        </div>
+
+        <div class="gdv-canvasWrap" id="gdv-canvasWrap">
+          <div class="gdv-canvasHUD">
+            <div class="gdv-chip" id="gdv-chipZoom">Zoom 100%</div>
+            <div class="gdv-chip" id="gdv-chipPan">Pan (0,0)</div>
+            <div class="gdv-chip">Grid • Snap • Wires</div>
+          </div>
+
+          <svg id="gdv-wires"></svg>
+
+          <!-- Viewport (pannable/zoomable world) -->
+          <div class="gdv-viewport" id="gdv-viewport"></div>
+        </div>
+      </section>
+
+      <!-- Right -->
+      <section class="gdv-panel" aria-label="Inspector">
+        <div class="gdv-ph">
+          <h2>Inspector</h2>
+          <div class="gdv-sub" id="gdv-selInfo">No selection</div>
+        </div>
+        <div class="gdv-ps">
+          <div class="gdv-insRow">
+            <button class="gdv-miniBtn" id="gdv-btnDuplicate">Duplicate</button>
+            <button class="gdv-miniBtn" id="gdv-btnDelete">Delete</button>
+            <button class="gdv-miniBtn" id="gdv-btnExport">Export JSON</button>
+          </div>
+
+          <div class="gdv-hr"></div>
+
+          <div class="gdv-field">
+            <label>Title</label>
+            <input id="gdv-fTitle" placeholder="Node title..." disabled />
+          </div>
+
+          <div class="gdv-field">
+            <label>Type</label>
+            <input id="gdv-fType" placeholder="Node type..." disabled />
+          </div>
+
+          <div class="gdv-field">
+            <label>Stage</label>
+            <select id="gdv-fStage" disabled>
+              <option>Design</option>
+              <option>Generate</option>
+              <option>Validate</option>
+              <option>Build</option>
+              <option>Package</option>
+              <option>Publish</option>
+              <option>Test</option>
+              <option>Ops</option>
+            </select>
+          </div>
+
+          <div class="gdv-field">
+            <label>Tags (comma)</label>
+            <input id="gdv-fTags" placeholder="unreal, factory, towerdefense..." disabled />
+          </div>
+
+          <div class="gdv-field">
+            <label>Config (JSON-ish)</label>
+            <textarea id="gdv-fCfg" placeholder='{"platform":"win64","profile":"shipping"}' disabled></textarea>
+          </div>
+
+          <div class="gdv-hr"></div>
+          <div class="gdv-tips" id="gdv-hint">
+            Select a node to edit. This is a <b>visualizer</b> for portal layout + pipeline flow.
+            The idea is to mirror your real job runner later (UAT/UBT/BuildGraph).
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="gdv-toast" id="gdv-toast">Copied</div>
+  </div>
+
+  <!-- Portal core JS -->
+  <script src="../assets/js/core.js"></script>
+
+  <!-- Page-scoped JS -->
+  <script src="../assets/js/pages/game-design.js"></script>
+</body>
+</html>
